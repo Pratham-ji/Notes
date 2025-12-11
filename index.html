@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Survey Methods & Data Analysis — Study Guide (Anushka ❤️)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Comfortaa:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f8fb;
+    --card:#ffffff;
+    --muted:#6b7280;
+    --accent:#5b7cfa;
+    --accent-2:#ff7aa2;
+    --accent-3:#ffd47a;
+    --soft:#eef2ff;
+    --radius:12px;
+    --shadow: 0 8px 24px rgba(32,33,36,0.08);
+    --max-width:1100px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:var(--bg);
+    color:#111827;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  header.site-header{
+    background:linear-gradient(90deg, rgba(91,124,250,0.95), rgba(255,122,162,0.95));
+    color:white;
+    padding:28px 20px;
+    text-align:center;
+    border-bottom-left-radius:24px;
+    border-bottom-right-radius:24px;
+    box-shadow: 0 8px 30px rgba(91,124,250,0.12);
+  }
+  header .title{
+    font-family: "Comfortaa", cursive;
+    font-size:26px;
+    margin:0 0 6px 0;
+    letter-spacing:0.2px;
+  }
+  header .subtitle{
+    margin:0;
+    font-size:14px;
+    opacity:0.95;
+  }
+
+  nav.topnav{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    padding:12px;
+    margin-top:14px;
+    flex-wrap:wrap;
+  }
+  nav.topnav a{
+    background:rgba(255,255,255,0.12);
+    color:white;
+    text-decoration:none;
+    padding:8px 14px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:14px;
+    transition:transform .12s ease, background .12s;
+  }
+  nav.topnav a:hover{ transform:translateY(-3px); background:rgba(255,255,255,0.18) }
+
+  .page{
+    max-width:var(--max-width);
+    margin:26px auto;
+    padding:18px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr 360px;
+    gap:20px;
+    align-items:start;
+  }
+
+  /* main card */
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow:var(--shadow);
+  }
+
+  /* side panel */
+  .side{
+    position:sticky;
+    top:22px;
+    align-self:start;
+  }
+
+  h2{font-size:20px; margin:0 0 12px 0; color:#0f172a}
+  h3{font-size:16px; margin: 10px 0; color:#0f172a}
+  p{margin:8px 0; color:#111827}
+
+  .muted{color:var(--muted); font-size:14px; margin:0}
+  .small{font-size:13px; color:var(--muted)}
+
+  .section{
+    margin-bottom:18px;
+  }
+
+  ul.clean{
+    padding-left:18px;
+    margin:8px 0 12px 0;
+  }
+  ul.clean li{margin:6px 0; line-height:1.45;}
+
+  .diagram{
+    background:linear-gradient(180deg,#f7fbff, #fff);
+    border-radius:10px;
+    padding:12px;
+    border:1px solid rgba(83,100,255,0.06);
+  }
+
+  .quote-card{
+    background: linear-gradient(180deg,#fff, #fffefc);
+    border-radius:14px;
+    padding:14px;
+    text-align:center;
+    border:1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 8px 20px rgba(21, 23, 33, 0.04);
+  }
+  .quote{
+    font-family: "Comfortaa", cursive;
+    color:#0b1220;
+    font-size:15px;
+    margin:6px 0;
+    line-height:1.3;
+  }
+  .quote-meta{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:8px;
+  }
+
+  /* nav anchor styling for sections */
+  .anchor-list a{
+    display:block;
+    padding:8px 10px;
+    text-decoration:none;
+    color:#0f172a;
+    border-radius:8px;
+    margin-bottom:6px;
+    background:linear-gradient(90deg, rgba(91,124,250,0.03), transparent);
+    font-weight:600;
+  }
+
+  /* quiz styles */
+  .quiz{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .q-card{
+    background:#fff;
+    border-radius:10px;
+    padding:12px;
+    border:1px solid rgba(16,24,40,0.04);
+  }
+  .options button{
+    display:block;
+    width:100%;
+    text-align:left;
+    margin:8px 0;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid rgba(16,24,40,0.06);
+    background:linear-gradient(180deg,#fbfdff,#fff);
+    cursor:pointer;
+  }
+  .options button:hover{transform:translateY(-2px)}
+  .btn{
+    background:var(--accent);
+    color:white;
+    padding:10px 14px;
+    border-radius:10px;
+    border:0;
+    cursor:pointer;
+    font-weight:700;
+  }
+
+  footer.site-footer{
+    max-width:var(--max-width);
+    margin:28px auto;
+    padding:18px;
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+  }
+
+  /* responsive */
+  @media (max-width:980px){
+    .grid{grid-template-columns:1fr; padding:0}
+    nav.topnav{gap:8px}
+    .side{position:static}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="title">Survey Methods & Data Analysis — Complete Study Guide</div>
+  <div class="subtitle">A concise, exam-oriented resource — now with quiz & a little corner for Anushka 💕</div>
+
+  <nav class="topnav" aria-label="Main Navigation">
+    <a href="#unit1">Unit 1</a>
+    <a href="#unit2">Unit 2</a>
+    <a href="#unit3">Unit 3</a>
+    <a href="#unit4">Unit 4</a>
+    <a href="#diagrams">Diagrams</a>
+    <a href="#answers">Model Answers</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#revision">Revision</a>
+  </nav>
+</header>
+
+<main class="page">
+  <div class="grid">
+    <!-- LEFT: main content -->
+    <div>
+      <!-- Hero / Quote -->
+      <div class="card section" style="display:flex;gap:14px;align-items:center;">
+        <div style="flex:1;">
+          <h2 style="margin-bottom:6px">A tiny corner of the internet — for Anushka</h2>
+          <p class="muted">Two little notes arranged just for her:</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <div style="background:linear-gradient(90deg,#fff,#fff);padding:10px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);">
+              <div style="font-family:'Comfortaa', cursive; color:var(--accent-2); font-weight:700">“A tiny corner of the internet dedicated to my favorite human.”</div>
+              <div class="small" style="margin-top:6px">— With love</div>
+            </div>
+            <div style="background:linear-gradient(90deg,#fff,#fff);padding:10px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);">
+              <div style="font-family:'Comfortaa', cursive; color:var(--accent-3); font-weight:700">“Little notes for my little universe — Pranushka.”</div>
+              <div class="small" style="margin-top:6px">— Your corner</div>
+            </div>
+          </div>
+        </div>
+        <div style="width:120px;">
+          <svg viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#ff7aa2"/><stop offset="1" stop-color="#5b7cfa"/></linearGradient>
+            </defs>
+            <path fill="url(#g)" d="M12 21s-6-4.35-9-7.02C0 10.96 3.55 6 8.5 6c2.5 0 3.5 1.46 3.5 1.46S14.5 6 17 6c4.95 0 8.5 4.96 5 7.98C18 16.65 12 21 12 21z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Unit 1 -->
+      <section id="unit1" class="card section" aria-labelledby="u1">
+        <h2 id="u1">Unit 1 — Data Collection & Sampling Methods</h2>
+        <p class="small">Core: survey steps, primary vs secondary data, census vs sample, sampling methods (random & non-random).</p>
+
+        <h3>Sampling methods — quick reference</h3>
+        <ul class="clean">
+          <li><b>Simple Random Sampling</b> — equal chance, use random numbers.</li>
+          <li><b>Stratified Sampling</b> — divide into strata, sample in each; reduces variance.</li>
+          <li><b>Cluster Sampling</b> — sample clusters (villages/blocks), then units inside.</li>
+          <li><b>Systematic Sampling</b> — every k-th unit from a listing.</li>
+          <li><b>Non-Probability Methods</b> — Purposive, Convenience, Quota (used when frame unavailable).</li>
+        </ul>
+
+        <div class="section">
+          <h3>How examiners ask (5M / 15M)</h3>
+          <p class="small">5M: Define & one example. 15M: Classification + advantages/limitations + short example (NSSO, household consumption survey).</p>
+        </div>
+      </section>
+
+      <!-- Unit 2 -->
+      <section id="unit2" class="card section" aria-labelledby="u2">
+        <h2 id="u2">Unit 2 — Survey Tools & Techniques</h2>
+        <p class="small">Questionnaires, schedules, types of questions, pilot studies, and qualitative methods.</p>
+
+        <h3>Questionnaire design — essentials</h3>
+        <ul class="clean">
+          <li>Simple, neutral wording — avoid leading or double-barrel questions.</li>
+          <li>Logical order: screening → demographics → main questions → closing.</li>
+          <li>Use mix of open & closed questions; include filter questions.</li>
+          <li>Pilot test with a small sample; refine wording and flow.</li>
+        </ul>
+
+        <h3>Qualitative tools — short notes</h3>
+        <ul class="clean">
+          <li><b>Observation:</b> Direct recording of events/behaviour.</li>
+          <li><b>Focus Groups:</b> Moderator-led group discussion for opinions.</li>
+          <li><b>Delphi:</b> Iterative expert consultation to build consensus.</li>
+          <li><b>Depth Interviews:</b> One-to-one, in-depth exploratory interviews.</li>
+        </ul>
+      </section>
+
+      <!-- Unit 3 -->
+      <section id="unit3" class="card section" aria-labelledby="u3">
+        <h2 id="u3">Unit 3 — Participatory Research (PRA)</h2>
+        <p class="small">Community-centred tools: social map, resource map, transect walk, timelines — used for local context and community planning.</p>
+
+        <h3>PRA tools — practice to draw</h3>
+        <ul class="clean">
+          <li><b>Social Map:</b> Sketch households, roads, facilities.</li>
+          <li><b>Resource Map:</b> Mark land, water, grazing, forests.</li>
+          <li><b>Transect Walk:</b> Walk along a transect to observe land use & resources.</li>
+          <li><b>Timeline:</b> Community events (droughts, floods, interventions).</li>
+        </ul>
+      </section>
+
+      <!-- Unit 4 -->
+      <section id="unit4" class="card section" aria-labelledby="u4">
+        <h2 id="u4">Unit 4 — Attitude Measurement & Scaling</h2>
+        <p class="small">Measurement scales & scaling techniques for attitudes: NOIR & Likert, Thurstone, Guttman.</p>
+
+        <h3>NOIR — remember the scale types</h3>
+        <ul class="clean">
+          <li><b>Nominal:</b> Categories (e.g., religion)</li>
+          <li><b>Ordinal:</b> Ordered ranks (e.g., satisfaction level)</li>
+          <li><b>Interval:</b> Equal intervals (e.g., temperature Celsius)</li>
+          <li><b>Ratio:</b> True zero (e.g., income)</li>
+        </ul>
+
+        <h3>Likert scale — sample</h3>
+        <div class="diagram" style="margin-top:10px;">
+          <p style="margin:0 0 6px 0;"><b>Sample Likert item:</b> "I find local healthcare services accessible."</p>
+          <div style="display:flex;gap:10px;margin-top:8px;">
+            <div style="flex:1;background:#fff;padding:8px;border-radius:8px;border:1px solid rgba(11,17,39,0.04)">Strongly agree (5)</div>
+            <div style="flex:1;background:#fff;padding:8px;border-radius:8px;border:1px solid rgba(11,17,39,0.04)">Agree (4)</div>
+            <div style="flex:1;background:#fff;padding:8px;border-radius:8px;border:1px solid rgba(11,17,39,0.04)">Neutral (3)</div>
+            <div style="flex:1;background:#fff;padding:8px;border-radius:8px;border:1px solid rgba(11,17,39,0.04)">Disagree (2)</div>
+            <div style="flex:1;background:#fff;padding:8px;border-radius:8px;border:1px solid rgba(11,17,39,0.04)">Strongly disagree (1)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Diagrams section -->
+      <section id="diagrams" class="card section" aria-labelledby="dg">
+        <h2 id="dg">Diagrams — Draw & Practice</h2>
+        <p class="small">Practice these once by hand so you can draw them quickly in the exam.</p>
+
+        <h3>Survey Process Flowchart</h3>
+        <div class="diagram" aria-hidden="true">
+          <!-- Simple inline SVG flowchart -->
+          <svg viewBox="0 0 700 160" width="100%" height="160" role="img">
+            <style> .n{fill:#eef7ff;stroke:#7ea5ff;stroke-width:1.2}.t{font:600 14px/1 "Inter"} </style>
+            <rect x="12" y="12" width="192" height="44" rx="10" class="n"></rect>
+            <text x="36" y="40" class="t">Define problem & objectives</text>
+
+            <rect x="242" y="12" width="192" height="44" rx="10" class="n"></rect>
+            <text x="282" y="40" class="t">Sampling design & frame</text>
+
+            <rect x="472" y="12" width="192" height="44" rx="10" class="n"></rect>
+            <text x="512" y="40" class="t">Questionnaire design & pilot</text>
+
+            <line x1="204" y1="34" x2="242" y2="34" stroke="#bcd1ff" stroke-width="2" />
+            <line x1="434" y1="34" x2="472" y2="34" stroke="#bcd1ff" stroke-width="2" />
+
+            <rect x="242" y="88" width="192" height="44" rx="10" class="n"></rect>
+            <text x="294" y="116" class="t">Fieldwork & data collection</text>
+
+            <line x1="342" y1="56" x2="342" y2="88" stroke="#bcd1ff" stroke-width="2" />
+          </svg>
+        </div>
+
+        <h3 style="margin-top:12px">Social Map — practice sketch</h3>
+        <div class="diagram" aria-hidden="true">
+          <svg viewBox="0 0 400 200" width="100%" height="200" role="img">
+            <rect x="12" y="12" width="376" height="176" rx="10" fill="#fffef6" stroke="#ffd47a" stroke-width="1"/>
+            <circle cx="80" cy="80" r="26" fill="#ffe6f0" stroke="#ff7aa2"/>
+            <text x="62" y="85" font-size="12px" font-weight="700">House A</text>
+            <circle cx="160" cy="58" r="26" fill="#e8f7ff" stroke="#5b7cfa"/>
+            <text x="142" y="63" font-size="12px" font-weight="700">Shop</text>
+            <rect x="220" y="120" width="120" height="40" rx="6" fill="#e8fff0" stroke="#3dbb7b"/>
+            <text x="240" y="145" font-size="12px" font-weight="700">Water Well</text>
+          </svg>
+        </div>
+      </section>
+
+      <!-- Model Answers -->
+      <section id="answers" class="card section" aria-labelledby="ma">
+        <h2 id="ma">Model Answers — Quick & Full</h2>
+
+        <h3>5-mark answers (memorize these)</h3>
+        <ul class="clean">
+          <li><b>Pilot Study:</b> A small trial survey conducted to test the questionnaire, field procedures and logistics before the main survey; helps identify errors and estimate time and cost.</li>
+          <li><b>Likert Scale:</b> A rating scale measuring degree of agreement on ordered categories (e.g., 1–5). Score items and sum to get an attitude index.</li>
+          <li><b>Simple Random Sampling:</b> A method in which every unit in the population has an equal chance of selection, usually achieved using random numbers.</li>
+        </ul>
+
+        <h3>15-mark model (Questionnaire Design)</h3>
+        <p><b>Definition:</b> A questionnaire is a structured instrument of questions designed to collect information from respondents for a survey.</p>
+        <p><b>Principles:</b> clarity, neutrality, single idea per question, logical flow and use of filters.</p>
+        <p><b>Pilot Testing:</b> Small trial with 20–50 respondents; revise wording and skip patterns based on feedback.</p>
+        <p><b>Practical tips:</b> Keep demographics short, avoid ambiguous scales, train interviewers and include consent statement.</p>
+        <p><b>Conclusion:</b> A well-designed questionnaire ensures data validity and reduces non-sampling errors.</p>
+      </section>
+
+      <!-- Revision Plan -->
+      <section id="revision" class="card section" aria-labelledby="rp">
+        <h2 id="rp">2-Hour Final Revision Plan</h2>
+        <ol>
+          <li>0–25 min: Memorize 10 five-mark answers (Sampling, Questionnaire, Pilot, Likert, PRA tools).</li>
+          <li>25–70 min: Write/recall two 15-mark answers (Sampling Methods & Questionnaire Design).</li>
+          <li>70–100 min: Practice diagrams — flowchart and social map.</li>
+          <li>100–120 min: Quick revision of mnemonics & relax for exam focus.</li>
+        </ol>
+      </section>
+    </div>
+
+    <!-- RIGHT: side panel -->
+    <aside class="side">
+      <div class="card">
+        <h3 style="margin-top:2px">Contents</h3>
+        <p class="small">Jump to any section</p>
+        <div class="anchor-list" style="margin-top:10px">
+          <a href="#unit1">Unit 1 — Sampling</a>
+          <a href="#unit2">Unit 2 — Tools</a>
+          <a href="#unit3">Unit 3 — PRA</a>
+          <a href="#unit4">Unit 4 — Scaling</a>
+          <a href="#diagrams">Diagrams</a>
+          <a href="#answers">Model Answers</a>
+          <a href="#quiz">Quiz</a>
+          <a href="#revision">Revision Plan</a>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h3 style="margin-bottom:8px">Quick Mnemonics</h3>
+        <p class="small"><b>SAM-PC</b> — Size, Access, Method, Purpose, Cost (sampling decision)</p>
+        <p class="small"><b>QUEST</b> — Questions simple, Unbiased, Exclusive, Structure, Test (questionnaire checklist)</p>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h3 style="margin-bottom:6px">Cute Corner — For Anushka</h3>
+        <div class="quote-card">
+          <div class="quote">A tiny corner of the internet dedicated to my favorite human.</div>
+          <div class="quote-meta">— With all my love</div>
+          <hr style="border:none;border-top:1px dashed rgba(11,17,39,0.06);margin:10px 0">
+          <div class="quote" style="color:#3b3f49">Little notes for my little universe — <strong>Pranushka</strong>.</div>
+          <div class="quote-meta">— Always yours</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- QUIZ SECTION (full width) -->
+  <section id="quiz" class="card section" style="margin-top:20px">
+    <h2>Interactive Quiz — Quick Check (5 questions)</h2>
+    <p class="small">Test yourself. Click an option and then "Next". Final score will appear at the end.</p>
+
+    <div id="quizApp" class="quiz" aria-live="polite">
+      <!-- Questions injected by JS -->
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:12px">
+      <button id="prevBtn" class="btn" style="background:#94a3ff; display:none">Previous</button>
+      <button id="nextBtn" class="btn">Start Quiz</button>
+      <button id="resetBtn" class="btn" style="background:#ff7aa2; display:none">Reset</button>
+    </div>
+
+    <div id="result" style="margin-top:14px;font-weight:700;color:var(--muted)"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  Made with care • Use this page to revise, practice, and calm exam nerves. Good luck! ❤️
+</footer>
+
+<script>
+  // Quiz data (5 example questions)
+  const quizData = [
+    {
+      q: "Which sampling method divides the population into homogeneous groups and samples from each?",
+      options: ["Simple random sampling", "Stratified sampling", "Cluster sampling", "Convenience sampling"],
+      a: 1
+    },
+    {
+      q: "A pilot study is used to:",
+      options: ["Increase sample size", "Train the examiner only", "Test questionnaire clarity and logistics", "Replace the main survey"],
+      a: 2
+    },
+    {
+      q: "Which scale allows calculation of mean values?",
+      options: ["Nominal", "Ordinal", "Interval", "None of the above"],
+      a: 2
+    },
+    {
+      q: "A Likert item typically measures:",
+      options: ["Frequency only", "Degree of agreement", "Ranking of options", "Binary choice"],
+      a: 1
+    },
+    {
+      q: "Transect walk is a tool commonly used in:",
+      options: ["Laboratory experiments", "Participatory Rural Appraisal", "Delphi method", "Randomized control trials"],
+      a: 1
+    }
+  ];
+
+  let current = -1;
+  let userAnswers = Array(quizData.length).fill(null);
+
+  const quizApp = document.getElementById('quizApp');
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const resultDiv = document.getElementById('result');
+
+  function renderQuestion(index){
+    quizApp.innerHTML = '';
+    resultDiv.textContent = '';
+    if(index < 0 || index >= quizData.length) return;
+    const q = quizData[index];
+    const qCard = document.createElement('div');
+    qCard.className = 'q-card';
+    const qTitle = document.createElement('div');
+    qTitle.innerHTML = '<strong>Q' + (index+1) + '.</strong> ' + q.q;
+    qCard.appendChild(qTitle);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.innerText = opt;
+      btn.onclick = () => {
+        userAnswers[index] = i;
+        // highlight selection
+        Array.from(opts.children).forEach(b => b.style.borderColor = 'rgba(16,24,40,0.06)');
+        btn.style.borderColor = 'var(--accent)';
+        btn.style.boxShadow = '0 6px 18px rgba(91,124,250,0.12)';
+      };
+      if(userAnswers[index] === i){
+        btn.style.borderColor = 'var(--accent)';
+        btn.style.boxShadow = '0 6px 18px rgba(91,124,250,0.12)';
+      }
+      opts.appendChild(btn);
+    });
+
+    qCard.appendChild(opts);
+    quizApp.appendChild(qCard);
+
+    // update buttons
+    prevBtn.style.display = index > 0 ? 'inline-block' : 'none';
+    nextBtn.innerText = index === quizData.length - 1 ? 'Finish' : 'Next';
+    resetBtn.style.display = 'inline-block';
+  }
+
+  function showResult(){
+    let score = 0;
+    for(let i=0;i<quizData.length;i++){
+      if(userAnswers[i] === quizData[i].a) score++;
+    }
+    resultDiv.innerHTML = 'Your score: <strong>' + score + ' / ' + quizData.length + '</strong>';
+    const msg = document.createElement('div');
+    msg.style.marginTop = '8px';
+    msg.style.color = '#101827';
+    if(score === quizData.length) {
+      msg.innerHTML = 'Excellent! You know your basics. ✨';
+    } else if(score >= Math.ceil(quizData.length * 0.7)) {
+      msg.innerHTML = 'Good job — revise a couple of weak spots and you\'re done.';
+    } else {
+      msg.innerHTML = 'Keep calm — review Units 1 & 2, then retake the quiz.';
+    }
+    resultDiv.appendChild(msg);
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if(current === -1){
+      current = 0;
+      renderQuestion(current);
+      return;
+    }
+    // if moving forward without answering, confirm
+    if(userAnswers[current] === null && current < quizData.length){
+      const confirmMove = confirm('You have not selected an option. Move on?');
+      if(!confirmMove) return;
+    }
+    if(current < quizData.length - 1){
+      current++;
+      renderQuestion(current);
+    } else {
+      // finish
+      showResult();
+    }
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if(current > 0){
+      current--;
+      renderQuestion(current);
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    if(!confirm('Reset quiz and your answers?')) return;
+    userAnswers = Array(quizData.length).fill(null);
+    current = -1;
+    quizApp.innerHTML = '';
+    prevBtn.style.display = 'none';
+    nextBtn.innerText = 'Start Quiz';
+    resetBtn.style.display = 'none';
+    resultDiv.textContent = '';
+  });
+
+  // small accessibility: navigate to quiz via hash on load
+  if(location.hash === '#quiz'){
+    document.getElementById('quiz').scrollIntoView({behavior:'smooth'});
+  }
+</script>
+
+</body>
+</html>
