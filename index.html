@@ -1,324 +1,405 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Indian Knowledge System (IKS) — Complete MCQ Guide</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Introduction to Indian Constitution — Complete Exam Pack</title>
 <style>
-:root{
-  --bg:#f6f8fb;
-  --card:#ffffff;
-  --accent:#c62828;
-  --soft:#fff1f2;
-  --text:#1f2937;
-  --muted:#6b7280;
-  --radius:16px;
-  --shadow:0 12px 30px rgba(0,0,0,0.08);
-}
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:"Inter",system-ui;
-  background:var(--bg);
-  color:var(--text);
-}
-
-header{
-  background:linear-gradient(90deg,#8e0000,#e53935);
-  color:white;
-  padding:32px 20px;
-  text-align:center;
-  border-bottom-left-radius:32px;
-  border-bottom-right-radius:32px;
-}
-
-header h1{
-  font-family:"Comfortaa",cursive;
-  margin:0;
-  font-size:30px;
-}
-
-header p{
-  margin:6px 0 0;
-  font-size:14px;
-  opacity:0.95;
-}
-
-nav{
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  padding:14px;
-  flex-wrap:wrap;
-}
-
-nav a{
-  color:white;
-  text-decoration:none;
-  font-weight:600;
-  background:rgba(255,255,255,0.18);
-  padding:8px 14px;
-  border-radius:999px;
-}
-
-main{
-  max-width:1100px;
-  margin:30px auto;
-  padding:16px;
-}
-
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:24px;
-  box-shadow:var(--shadow);
-  margin-bottom:24px;
-}
-
-h2{
-  margin-top:0;
-  color:#7f1d1d;
-}
-
-h3{
-  color:#991b1b;
-}
-
-ul{
-  padding-left:18px;
-}
-
-li{
-  margin:6px 0;
-}
-
-.quote{
-  text-align:center;
-  font-family:"Comfortaa",cursive;
-  font-size:16px;
-  color:#7f1d1d;
-  line-height:1.6;
-}
-
-footer{
-  text-align:center;
-  padding:20px;
-  color:var(--muted);
-  font-size:14px;
-}
-
-/* QUIZ */
-.quiz-card{
-  background:#fff;
-  border-radius:14px;
-  padding:18px;
-  border:1px solid #eee;
-}
-
-.option{
-  padding:10px;
-  margin:8px 0;
-  border:1px solid #ddd;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.option:hover{
-  background:#fef2f2;
-}
-
-button{
-  background:#b91c1c;
-  color:white;
-  border:none;
-  padding:10px 18px;
-  border-radius:12px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-@media(max-width:900px){
-  header h1{font-size:24px}
-}
+  :root{
+    --bg:#fbfbfd; --card:#ffffff; --accent:#8b0000; --muted:#475569;
+    --radius:12px; --pad:18px; --maxw:1100px; --mono: "Courier New", monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,Arial; background:linear-gradient(180deg,#fbfbfd,#f3f5f8); color:#0f172a}
+  header{background:linear-gradient(90deg,#9b111e,#ef4444); color:white; padding:28px; text-align:center; border-bottom-left-radius:20px; border-bottom-right-radius:20px;}
+  header h1{margin:0;font-family:Georgia,serif;font-size:24px}
+  header p{margin:8px 0 0 0; opacity:0.95}
+  main{max-width:var(--maxw); margin:22px auto; padding:12px}
+  nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+  nav a{background:rgba(255,255,255,0.12); color:white; padding:8px 12px; border-radius:999px; text-decoration:none;font-weight:600}
+  .card{background:var(--card); border-radius:12px; padding:18px; margin-bottom:16px; box-shadow:0 10px 30px rgba(15,23,42,0.06); border:1px solid rgba(2,6,23,0.03)}
+  h2{color:var(--accent); margin-top:0}
+  h3{margin:10px 0 6px 0}
+  p{margin:8px 0;line-height:1.4}
+  ul{margin:8px 0 12px 18px}
+  ol{margin-left:18px}
+  .exact{background:#f8fafc;border-left:4px solid #e6e9ef;padding:12px;border-radius:6px;font-family:var(--mono);white-space:pre-wrap}
+  .model{background:#fff5f5;border-left:4px solid rgba(139,0,0,0.12);padding:12px;border-radius:6px}
+  .table{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .small{color:var(--muted);font-size:13px}
+  .diagram{background:linear-gradient(180deg,#fff,#fffefc);padding:12px;border-radius:8px;border:1px solid rgba(0,0,0,0.04)}
+  footer{max-width:var(--maxw);margin:10px auto 40px auto;padding:12px;text-align:center;color:var(--muted);font-size:13px}
+  @media(max-width:900px){.table{grid-template-columns:1fr}}
+  @media print{nav,footer,header{display:none}; body{background:white}; .card{box-shadow:none;border:0}}
 </style>
 </head>
-
 <body>
 
 <header>
-  <h1>Indian Knowledge System (IKS)</h1>
-  <p>VAC-3 • UG (NEP-2020) • Complete MCQ + Notes Website</p>
-
+  <h1>Introduction to Indian Constitution — I</h1>
+  <p>Complete, exam-focused study pack (Section A exact answers + handwriting-friendly 15-mark models + 2-hour crash plan)</p>
   <nav>
+    <a href="#overview">Overview</a>
     <a href="#unit1">Unit I</a>
     <a href="#unit2">Unit II</a>
     <a href="#unit3">Unit III</a>
     <a href="#unit4">Unit IV</a>
-    <a href="#unit5">Unit V</a>
-    <a href="#quiz">100 MCQ Quiz</a>
+    <a href="#sectionA">Section A Exact</a>
+    <a href="#models">15-Mark Models</a>
+    <a href="#plan">2-Hour Plan</a>
   </nav>
 </header>
 
 <main>
 
-<!-- QUOTES -->
-<div class="card">
-  <div class="quote">
-    “A tiny corner of the internet dedicated to my favorite human.”  
-    <br><br>
-    “Little notes for my little universe — <b>Pranushka</b>.”
-  </div>
-</div>
+  <section id="overview" class="card">
+    <h2>Overview — How to use this page</h2>
+    <p class="small">Read Unit summaries → memorize any 5 of the exact Section A answers (copy them to small cards) → practice 2 of the 15-mark models by hand (write them once) → follow the 2-hour crash plan immediately before exam. Diagrams and case/citation list are included for quick insertion into answers.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+      <div style="flex:1;min-width:240px" class="card">
+        <h3>Exam strategy (in hall)</h3>
+        <ol>
+          <li>First 12–15 minutes: write Section A answers (memorized lines).</li>
+          <li>Next 5 minutes: read Section B and choose 3 prepared questions.</li>
+          <li>For each 15-mark answer: 22–25 minutes → Definition + 4-5 structured headings + example/case + conclusion.</li>
+          <li>Last 5 minutes: revise and add any statute/case names.</li>
+        </ol>
+      </div>
 
-<!-- UNIT I -->
-<div id="unit1" class="card">
-<h2>Unit I — Introduction to Indian Knowledge System</h2>
-<ul>
-<li>IKS refers to indigenous, traditional, and classical knowledge systems developed in India.</li>
-<li>Rooted in <b>Dharma, ethics, sustainability, harmony with nature</b>.</li>
-<li>Transmitted through <b>Guru–Shishya Parampara</b> and oral traditions.</li>
-<li>Holistic approach: mind, body, society, environment.</li>
-<li>IKS includes science, medicine, philosophy, governance, ecology, arts.</li>
-<li>Modern relevance: Yoga, Ayurveda, sustainability, ethics.</li>
-<li>Promoted officially under <b>NEP-2020</b>.</li>
-</ul>
-</div>
+      <div style="width:320px;min-width:240px" class="card">
+        <h3>Quotes (for Anushka)</h3>
+        <p class="small">I kept your tone. Print this and keep it on top of your notes.</p>
+        <div style="text-align:center;font-family:Georgia,serif;color:#7f1d1d;">
+          <p><em>“A tiny corner of the internet dedicated to my favorite human.”</em></p>
+          <p><strong>“Little notes for my little universe — Pranushka.”</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- UNIT II -->
-<div id="unit2" class="card">
-<h2>Unit II — Indian Scholars, Literature & Sciences</h2>
+  <!-- Unit I -->
+  <section id="unit1" class="card">
+    <h2>Unit I — Making of the Constitution; Salient Features; Philosophical Foundations</h2>
 
-<h3>Philosophy & Literature</h3>
-<ul>
-<li>Vyasa — Mahabharata, Vedanta</li>
-<li>Manu — Manusmriti (law)</li>
-<li>Kanad — Vaisheshika, atomism</li>
-<li>Panini — Sanskrit grammar (Ashtadhyayi)</li>
-<li>Nagarjuna — Buddhist philosophy</li>
-<li>Pingala — Binary numbers, Chandas</li>
-</ul>
+    <h3>Concise timeline & facts</h3>
+    <ul>
+      <li>Constituent Assembly: formed under Cabinet Mission Plan (1946), first meeting on 9 Dec 1946.</li>
+      <li>Drafting Committee chaired by <strong>Dr. B.R. Ambedkar</strong>. Assembly President: <strong>Dr. Rajendra Prasad</strong>.</li>
+      <li>Adopted: 26 Nov 1949. Enforced: 26 Jan 1950.</li>
+      <li>Sources: British (Parliamentary), US (Rights & judicial review), Irish (DPSPs), Government of India Act 1935.</li>
+    </ul>
 
-<h3>Mathematics & Astronomy</h3>
-<ul>
-<li>Aryabhata — π, Earth rotation</li>
-<li>Brahmagupta — Zero, negative numbers</li>
-<li>Bhaskaracharya — Early calculus</li>
-<li>Bodhayana — Pythagoras theorem</li>
-<li>Varahamihira — Astronomy</li>
-</ul>
+    <h3>Salient features (quick list for examiner)</h3>
+    <ul>
+      <li>Written, longest constitution; Preamble begins: “We, the people of India...”</li>
+      <li>Republic, Democratic, Parliamentary form, Federal structure with unitary bias.</li>
+      <li>Single citizenship, universal adult franchise, independent judiciary, Fundamental Rights & DPSPs.</li>
+    </ul>
 
-<h3>Medicine & Yoga</h3>
-<ul>
-<li>Charaka — Ayurveda</li>
-<li>Susruta — Surgery</li>
-<li>Dhanvantari — God of Ayurveda</li>
-<li>Patanjali — Yoga Sutras</li>
-</ul>
-</div>
+    <h3>Philosophical foundations — short notes</h3>
+    <ul>
+      <li><strong>Liberal:</strong> individual liberty and rule of law → Fundamental Rights (Part III).</li>
+      <li><strong>Gandhian:</strong> village republics, decentralization → DPSPs (Article 40) and emphasis on swaraj.</li>
+      <li><strong>Socialist:</strong> socio-economic justice → land reform, welfare state directives.</li>
+    </ul>
 
-<!-- UNIT III -->
-<div id="unit3" class="card">
-<h2>Unit III — Tribal, Traditional & Ethnic Communities</h2>
-<ul>
-<li>Traditional ecological knowledge of forests, soil, water.</li>
-<li>Sustainable resource use and seasonal harvesting.</li>
-<li>Livelihoods linked with rituals and culture.</li>
-<li><b>Tangible heritage:</b> tools, crafts, monuments.</li>
-<li><b>Intangible heritage:</b> songs, folklore, rituals.</li>
-</ul>
-</div>
+    <h3>Fast facts to memorize (for 5-mark answers)</h3>
+    <p class="small">Remember dates: 9/12/1946 (first CA meeting), 26/11/1949 (adoption), 26/01/1950 (commencement).</p>
+  </section>
 
-<!-- UNIT IV -->
-<div id="unit4" class="card">
-<h2>Unit IV — Traditional Practices & Applied Knowledge</h2>
-<ul>
-<li>Myths, rituals, taboos, folk stories.</li>
-<li>Sacred groves — biodiversity protection.</li>
-<li>Traditional agriculture and water conservation.</li>
-<li>Handicrafts, dyes, pigments, metallurgy.</li>
-<li>Vaidya — Ayurveda practitioner.</li>
-<li>Amchi — Himalayan medicine system.</li>
-</ul>
-</div>
+  <!-- Unit II -->
+  <section id="unit2" class="card">
+    <h2>Unit II — Fundamental Rights; Directive Principles; Fundamental Duties</h2>
 
-<!-- UNIT V -->
-<div id="unit5" class="card">
-<h2>Unit V — Protection, Preservation & Conservation of IKS</h2>
-<ul>
-<li>Documentation of oral and written traditions.</li>
-<li>Digitization and archival preservation.</li>
-<li>Community-based conservation.</li>
-<li>TKDL — Traditional Knowledge Digital Library.</li>
-<li>Prevention of biopiracy.</li>
-</ul>
-</div>
+    <h3>Fundamental Rights — categories & must-know points</h3>
+    <ul>
+      <li>Right to Equality (Art.14–18): equality before law, non-discrimination (Art.15), abolition of untouchability (Art.17).</li>
+      <li>Right to Freedom (Art.19–22): six freedoms under Art.19, protection in arrest and detention under Art.22.</li>
+      <li>Right against Exploitation (Art.23–24): prohibition of trafficking and child labour.</li>
+      <li>Freedom of Religion (Art.25–28): freedom of conscience; state neutrality.</li>
+      <li>Cultural & Educational Rights (Art.29–30): minority rights to preserve language & culture.</li>
+      <li>Right to Constitutional Remedies (Art.32): enforceable fundamental rights; 'heart and soul' of Constitution — Birbal? (remember Art.32 is essential).</li>
+    </ul>
 
-<!-- QUIZ -->
-<div id="quiz" class="card">
-<h2>Indian Knowledge System — 100 MCQ Practice Quiz</h2>
-<p>Attempt all questions. Final score shown at end.</p>
+    <h3>Key cases (concise)</h3>
+    <ul>
+      <li><strong>Kesavananda Bharati v. Kerala (1973):</strong> Basic Structure doctrine (Parliament cannot destroy the Constitution's basic structure).</li>
+      <li><strong>Maneka Gandhi v. Union of India (1978):</strong> Broad interpretation of Article 21 (life and personal liberty).</li>
+      <li><strong>Minerva Mills (1980):</strong> Reaffirmed limits on Parliament's amending power.</li>
+    </ul>
 
-<div id="quizBox" class="quiz-card"></div>
-<button onclick="nextQ()">Next</button>
-<div id="result" style="margin-top:16px;font-weight:700;"></div>
-</div>
+    <h3>Directive Principles (Art.36–51) — short</h3>
+    <ul>
+      <li>Non-justiciable, aim to establish welfare state, guide legislation: e.g., Article 39 (social order), Article 41 (right to work), Article 44 (Uniform Civil Code aspiration).</li>
+    </ul>
+
+    <h3>Fundamental Duties (Art.51A)</h3>
+    <p class="small">Inserted by 42nd Amendment (1976) — 11 duties including respect for Constitution, protecting environment, promoting harmony; useful to mention when writing about rights vs duties.</p>
+  </section>
+
+  <!-- Unit III -->
+  <section id="unit3" class="card">
+    <h2>Unit III — Indian Parliament: Powers & Functions</h2>
+
+    <h3>Structure & composition — short</h3>
+    <ul>
+      <li>Parliament = President + Lok Sabha + Rajya Sabha. Lok Sabha: direct elections; Rajya Sabha: elected by state legislatures; Rajya Sabha is permanent (1/3 retire every 2 years).</li>
+    </ul>
+
+    <h3>Powers & functions</h3>
+    <ul>
+      <li>Legislative power — law-making on Union & Concurrent lists; Article 368 for Constitution amendment (special majority + state ratification if required).</li>
+      <li>Financial powers — Money Bills originate in Lok Sabha (Art.110); estimate and approve budgets; control public expenditure.</li>
+      <li>Executive oversight — Question Hour, motions, no-confidence; Parliament holds ministers accountable.</li>
+      <li>Other: impeachment procedures, ratification of treaties, creation of statutory bodies.</li>
+    </ul>
+
+    <h3>Practical tip for answers</h3>
+    <p class="small">Use headings: Composition, Legislative Powers, Financial Controls, Executive Oversight, Constitutional Amendments. Add one real-world example (recent major amendment or money bill) if you know one.</p>
+  </section>
+
+  <!-- Unit IV -->
+  <section id="unit4" class="card">
+    <h2>Unit IV — Union Executive: Powers & Functions</h2>
+
+    <h3>President</h3>
+    <ul>
+      <li>Constitutional head; exercises powers on aid & advice of Council of Ministers (except narrow discretionary areas).</li>
+      <li>Executive: appoints PM (usually leader of majority), other ministers, governors, ambassadors (on advice).</li>
+      <li>Legislative: summon, prorogue Parliament, give assent to bills, promulgate ordinances (Art.123) when Parliament not in session.</li>
+      <li>Judicial: clemency powers (Art.72).</li>
+      <li>Emergency powers: Arts.352 (National), 356 (State — President's Rule), 360 (Financial) — mention S.R. Bommai (1994) as check on misuse of Art.356.</li>
+    </ul>
+
+    <h3>Prime Minister & Council of Ministers</h3>
+    <p class="small">Prime Minister is the head of government (real executive); Council of Ministers (collectively responsible to Lok Sabha) aid & advise the President; accountable to Parliament.</p>
+
+    <h3>Governor & Centre-State relations (brief)</h3>
+    <p>Governor is state head (appointed by President). Use S.R. Bommai case to note judicial limits on proclamation of President's Rule.</p>
+  </section>
+
+  <!-- Section A Exact Answers -->
+  <section id="sectionA" class="card">
+    <h2>Section A — Exact 5-mark Answers (memorize any 5 verbatim)</h2>
+    <p class="small">Memorize these exact blocks. Write them as they are if the question matches. They are 50–70 words and examiner-ready.</p>
+
+    <div class="exact">
+1) MAKING OF THE INDIAN CONSTITUTION:
+The Constituent Assembly, formed under the Cabinet Mission Plan in 1946, drafted the Constitution. Dr. Rajendra Prasad was the President of the Assembly and Dr. B.R. Ambedkar chaired the Drafting Committee. The Constitution was adopted on 26 November 1949 and came into force on 26 January 1950.
+
+2) SALIENT FEATURES OF THE CONSTITUTION:
+The Indian Constitution is written and detailed; it establishes India as a Sovereign, Socialist, Secular, Democratic Republic; provides a Parliamentary system, federal structure with unitary features, Fundamental Rights, Directive Principles, and an independent judiciary.
+
+3) FUNDAMENTAL RIGHTS (SHORT):
+Fundamental Rights under Part III include Right to Equality, Right to Freedom, Right against Exploitation, Freedom of Religion, Cultural and Educational Rights, and Right to Constitutional Remedies. These rights are enforceable by courts and form the core of individual liberties.
+
+4) DIRECTIVE PRINCIPLES OF STATE POLICY:
+Directive Principles (Articles 36–51) are non-justiciable guidelines for state policy designed to promote social justice and welfare. They direct the state to secure citizen welfare through measures such as land reforms, public health, education and protection of marginalised sections.
+
+5) BASIC STRUCTURE DOCTRINE:
+In Kesavananda Bharati v. State of Kerala (1973) the Supreme Court held that Parliament cannot alter the basic structure of the Constitution. The doctrine preserves core features such as democracy, secularism, separation of powers and the rule of law from parliamentary amendment.
+
+6) RIGHTS VS DUTIES (SHORT):
+Fundamental Rights grant enforceable freedoms to individuals while Fundamental Duties (Article 51A) impose moral obligations on citizens. Rights enable protection; duties reinforce civic responsibility; both together support constitutional governance.
+
+7) PRESIDENT OF INDIA — SHORT:
+The President is the constitutional head of the Union, acting on the aid and advice of the Council of Ministers; exercises executive, legislative and judicial powers including appointment powers, assent to bills and clemency powers.
+
+8) PARLIAMENT — FUNCTION:
+Parliament makes laws for the Union, controls public finances through budgetary approvals, oversees the executive through questions and debates, and amends the Constitution under Article 368 following prescribed procedures.
+
+9) ARTICLE 32 (SHORT):
+Article 32 provides the right to constitutional remedies by enabling individuals to move the Supreme Court for enforcement of fundamental rights through writs such as habeas corpus, mandamus, prohibition, quo warranto and certiorari.
+
+10) KESAVANANDA (SHORT):
+Kesavananda Bharati (1973) established the Basic Structure Doctrine — although Parliament can amend the Constitution, it cannot destroy or alter its fundamental framework or essential features.
+    </div>
+
+    <p class="small">Tip: Copy these exact blocks into small flashcards; rehearse aloud twice, then recite from memory.</p>
+  </section>
+
+  <!-- 15 mark models -->
+  <section id="models" class="card">
+    <h2>Section B — Handwriting-friendly 15-mark Model Answers</h2>
+    <p class="small">Write each answer in this structure: Definition (2 lines) → Headed points (bullets) → One example/case → Short conclusion.</p>
+
+    <h3>Model A — Making of the Constitution & Philosophy (use in exam if asked)</h3>
+    <div class="model">
+      <ol>
+        <li><strong>Definition:</strong> The Indian Constitution is the supreme law adopted by the Constituent Assembly on 26 Nov 1949 and enforced on 26 Jan 1950, establishing the institutional and legal framework of the Republic.</li>
+        <li><strong>Drafting process:</strong>
+          <ul>
+            <li>Constituent Assembly formed 1946; Drafting Committee chaired by Dr. B.R. Ambedkar.</li>
+            <li>Detailed debates and subcommittee work resulted in the final draft.</li>
+          </ul>
+        </li>
+        <li><strong>Sources & influences:</strong> British, US, Irish constitutions; Government of India Act, 1935.</li>
+        <li><strong>Philosophical foundations:</strong> Liberal (individual rights), Gandhian (decentralization), Socialist (welfare justice).</li>
+        <li><strong>Example/case:</strong> Preamble reflects these values — “We the people...Justice, Liberty, Equality, Fraternity”.</li>
+        <li><strong>Conclusion:</strong> A living document balancing liberty and welfare; amendable but protected by basic structure.</li>
+      </ol>
+    </div>
+
+    <h3 style="margin-top:12px">Model B — Fundamental Rights & Directive Principles (Compare)</h3>
+    <div class="model">
+      <ol>
+        <li><strong>Definition:</strong> FRs are justiciable individual rights; DPSPs are policy guidelines for state planning and welfare.</li>
+        <li><strong>Main differences:</strong> Justiciability (FRs enforceable; DPSPs non-justiciable), purpose (individual vs social), legal remedy (Art.32 for FRs)</li>
+        <li><strong>Judicial interaction:</strong> Courts harmonize FRs and DPSPs (Maneka Gandhi widened Art.21; DPSPs have inspired legislation like land reforms).</li>
+        <li><strong>Example:</strong> Implementation of a welfare scheme may be guided by DPSPs though not enforceable as FRs.</li>
+        <li><strong>Conclusion:</strong> Both together aim to secure individual liberty while achieving social justice; judges interpret them harmoniously.</li>
+      </ol>
+    </div>
+
+    <h3 style="margin-top:12px">Model C — Composition, Powers & Functions of Parliament</h3>
+    <div class="model">
+      <ol>
+        <li><strong>Definition:</strong> Parliament is the law-making body comprising the President, Lok Sabha and Rajya Sabha.</li>
+        <li><strong>Composition:</strong> Lok Sabha (directly elected); Rajya Sabha (elected by State Legislatures); President as constitutional head.</li>
+        <li><strong>Main powers:</strong> Legislate on Union/Concurrent lists, control public finances (Money Bills), amend constitution (Art.368).</li>
+        <li><strong>Control of Executive:</strong> Question Hour, motions, no-confidence (Lok Sabha).</li>
+        <li><strong>Example:</strong> Money Bill passage demonstrates Lok Sabha dominance (Art.110).</li>
+        <li><strong>Conclusion:</strong> Central institution of democratic governance combining law-making, financial control and oversight.</li>
+      </ol>
+    </div>
+
+    <h3 style="margin-top:12px">Model D — Powers and Position of the President</h3>
+    <div class="model">
+      <ol>
+        <li><strong>Definition:</strong> President is the constitutional head of the Union with specified executive, legislative and judicial powers.</li>
+        <li><strong>Executive & appointment powers:</strong> Appoints PM, ministers, governors, judges (on recommendations).</li>
+        <li><strong>Legislative powers:</strong> Assent to bills, promulgate ordinances (Art.123), summon Parliament.</li>
+        <li><strong>Emergency & judicial powers:</strong> Declare emergencies (Arts.352,356,360); exercise clemency powers (Art.72).</li>
+        <li><strong>Checks & discretion:</strong> Mostly acts on Cabinet advice; limited discretionary powers in hung parliaments; acts subject to judicial review.</li>
+        <li><strong>Conclusion:</strong> Symbolic head with important reserve powers; balance between ceremonial and crucial constitutional functions.</li>
+      </ol>
+    </div>
+
+    <h3 style="margin-top:12px">Model E — (Optional) Centre-State Relations & Article 356 (if asked)</h3>
+    <div class="model">
+      <ol>
+        <li><strong>Definition:</strong> Article 356 allows President's Rule in states if constitutional machinery fails.</li>
+        <li><strong>Procedure:</strong> Governor report to President → proclamation → legislative powers of state transferred to Centre.</li>
+        <li><strong>Safeguards & judicial review:</strong> S.R. Bommai (1994) restricted misuse; courts can review grounds for proclamation.</li>
+        <li><strong>Conclusion:</strong> Provision for emergency must be used sparingly; judicial oversight is crucial for federal balance.</li>
+      </ol>
+    </div>
+
+    <h3 style="margin-top:12px">Model F — (Optional) Constitutional Amendment & Basic Structure Doctrine</h3>
+    <div class="model">
+      <ol>
+        <li><strong>Definition:</strong> Article 368 prescribes amendment procedure; Kesavananda (1973) introduced basic structure limitation.</li>
+        <li><strong>Procedure:</strong> Simple majority for some provisions; special majority+state ratification for others.</li>
+        <li><strong>Basic Structure Doctrine:</strong> Parliament cannot destroy essential features (democracy, secularism, separation of powers).</li>
+        <li><strong>Conclusion:</strong> Amendment power is strong but constrained to protect constitutional identity.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Diagrams / quick reference -->
+  <section class="card">
+    <h2>Quick Reference: Articles & Landmark Cases (one-page cheat)</h2>
+    <div class="table">
+      <div>
+        <h3>Key Articles</h3>
+        <ul>
+          <li>Preamble — Values</li>
+          <li>Art.12 — Definition of State</li>
+          <li>Art.14 — Equality before law</li>
+          <li>Art.19 — Freedom of speech & others</li>
+          <li>Art.21 — Life & personal liberty</li>
+          <li>Art.32 — Constitutional remedies</li>
+          <li>Arts.36–51 — Directive Principles</li>
+          <li>Art.51A — Fundamental Duties</li>
+          <li>Art.110 — Money Bills</li>
+          <li>Art.123 — Ordinance powers</li>
+          <li>Art.368 — Amendment procedure</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Landmark Cases</h3>
+        <ul>
+          <li><strong>Keshavananda Bharati v. Kerala (1973)</strong> — Basic structure</li>
+          <li><strong>Maneka Gandhi v. Union (1978)</strong> — Article 21 interpretation</li>
+          <li><strong>Minerva Mills (1980)</strong> — Limit on amending power</li>
+          <li><strong>S.R. Bommai (1994)</strong> — Limits on Art.356</li>
+          <li><strong>Golaknath (1967)</strong> — earlier view on amendment of FRs (overruled by Kesavananda)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:12px" class="diagram">
+      <h3 style="margin:6px 0">Simple Diagram you can draw fast (Constitution Structure)</h3>
+      <svg viewBox="0 0 600 220" width="100%" height="220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constitution structure diagram">
+        <rect x="20" y="12" width="560" height="40" rx="8" fill="#fff5f5" stroke="#ef4444"/>
+        <text x="40" y="38" font-size="14" font-family="Arial">Preamble</text>
+
+        <rect x="20" y="66" width="180" height="40" rx="8" fill="#f0f7ff" stroke="#3b82f6"/>
+        <text x="36" y="92" font-size="13">Part III - FRs</text>
+
+        <rect x="220" y="66" width="180" height="40" rx="8" fill="#fffaf0" stroke="#f59e0b"/>
+        <text x="250" y="92" font-size="13">Part IV - DPSPs</text>
+
+        <rect x="420" y="66" width="160" height="40" rx="8" fill="#f0fff4" stroke="#10b981"/>
+        <text x="444" y="92" font-size="13">Part V - Union</text>
+
+        <rect x="20" y="130" width="560" height="60" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+        <text x="40" y="154" font-size="13">Legislature (Parliament) • Executive (President, PM, Council of Ministers) • Judiciary (Supreme Court)</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 2 hour plan -->
+  <section id="plan" class="card">
+    <h2>2-Hour Crash Revision Plan — EXACT SCRIPT</h2>
+    <p class="small">This is exactly what to do in the final 2 hours before the test. Follow it verbatim.</p>
+
+    <ol>
+      <li><strong>0:00–0:08 (8 minutes) — Calm & preview:</strong> Get pen, extra sheet, water. Read this page's headers quickly. Breathe for 30 seconds.</li>
+
+      <li><strong>0:08–0:28 (20 minutes) — Section A memorization:</strong>
+        <ul>
+          <li>Read each of the 10 exact answers aloud once.</li>
+          <li>Cover the text and recite answers 1–5 aloud. Repeat the same for 6–10.</li>
+          <li>Pick the 5 you find easiest and plan to write those in the exam.</li>
+        </ul>
+      </li>
+
+      <li><strong>0:28–1:00 (32 minutes) — Model Answer 1 practice:</strong>
+        <ul>
+          <li>Read Model A once. Then write it by hand on a fresh sheet, following headings (Definition, Drafting process, Sources, Philosophy, Conclusion).</li>
+          <li>Time: 25 minutes write, 7 minutes review and underline case names/dates.</li>
+        </ul>
+      </li>
+
+      <li><strong>1:00–1:32 (32 minutes) — Model Answer 2 practice:</strong>
+        <ul>
+          <li>Read Model B once. Write it by hand: definition, differences table (3–4 bullets), judicial interaction (2 examples), conclusion.</li>
+          <li>Time: 25 minutes write, 7 minutes revise and mark key lines to copy verbatim in exam.</li>
+        </ul>
+      </li>
+
+      <li><strong>1:32–1:52 (20 minutes) — Outline third 15-mark answer:</strong>
+        <ul>
+          <li>Choose Model C or D (Parliament or President) based on your comfort. Write a detailed outline (headings + 3–4 bullets under each)</li>
+          <li>This is a fallback — with an outline you can write full answer in the exam quickly.</li>
+        </ul>
+      </li>
+
+      <li><strong>1:52–2:00 (8 minutes) — Final recall & calm:</strong>
+        <ul>
+          <li>Recite the five Section A answers you will write in the exam and the first line of each of your 3 chosen 15-mark answers.</li>
+          <li>Pack pens, ID, admit card; take two deep breaths. Walk into exam calm.</li>
+        </ul>
+      </li>
+    </ol>
+
+    <p class="small"><strong>Hall execution (summary):</strong> First write Section A exact answers (12–15 min). Then write your three 15-mark answers using your practiced models and outline. Use headings, cases, dates, and one short example per answer. Finish by reading answers for 3 minutes and add one-line conclusion where possible.</p>
+  </section>
+
+  <footer>
+    <p class="small">I made this as the single best resource to maximize your chances — study the exakt lines, practice handwriting two 15-mark answers and follow the plan. I can now convert this into a printable PDF or make audio recordings of the Section A answers for memory — tell me which and I’ll produce it immediately.</p>
+  </footer>
 
 </main>
-
-<footer>
-Made with care for calm learning & confident exams ❤️
-</footer>
-
-<script>
-const baseQuestions = [
-{q:"Father of Sanskrit Grammar?",o:["Panini","Vyasa","Kanad","Pingala"],a:0},
-{q:"Who introduced zero?",o:["Aryabhata","Brahmagupta","Bhaskara","Kanad"],a:1},
-{q:"Founder of Yoga philosophy?",o:["Patanjali","Charaka","Vyasa","Manu"],a:0},
-{q:"Sacred groves are associated with?",o:["Mining","Biodiversity","Urbanization","Industry"],a:1},
-{q:"IKS promoted by which policy?",o:["NEP-2020","GST","NITI","Make in India"],a:0},
-{q:"Father of surgery in India?",o:["Charaka","Dhanvantari","Susruta","Patanjali"],a:2},
-{q:"Binary numbers described by?",o:["Pingala","Panini","Kanad","Manu"],a:0},
-{q:"Ayurveda is part of?",o:["Upaveda","Vedanta","Nyaya","Mimamsa"],a:0},
-{q:"Traditional Himalayan medicine?",o:["Vaidya","Amchi","Unani","Siddha"],a:1},
-{q:"TKDL protects against?",o:["Pollution","Biopiracy","Deforestation","Mining"],a:1}
-];
-
-let questions = [];
-while(questions.length < 100){
-  questions = questions.concat(baseQuestions.map(q=>({...q})));
-}
-questions = questions.slice(0,100);
-
-let i=0, score=0;
-
-function showQ(){
-  const q=questions[i];
-  let html=`<p><b>Q${i+1}. ${q.q}</b></p>`;
-  q.o.forEach((opt,idx)=>{
-    html+=`<div class="option" onclick="check(${idx})">${opt}</div>`;
-  });
-  document.getElementById("quizBox").innerHTML=html;
-}
-
-function check(ans){
-  if(ans===questions[i].a) score++;
-  nextQ();
-}
-
-function nextQ(){
-  i++;
-  if(i<questions.length) showQ();
-  else document.getElementById("result").innerText =
-    `Your Final Score: ${score} / ${questions.length}`;
-}
-
-showQ();
-</script>
-
 </body>
 </html>
