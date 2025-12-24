@@ -1,141 +1,206 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>English Poetry – Semester III | For Anushka</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-:root{
-  --bg:#f9fafb;
-  --card:#ffffff;
-  --accent:#7c2d12;
-  --soft:#fff7ed;
-  --green:#14532d;
-  --muted:#475569;
-  --radius:14px;
-}
+  :root{
+    --page-bg: #fffaf0;
+    --panel-bg: #ffffff;
+    --accent: #7c2d12;      /* warm chestnut */
+    --accent-dark: #5a210f;
+    --calm-green: #114d2b;
+    --muted: #4b5563;
+    --soft: #fff7ed;
+    --radius: 14px;
+    --maxw: 1100px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: Georgia, "Times New Roman", serif;
+    background: linear-gradient(180deg, #fffdf8 0%, #fbf7f2 100%);
+    color:#1f2937;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.55;
+    padding-bottom:40px;
+  }
 
-*{box-sizing:border-box}
+  /* header */
+  header{
+    background: linear-gradient(90deg, #7c2d12 0%, #b45309 100%);
+    color: #fff;
+    padding:34px 18px;
+    text-align:center;
+    border-bottom-left-radius:20px;
+    border-bottom-right-radius:20px;
+  }
+  header .title{
+    font-size:28px;
+    margin:0 0 6px 0;
+    letter-spacing:0.3px;
+  }
+  header .subtitle{
+    margin:0;
+    font-size:14px;
+    opacity:0.95;
+  }
+  header .holly{
+    width:42px;
+    height:42px;
+    margin:12px auto 0;
+    display:block;
+  }
 
-body{
-  margin:0;
-  font-family: "Georgia", serif;
-  background:linear-gradient(180deg,#fffaf0,#f9fafb);
-  color:#1f2937;
-  line-height:1.6;
-}
+  /* nav */
+  nav{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    padding:14px 8px;
+  }
+  nav a{
+    background: rgba(255,255,255,0.14);
+    color:#fff;
+    text-decoration:none;
+    padding:8px 12px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:13px;
+  }
 
-header{
-  background:linear-gradient(90deg,#7c2d12,#b45309);
-  color:white;
-  padding:36px 20px;
-  text-align:center;
-  border-bottom-left-radius:28px;
-  border-bottom-right-radius:28px;
-}
+  main{
+    max-width:var(--maxw);
+    margin:26px auto;
+    padding:12px;
+  }
 
-header h1{
-  margin:0;
-  font-size:28px;
-  letter-spacing:0.5px;
-}
+  .card{
+    background:var(--panel-bg);
+    border-radius:var(--radius);
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow: 0 8px 22px rgba(16,24,40,0.04);
+    border:1px solid rgba(16,24,40,0.02);
+  }
 
-header p{
-  margin-top:10px;
-  font-size:15px;
-  opacity:0.95;
-}
+  h2{color:var(--accent); margin-top:0}
+  h3{color:var(--accent-dark); margin-bottom:6px}
+  p{margin:10px 0}
+  ul{margin:8px 0 14px 20px}
+  li{margin:6px 0}
 
-nav{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:12px;
-  padding:16px;
-}
+  .quote{
+    margin:18px 0;
+    font-style:italic;
+    color:var(--calm-green);
+    text-align:center;
+  }
 
-nav a{
-  color:white;
-  text-decoration:none;
-  font-size:14px;
-  padding:8px 14px;
-  background:rgba(255,255,255,0.18);
-  border-radius:999px;
-}
+  .intro{
+    font-size:15px;
+    color:#0f172a;
+    margin-bottom:8px;
+  }
 
-main{
-  max-width:1200px;
-  margin:30px auto;
-  padding:18px;
-}
+  .exam-tip{
+    background:var(--soft);
+    border-left:4px solid var(--accent);
+    padding:12px;
+    margin:14px 0;
+    font-size:14px;
+    color:var(--muted);
+    border-radius:6px;
+  }
 
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:26px;
-  margin-bottom:26px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.06);
-}
+  .section-a{
+    font-family: "Courier New", monospace;
+    background:#f8fbfa;
+    border-left:4px solid #e6eef0;
+    padding:14px;
+    white-space:pre-wrap;
+    border-radius:8px;
+    color:#0b2330;
+  }
 
-h2{
-  color:var(--accent);
-  margin-top:0;
-}
+  .model-structure{
+    background:#fffaf6;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid rgba(180,83,9,0.06);
+  }
 
-h3{
-  color:#92400e;
-  margin-bottom:6px;
-}
+  .audio-box{
+    background:#fffaf0;
+    border:1px dashed rgba(180,83,9,0.5);
+    padding:16px;
+    border-radius:10px;
+    text-align:center;
+  }
 
-.quote{
-  font-style:italic;
-  color:var(--green);
-  margin:18px 0;
-  text-align:center;
-}
+  footer{
+    max-width:var(--maxw);
+    margin:18px auto 40px;
+    text-align:center;
+    color:var(--muted);
+    padding:12px;
+    font-size:14px;
+  }
 
-.exam-tip{
-  background:var(--soft);
-  border-left:4px solid var(--accent);
-  padding:12px;
-  margin:16px 0;
-  font-size:14px;
-}
+  /* small screens */
+  @media (max-width:880px){
+    header{padding:22px 10px}
+    nav{padding:8px 6px}
+    main{padding:10px}
+  }
 
-.section-a{
-  font-family:"Courier New", monospace;
-  background:#f8fafc;
-  border-left:4px solid #cbd5e1;
-  padding:16px;
-  white-space:pre-wrap;
-}
-
-.audio-box{
-  background:#fffaf0;
-  border:1px dashed #b45309;
-  border-radius:12px;
-  padding:18px;
-  text-align:center;
-}
-
-footer{
-  text-align:center;
-  font-size:14px;
-  color:var(--muted);
-  padding:30px 10px 50px;
-  line-height:1.5;
-}
+  /* subtle snow (pure CSS, lightweight) */
+  .snow {
+    pointer-events:none;
+    position:fixed;
+    inset:0;
+    z-index:0;
+  }
+  .snow__flake{
+    position:absolute;
+    top:-10%;
+    color: rgba(255,255,255,0.9);
+    font-size:12px;
+    opacity:0.85;
+    animation-name:fall;
+    animation-duration:10s;
+    animation-timing-function:linear;
+    animation-iteration-count:infinite;
+    transform:translateX(0);
+    text-shadow:0 1px 0 rgba(0,0,0,0.02);
+  }
+  @keyframes fall{
+    0%{transform:translateY(-10vh) translateX(0) rotate(0deg); opacity:0.9}
+    100%{transform:translateY(110vh) translateX(30px) rotate(360deg); opacity:0.7}
+  }
 </style>
 </head>
-
 <body>
 
+<!-- header with subtle holly SVG -->
 <header>
-  <h1>English Poetry – Semester III</h1>
-  <p>Complete Theory Companion • Made with Love, Care & Patience</p>
+  <svg class="holly" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <g fill="none" fill-rule="evenodd">
+      <circle cx="24" cy="32" r="10" fill="#0f5132"/>
+      <circle cx="40" cy="28" r="10" fill="#0f5132"/>
+      <path d="M32 16c6 0 12 4 14 10 0 0 0 6-6 6-3 0-6-3-8-5-3 3-6 5-10 5-5 0-6-7-6-7C18 20 24 16 32 16z" fill="#c33"/>
+    </g>
+  </svg>
+
+  <div class="title">English Poetry Notes</div>
+  <div class="subtitle">Complete Theory Companion • Made with care — Merry Christmas </div>
 
   <nav>
+    <a href="#for-you">For You</a>
     <a href="#unit1">Unit I</a>
     <a href="#unit2">Unit II</a>
     <a href="#unit3">Unit III</a>
@@ -147,217 +212,211 @@ footer{
   </nav>
 </header>
 
+<!-- subtle snow decoration (non-intrusive) -->
+<div class="snow" aria-hidden="true">
+  <div class="snow__flake" style="left:8%; animation-duration:12s; font-size:10px">❆</div>
+  <div class="snow__flake" style="left:22%; animation-duration:9s; font-size:12px">❄</div>
+  <div class="snow__flake" style="left:40%; animation-duration:11s; font-size:9px">✻</div>
+  <div class="snow__flake" style="left:58%; animation-duration:10s; font-size:11px">❅</div>
+  <div class="snow__flake" style="left:76%; animation-duration:13s; font-size:10px">❆</div>
+</div>
+
 <main>
 
-<!-- INTRO CARD -->
-<div class="card">
-  <h2>For You, Anushka</h2>
-  <p>
-    This isn’t just a study companion — it’s a small space made with quiet love, gentle effort, and all the care in the world.  
-    I know things feel heavy right now, but I also know the kind of strength that lives inside you.  
-    You’ve always had it — I’m just here to remind you of it whenever you forget.
-  </p>
-  <div class="quote">“Healing doesn’t always look like moving forward. Sometimes it’s just learning how to breathe again.”</div>
-</div>
+  <!-- PERSONAL INTRO -->
+  <section id="for-you" class="card" aria-labelledby="intro-heading">
+    <h2 id="intro-heading">For you, My Anushka:</h2>
+    <p class="intro">
+      I made this page slowly and softly — like a quiet cup of tea on a day that feels too loud. It’s a study guide first, yes, but also something calm to hold onto when everything else feels a little heavy. Take it at your own pace, one sip, one step, one thought at a time. These notes are here to help you study clearly today — and maybe, to bring a bit of comfort tomorrow.
+    </p>
 
-<!-- QUOTE -->
-<div class="quote">
-  “Some winters are meant for revision, reflection, and quiet hope.”
-</div>
+    <p style="margin-top:8px;">
+      <strong>Quick note:</strong> Christmas is tomorrow; I know plans changed and that this break matters.
+      If you want, use this file as a small gift — the audio section at the end is for the message I recorded.
+    </p>
 
-<!-- UNIT I -->
-<div id="unit1" class="card">
-<h2>Unit I – Introduction to Poetry</h2>
+    <div class="quote">“Healing doesn’t always look like moving forward. Sometimes it’s just learning how to breathe again.”</div>
+  </section>
 
-<h3>What is Poetry?</h3>
-<p>
-Poetry is a literary form that expresses emotions, thoughts, and experiences
-through condensed language, rhythm, imagery, and symbolic meaning.
-Unlike prose, poetry relies on musicality and layered interpretation.
-</p>
+  <!-- UNIT I -->
+  <section id="unit1" class="card" aria-labelledby="u1">
+    <h2 id="u1">Unit I — Introduction to Poetry (Core concepts)</h2>
 
-<h3>Types of Poetry</h3>
-<ul>
-<li><b>Epic:</b> Long narrative poem (Homer’s <i>Iliad</i>)</li>
-<li><b>Ballad:</b> Narrative poem in simple language</li>
-<li><b>Ode:</b> Lyric poem expressing admiration</li>
-<li><b>Sonnet:</b> 14-line poem (Shakespearean / Petrarchan)</li>
-<li><b>Elegy:</b> Poem of mourning (Gray)</li>
-<li><b>Lyric:</b> Short personal poem</li>
-</ul>
+    <h3>What poetry does</h3>
+    <p>
+      Poetry condenses experience: it turns feeling, memory, thought, and image into a compact
+      musical form. In the exam, focus on clear definitions and one strong example (line + small interpretation).
+    </p>
 
-<h3>Poetic Devices</h3>
-<ul>
-<li>Metaphor, Simile, Personification</li>
-<li>Alliteration, Assonance</li>
-<li>Irony and Satire</li>
-<li>Rhyme & Rhythm</li>
-<li>Blank Verse (unrhymed iambic pentameter)</li>
-</ul>
+    <h3>Key forms (short definitions you can write fast)</h3>
+    <ul>
+      <li><strong>Epic</strong> — Long narrative; public concerns; example: Homer’s <i>Iliad</i>.</li>
+      <li><strong>Ballad</strong> — Simple narrative, often with refrain.</li>
+      <li><strong>Ode</strong> — Formal lyric of praise (tone elevated).</li>
+      <li><strong>Sonnet</strong> — 14 lines; volta/turn often divides thought.</li>
+      <li><strong>Elegy</strong> — Meditation on loss; moves from lament to consolation.</li>
+      <li><strong>Lyric</strong> — Short, personal, emotional; ideal for close reading.</li>
+    </ul>
 
-<div class="exam-tip">
-<b>Exam Tip:</b> Unit I is heavily used for Section A short notes and definitions.
-</div>
-</div>
+    <h3>Poetic devices (write these as bullets in answers)</h3>
+    <ul>
+      <li>Metaphor, simile — comparison without/with 'like'</li>
+      <li>Conceit — extended intellectual metaphor (Donne)</li>
+      <li>Alliteration & assonance — sound patterns</li>
+      <li>Blank verse — unrhymed iambic pentameter (Milton)</li>
+      <li>Imagery — sensory detail (sight, sound, touch, taste, smell)</li>
+    </ul>
 
-<div class="quote">
-  “Understanding poetry is learning how to listen — even when words are quiet.”
-</div>
+    <div class="exam-tip"><strong>Exam tip:</strong> For short notes write 2–3 lines definition + one quick example line. That gets full marks.</div>
+  </section>
 
-<!-- UNIT II -->
-<div id="unit2" class="card">
-<h2>Unit II – Classical & Metaphysical Poetry</h2>
+  <!-- UNIT II -->
+  <section id="unit2" class="card" aria-labelledby="u2">
+    <h2 id="u2">Unit II — Classical & Metaphysical Poetry</h2>
 
-<h3>Homer – <i>The Iliad</i></h3>
-<p>
-An epic poem centered on the Trojan War. Themes include heroism, fate,
-honor, and human suffering.
-</p>
+    <h3>Homer — <i>Iliad</i> (extract)</h3>
+    <p>
+      Theme: war, heroism, human cost. In a short answer mention a key line from the extract and connect it to the larger epic idea (e.g., hero vs fate).
+    </p>
 
-<h3>Shakespeare – Sonnets & Songs</h3>
-<ul>
-<li><i>Blow, Blow Thou Winter Wind</i>: Critique of human ingratitude</li>
-<li>Sonnet 30: Memory, loss, and emotional endurance</li>
-</ul>
+    <h3>Shakespeare</h3>
+    <ul>
+      <li><i>Blow, Blow Thou Winter Wind</i> — world-weary tone, nature as mirror to human ingratitude.</li>
+      <li>Sonnet 30 — memory and consolation; regret transformed through recollection.</li>
+    </ul>
 
-<h3>John Donne – <i>A Valediction: Forbidding Mourning</i></h3>
-<p>
-A metaphysical poem using intellectual conceits (compass imagery)
-to portray spiritual love.
-</p>
+    <h3>John Donne — <i>A Valediction: Forbidding Mourning</i></h3>
+    <p>
+      Use the compass conceit: physical distance contrasted with spiritual unity. Good line to remember:
+      “If they be two, they are two so as stiff twin compasses are two; though they be two, they are one.”
+    </p>
 
-<h3>John Milton – <i>When the Assault Was Intended to the City</i></h3>
-<p>
-Reflects Puritan faith, divine protection, and political anxiety.
-</p>
-</div>
+    <h3>John Milton — excerpt</h3>
+    <p>
+      The extract emphasizes moral resolve and the sense of a divine/political order. Mention Milton’s use of blank verse and lofty diction.
+    </p>
 
-<div class="quote">
-  “Some poems don’t demand answers — only honesty.”
-</div>
+    <div class="exam-tip"><strong>Exam tip:</strong> For Donne highlight the conceit and its effect; for Shakespeare focus on tone and imagery.</div>
+  </section>
 
-<!-- UNIT III -->
-<div id="unit3" class="card">
-<h2>Unit III – Neo-Classical Poetry</h2>
+  <!-- UNIT III -->
+  <section id="unit3" class="card" aria-labelledby="u3">
+    <h2 id="u3">Unit III — Neo-Classical Poetry</h2>
 
-<h3>Alexander Pope</h3>
-<ul>
-<li><i>An Essay on Man</i>: Reason, order, human limitation</li>
-<li><i>Ode on Solitude</i>: Simple life ideal</li>
-</ul>
+    <h3>Alexander Pope</h3>
+    <p>
+      Pope balances order and moral reflection. In answers mention his use of heroic couplets and satirical sharpness.
+      Quick idea: in <i>An Essay on Man</i> he argues for a limited human perspective — “Whatever is, is right” (note the debate around this line).
+    </p>
 
-<h3>Thomas Gray</h3>
-<ul>
-<li><i>Elegy Written in a Country Churchyard</i>: Mortality, common man</li>
-<li><i>The Epitaph</i>: Humility and spiritual peace</li>
-</ul>
+    <h3>Thomas Gray — <i>Elegy Written in a Country Churchyard</i></h3>
+    <p>
+      Key themes for exam: mortality, the worth of common lives, memory and epitaphic tone. Learn 2–3 lines (opening & closing) to anchor your answer.
+    </p>
 
-<div class="exam-tip">
-<b>Exam Tip:</b> Gray’s Elegy is a frequent long-answer question.
-</div>
-</div>
+    <div class="exam-tip"><strong>Exam tip:</strong> Gray often appears in long answers — build answers around theme, tone, and social message.</div>
+  </section>
 
-<div class="quote">
-  “Even silence has meaning when you learn how to read it.”
-</div>
+  <!-- UNIT IV -->
+  <section id="unit4" class="card" aria-labelledby="u4">
+    <h2 id="u4">Unit IV — Romantic Poetry</h2>
 
-<!-- UNIT IV -->
-<div id="unit4" class="card">
-<h2>Unit IV – Romantic Poetry</h2>
+    <ul>
+      <li><strong>Blake — <i>The Tyger</i></strong>: dualities; innocence/experience; memorable rhetorical questions (“Did he who made the Lamb make thee?”)</li>
+      <li><strong>Wordsworth — <i>I Wandered Lonely as a Cloud / Daffodils</i></strong>: nature as memory and moral teacher; suggest looking for personification and recollection in tranquillity.</li>
+      <li><strong>Coleridge — <i>Dejection: An Ode</i></strong>: self-reflection on loss of poetic power; mood & voice are key.</li>
+      <li><strong>Shelley — <i>To a Skylark</i></strong>: idealized song of nature; ecstatic imagery.</li>
+      <li><strong>Keats — <i>Ode to a Nightingale</i></strong>: mortality, transience, desire for escape; rich sensual imagery.</li>
+    </ul>
 
-<ul>
-<li>Blake – <i>The Tyger</i>: Innocence vs experience</li>
-<li>Wordsworth – <i>Daffodils</i>: Nature and memory</li>
-<li>Coleridge – <i>Dejection: An Ode</i>: Loss of imagination</li>
-<li>Shelley – <i>To a Skylark</i>: Ideal joy</li>
-<li>Keats – <i>Ode to a Nightingale</i>: Escape and mortality</li>
-</ul>
-</div>
+    <div class="exam-tip"><strong>Exam tip:</strong> For Romantic poems quote one line in your answer. Examiners like textual anchors.</div>
+  </section>
 
-<div class="quote">
-  “Some nights teach us endurance before they teach us beauty.”
-</div>
+  <!-- UNIT V -->
+  <section id="unit5" class="card" aria-labelledby="u5">
+    <h2 id="u5">Unit V — Victorian & Modern Poetry</h2>
 
-<!-- UNIT V -->
-<div id="unit5" class="card">
-<h2>Unit V – Victorian & Modern Poetry</h2>
+    <ul>
+      <li><strong>Tennyson — <i>Break, Break, Break</i></strong>: grief and the sea’s rhythm; short, direct lines are helpful to discuss.</li>
+      <li><strong>Robert Browning — <i>Prospice</i></strong>: face death with courage; dramatic monologue energy.</li>
+      <li><strong>W. B. Yeats — <i>A Prayer for My Daughter</i></strong>: political anxiety and private hopes; symbol & image interplay.</li>
+      <li><strong>Sarojini Naidu — <i>Indian Weavers</i></strong>: lyrical celebration of craft and tradition — use cultural imagery as answer point.</li>
+      <li><strong>Eunice de Souza — <i>Marriages Are Made</i></strong>: irony and social realism; sharp lines for quick analysis.</li>
+    </ul>
 
-<ul>
-<li>Tennyson – <i>Break, Break, Break</i>: Grief</li>
-<li>Browning – <i>Prospice</i>: Courage before death</li>
-<li>Yeats – <i>A Prayer for My Daughter</i>: Wisdom & stability</li>
-<li>Sarojini Naidu – <i>Indian Weavers</i>: Indian imagery</li>
-<li>Eunice De Souza – <i>Marriages Are Made</i>: Social irony</li>
-</ul>
-</div>
+    <div class="exam-tip"><strong>Exam tip:</strong> For modern poets emphasize tone, irony, and social context; two short quotations help score high in analysis.
+    </div>
+  </section>
 
-<div class="quote">
-  “Even after the hardest winter, spring remembers your name.”
-</div>
+  <!-- Section A exact -->
+  <section id="sectiona" class="card" aria-labelledby="secA">
+    <h2 id="secA">Section A — Exact answers (copy them, learn them)</h2>
 
-<!-- SECTION A -->
-<div id="sectiona" class="card">
-<h2>Section A – Exact Answers (Memorize)</h2>
+    <p>Memorize any five. Each block is 50–70 words and exam-ready.</p>
 
-<div class="section-a">
-1. Poetry is a literary form that expresses emotions and ideas through rhythm,
-imagery, and symbolic language. It differs from prose in its musical structure
-and condensed expression.
+    <div class="section-a" aria-hidden="false">
+1) Poetry is a literary form that expresses emotions and ideas through rhythm, imagery,
+and symbolic language. It differs from prose in its musical structure and condensed expression.
 
-2. A sonnet is a fourteen-line poem written in iambic pentameter, commonly
-associated with themes of love, time, and beauty.
+2) A sonnet is a fourteen-line poem written in iambic pentameter, commonly associated
+with themes of love, time, and beauty. The sonnet often contains a turn (volta).
 
-3. An elegy is a poem of mourning that reflects on death, loss, and the passage
-of time, often moving towards consolation.
+3) An elegy is a poem of mourning that reflects on death, loss, and the passage
+of time; it commonly moves from lament towards consolation or reflection.
 
-4. Metaphysical poetry is characterized by intellectual imagery, philosophical
-themes, and elaborate conceits, as seen in the works of John Donne.
+4) Metaphysical poetry is characterised by intellectual imagery, philosophical themes,
+and extended conceits — its rhetoric is argumentative and playful, as in Donne.
 
-5. Romantic poetry emphasizes emotion, imagination, nature, and individual
-experience, reacting against neoclassical restraint.
-</div>
-</div>
+5) Romantic poetry emphasises emotion, imagination, nature, and individual experience,
+reacting against neoclassical restraint and valuing spontaneity and insight.
+    </div>
 
-<div class="quote">
-  “Sometimes learning is healing — one word, one line, one small victory at a time.”
-</div>
+    <div class="quote" style="margin-top:12px">“Sometimes learning is healing — one word, one line, one small victory at a time.”</div>
+  </section>
 
-<!-- SECTION B -->
-<div id="sectionb" class="card">
-<h2>Section B – 15-Mark Model Structure</h2>
+  <!-- Section B guidance -->
+  <section id="sectionb" class="card" aria-labelledby="secB">
+    <h2 id="secB">Section B — How to write a 15-mark answer</h2>
 
-<ul>
-<li>Introduction to poet & age</li>
-<li>Summary of poem</li>
-<li>Themes</li>
-<li>Imagery & symbols</li>
-<li>Language & style</li>
-<li>Conclusion</li>
-</ul>
+    <div class="model-structure">
+      <ol>
+        <li><strong>Intro (1–2 sentences):</strong> Name the poem, poet, context (age/genre).</li>
+        <li><strong>Summary (2–3 lines):</strong> Give a clear, concise overview of the poem’s action or argument.</li>
+        <li><strong>Themes (3–4 points):</strong> Bulleted — list central themes with one short explanation each.</li>
+        <li><strong>Imagery & Language (2–3 bullets):</strong> Mention key devices and a short quote (1 line).</li>
+        <li><strong>Tone & Structure:</strong> Note voice, stanza form, and any important shifts (volta/turn).</li>
+        <li><strong>Conclusion (1–2 lines):</strong> Sum up the poem’s significance or poet’s aim.</li>
+      </ol>
+    </div>
 
-<div class="exam-tip">
-<b>Practice Tip:</b> Any poem you prepare using this structure is exam-safe.
-</div>
-</div>
+    <p class="exam-tip">Write legibly, use headings, and include one short quoted line per answer — it shows confidence with the text.</p>
 
-<!-- MESSAGE -->
-<div id="message" class="card">
-<h2>A Quiet Message</h2>
+    <h3>Sample quick model (Gray – <i>Elegy Written in a Country Churchyard</i>)</h3>
+    <ol>
+      <li><strong>Intro:</strong> Thomas Gray’s <i>Elegy</i> meditates on mortality and the value of humble lives; written in 1750s England.</li>
+      <li><strong>Summary:</strong> The speaker reflects in a rural churchyard, thinking of lives unrecorded by fame yet worthy of dignity.</li>
+      <li><strong>Themes:</strong> Mortality; equality in death; memory and the common man.</li>
+      <li><strong>Imagery & language:</strong> pastoral imagery, epitaphic tone; sample line: “The paths of glory lead but to the grave.”</li>
+      <li><strong>Conclusion:</strong> Gray argues for humble virtue’s dignity and warns against arrogance of fame.</li>
+    </ol>
+  </section>
 
-<div class="audio-box">
-<p>Sometimes words on a screen can’t hold everything I want to say —  
-so I recorded something just for you.</p>
+  <!-- MESSAGE / AUDIO -->
+  <section id="message" class="card" aria-labelledby="msg">
+    <h2 id="msg">A Quiet Message — For Bhura!</h2>
 
-<audio controls>
-  <source src="message.m4a" type="audio/mp4">
-  Your browser does not support the audio element.
-</audio>
+    <div class="audio-box" role="region" aria-label="Voice message for Anushka">
+      <p style="margin-bottom:12px">Sometimes words on a screen can’t hold everything I want to say —  
+so I recorded something just for you..</p>
 
-<p class="quote">
-  “Some things are easier to say when the world is quiet.”
-</p>
-</div>
-</div>
+      <audio controls preload="none" style="max-width:100%;">
+        <source src="message.m4a" type="audio/mp4">
+        Your browser does not support the audio element. Save the file as <code>message.m4a</code> in the same folder.
+      </audio>
+
+      <p class="quote" style="margin-top:12px">“Some things are easier to say when the world is quiet.”</p>
+    </div>
+  </section>
 
 </main>
 
@@ -367,8 +426,9 @@ so I recorded something just for you.</p>
   May this small effort remind you that you’re not alone, that you’re loved deeply,  
   and that no matter how hard it gets, you have someone quietly rooting for you always.  
 </p>
-<p>— Yours, always 🧿❤️🐢</p>
+<p>— Yours, always and forever! 🧿❤️🐢</p>
 </footer>
+
 
 </body>
 </html>
