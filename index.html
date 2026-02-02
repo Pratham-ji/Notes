@@ -3,553 +3,548 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>English Poetry | For Anushka</title>
+<title>For Anushka — A Calm Corner</title>
+<meta name="color-scheme" content="light dark">
 <style>
-  :root{
-    --page-bg: #fffaf0;
-    --panel-bg: #ffffff;
-    --accent: #7c2d12;      /* warm chestnut */
-    --accent-dark: #5a210f;
-    --calm-green: #114d2b;
-    --muted: #4b5563;
-    --soft: #fff7ed;
-    --radius: 14px;
-    --maxw: 1100px;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    font-family: Georgia, "Times New Roman", serif;
-    background: linear-gradient(180deg, #fffdf8 0%, #fbf7f2 100%);
-    color:#1f2937;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    line-height:1.55;
-    padding-bottom:40px;
-  }
+:root{
+  --bg:#fffbf8;
+  --card:#ffffff;
+  --accent:#7c2d12;
+  --muted:#475569;
+  --green:#114d2b;
+  --soft:#fff7ed;
+  --radius:12px;
+  --maxw:1100px;
+  --glass: rgba(255,255,255,0.8);
+  --shadow: 0 10px 30px rgba(2,6,23,0.08);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(180deg, #fffdf8 0%, #fbf7f2 100%);
+  color:#0f172a;
+  -webkit-font-smoothing:antialiased;
+  padding:18px;
+}
+.container{
+  max-width:var(--maxw);
+  margin:0 auto;
+}
+.header{
+  background: linear-gradient(90deg,var(--accent), #b45309);
+  color:#fff;
+  padding:22px;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  display:flex;
+  gap:16px;
+  align-items:center;
+}
+.header svg{flex:0 0 56px}
+.header h1{margin:0;font-size:20px}
+.header p{margin:4px 0 0 0;opacity:0.95;font-size:13px}
+.topnav{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.chip{
+  background:rgba(255,255,255,0.12); color:#fff; padding:8px 12px;border-radius:999px;font-weight:600;font-size:13px;text-decoration:none;
+}
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 380px;
+  gap:18px;
+  margin-top:18px;
+}
+@media(max-width:980px){ .grid{grid-template-columns:1fr} }
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:16px;
+  box-shadow:0 8px 20px rgba(2,6,23,0.04);
+  border:1px solid rgba(2,6,23,0.03);
+}
+.section-title{color:var(--accent);margin:0 0 8px 0}
+.small{font-size:13px;color:var(--muted)}
+.quote{font-style:italic;color:var(--green);text-align:center;padding:8px 0}
+.calendar{
+  display:grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap:6px;
+}
+.cal-day{
+  border-radius:10px;padding:8px;background:linear-gradient(180deg,#fff,#fffaf2);text-align:center;border:1px solid rgba(0,0,0,0.03);
+  cursor:pointer; user-select:none;
+}
+.cal-day.today{box-shadow:0 4px 14px rgba(124,45,18,0.12); border:1px solid rgba(124,45,18,0.12)}
+textarea,input[type="text"]{width:100%;padding:8px;border-radius:8px;border:1px solid #e6e9ef;font-size:14px}
+button{padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+.btn-ghost{background:transparent;border:1px solid rgba(15,23,42,0.06);color:var(--muted)}
+.row{display:flex;gap:8px;align-items:center}
+.list{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.item{padding:10px;border-radius:8px;background:linear-gradient(180deg,#fff,#fffef7);border:1px solid rgba(0,0,0,0.03)}
+.item .meta{font-size:12px;color:var(--muted);margin-bottom:6px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.thumb{width:100%;max-height:160px;object-fit:cover;border-radius:8px;border:1px solid rgba(0,0,0,0.04)}
+.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(max-width:520px){ .gallery-grid{grid-template-columns:repeat(1,1fr)} }
+.footer-note{font-size:13px;color:var(--muted);text-align:center;padding:12px 0}
+.badge{display:inline-block;padding:6px 8px;border-radius:999px;background:var(--soft);color:var(--accent);font-weight:600;font-size:13px}
+.export-area{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 
-  /* header */
-  header{
-    background: linear-gradient(90deg, #7c2d12 0%, #b45309 100%);
-    color: #fff;
-    padding:34px 18px;
-    text-align:center;
-    border-bottom-left-radius:20px;
-    border-bottom-right-radius:20px;
-  }
-  header .title{
-    font-size:28px;
-    margin:0 0 6px 0;
-    letter-spacing:0.3px;
-  }
-  header .subtitle{
-    margin:0;
-    font-size:14px;
-    opacity:0.95;
-  }
-  header .holly{
-    width:42px;
-    height:42px;
-    margin:12px auto 0;
-    display:block;
-  }
-
-  /* nav */
-  nav{
-    display:flex;
-    gap:10px;
-    justify-content:center;
-    flex-wrap:wrap;
-    padding:14px 8px;
-  }
-  nav a{
-    background: rgba(255,255,255,0.14);
-    color:#fff;
-    text-decoration:none;
-    padding:8px 12px;
-    border-radius:999px;
-    font-weight:600;
-    font-size:13px;
-  }
-
-  main{
-    max-width:var(--maxw);
-    margin:26px auto;
-    padding:12px;
-  }
-
-  .card{
-    background:var(--panel-bg);
-    border-radius:var(--radius);
-    padding:20px;
-    margin-bottom:20px;
-    box-shadow: 0 8px 22px rgba(16,24,40,0.04);
-    border:1px solid rgba(16,24,40,0.02);
-  }
-
-  h2{color:var(--accent); margin-top:0}
-  h3{color:var(--accent-dark); margin-bottom:6px}
-  p{margin:10px 0}
-  ul{margin:8px 0 14px 20px}
-  li{margin:6px 0}
-
-  .quote{
-    margin:18px 0;
-    font-style:italic;
-    color:var(--calm-green);
-    text-align:center;
-  }
-
-  .intro{
-    font-size:15px;
-    color:#0f172a;
-    margin-bottom:8px;
-  }
-
-  .exam-tip{
-    background:var(--soft);
-    border-left:4px solid var(--accent);
-    padding:12px;
-    margin:14px 0;
-    font-size:14px;
-    color:var(--muted);
-    border-radius:6px;
-  }
-
-  .section-a{
-    font-family: "Courier New", monospace;
-    background:#f8fbfa;
-    border-left:4px solid #e6eef0;
-    padding:14px;
-    white-space:pre-wrap;
-    border-radius:8px;
-    color:#0b2330;
-  }
-
-  .model-structure{
-    background:#fffaf6;
-    padding:12px;
-    border-radius:8px;
-    border:1px solid rgba(180,83,9,0.06);
-  }
-
-  .audio-box{
-    background:#fffaf0;
-    border:1px dashed rgba(180,83,9,0.5);
-    padding:16px;
-    border-radius:10px;
-    text-align:center;
-  }
-
-  footer{
-    max-width:var(--maxw);
-    margin:18px auto 40px;
-    text-align:center;
-    color:var(--muted);
-    padding:12px;
-    font-size:14px;
-  }
-
-  /* small screens */
-  @media (max-width:880px){
-    header{padding:22px 10px}
-    nav{padding:8px 6px}
-    main{padding:10px}
-  }
-
-  /* subtle snow (pure CSS, lightweight) */
-  .snow {
-    pointer-events:none;
-    position:fixed;
-    inset:0;
-    z-index:0;
-  }
-  .snow__flake{
-    position:absolute;
-    top:-10%;
-    color: rgba(255,255,255,0.9);
-    font-size:12px;
-    opacity:0.85;
-    animation-name:fall;
-    animation-duration:10s;
-    animation-timing-function:linear;
-    animation-iteration-count:infinite;
-    transform:translateX(0);
-    text-shadow:0 1px 0 rgba(0,0,0,0.02);
-  }
-  @keyframes fall{
-    0%{transform:translateY(-10vh) translateX(0) rotate(0deg); opacity:0.9}
-    100%{transform:translateY(110vh) translateX(30px) rotate(360deg); opacity:0.7}
-  }
+/* subtle hint */
+.hint{font-size:13px;color:#6b7280;background:#fbfbff;padding:8px;border-radius:8px;border:1px dashed rgba(99,102,241,0.06)}
 </style>
 </head>
 <body>
+<div class="container">
 
-<!-- header with subtle holly SVG -->
-<header>
-  <svg class="holly" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-    <g fill="none" fill-rule="evenodd">
-      <circle cx="24" cy="32" r="10" fill="#0f5132"/>
-      <circle cx="40" cy="28" r="10" fill="#0f5132"/>
-      <path d="M32 16c6 0 12 4 14 10 0 0 0 6-6 6-3 0-6-3-8-5-3 3-6 5-10 5-5 0-6-7-6-7C18 20 24 16 32 16z" fill="#c33"/>
-    </g>
-  </svg>
+  <!-- Header -->
+  <div class="header" role="banner" aria-label="Header">
+    <!-- small holly SVG -->
+    <svg width="56" height="56" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <g>
+        <circle cx="20" cy="34" r="9" fill="#0f5132"/>
+        <circle cx="36" cy="28" r="9" fill="#0f5132"/>
+        <path d="M32 16c6 0 12 4 14 10 0 0 0 6-6 6-3 0-6-3-8-5-3 3-6 5-10 5-5 0-6-7-6-7C18 20 24 16 32 16z" fill="#c33"/>
+      </g>
+    </svg>
 
-  <div class="title">English Poetry Notes</div>
-  <div class="subtitle">Complete Theory Companion • Made with care — Merry Christmas </div>
+    <div>
+      <h1 style="margin:0">For Anushka — a calm corner</h1>
+      <p style="margin:6px 0 0 0" class="small">A place to leave daily wishes, memories and quiet apologies — private and only for you two.</p>
+    </div>
 
-  <nav>
-    <a href="#for-you">For You</a>
-    <a href="#unit1">Unit I</a>
-    <a href="#unit2">Unit II</a>
-    <a href="#unit3">Unit III</a>
-    <a href="#unit4">Unit IV</a>
-    <a href="#unit5">Unit V</a>
-    <a href="#sectiona">Section A</a>
-    <a href="#sectionb">Section B</a>
-    <a href="#message">Message</a>
-  </nav>
-</header>
+  </div>
 
-<!-- subtle snow decoration (non-intrusive) -->
-<div class="snow" aria-hidden="true">
-  <div class="snow__flake" style="left:8%; animation-duration:12s; font-size:10px">❆</div>
-  <div class="snow__flake" style="left:22%; animation-duration:9s; font-size:12px">❄</div>
-  <div class="snow__flake" style="left:40%; animation-duration:11s; font-size:9px">✻</div>
-  <div class="snow__flake" style="left:58%; animation-duration:10s; font-size:11px">❅</div>
-  <div class="snow__flake" style="left:76%; animation-duration:13s; font-size:10px">❆</div>
+  <div class="topnav" role="navigation" aria-label="Quick links">
+    <a class="chip" href="#wishes">Daily Wishes</a>
+    <a class="chip" href="#calendar">Birthday Calendar</a>
+    <a class="chip" href="#timeline">Memory Timeline</a>
+    <a class="chip" href="#gallery">Gallery</a>
+    <a class="chip" href="#audio">Audio</a>
+    <a class="chip" href="#apology">Apology Letter</a>
+  </div>
+
+  <div class="grid" role="main">
+    <!-- Left column -->
+    <div>
+
+      <!-- Daily Wishes -->
+      <section id="wishes" class="card" aria-labelledby="wishes-title">
+        <h2 id="wishes-title" class="section-title">Daily Wishes</h2>
+        <p class="small">Add a short note/wish for today — you can add new notes every day. They are saved locally.</p>
+
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <input id="wish-input" type="text" placeholder="Write a short wish or message (e.g., 'Happy Christmas — love you')" />
+          <button id="wish-add">Add</button>
+        </div>
+
+        <div class="hint" style="margin-top:10px">Pro tip: Keep wishes tiny (1–2 lines). Small consistent gestures feel steady and mature.</div>
+
+        <div id="wishes-list" class="list" aria-live="polite" style="margin-top:12px"></div>
+      </section>
+
+      <!-- Memory Timeline -->
+      <section id="timeline" class="card" aria-labelledby="timeline-title">
+        <h2 id="timeline-title" class="section-title">Memory Timeline</h2>
+        <p class="small">Add milestones, sweet moments, or notes about days that matter. These appear in order (newest first).</p>
+
+        <textarea id="timeline-input" placeholder="Add a memory (where, when, one sentence about why it mattered)" rows="3"></textarea>
+        <div class="row" style="margin-top:8px">
+          <button id="timeline-add">Add Memory</button>
+          <button id="timeline-clear" class="btn-ghost">Clear All</button>
+        </div>
+
+        <div id="timeline-list" class="list" style="margin-top:12px"></div>
+      </section>
+
+      <!-- Apology Letter (editable + download) -->
+      <section id="apology" class="card" aria-labelledby="apology-title">
+        <h2 id="apology-title" class="section-title">Apology letter — editable</h2>
+        <p class="small">A simple, honest script. Edit freely to make it sound like you — then download or copy to send.</p>
+
+        <textarea id="apology-text" rows="8" style="font-family:inherit;">
+Hi Anushka,
+
+I’m sorry for the way things have been. I’ve been thinking about what went wrong and how I can do better. I love you, and I want to be the calm, steady person you can rely on. I'm ready to listen, to learn, and to make changes — not because I want to fix things quickly, but because I truly respect you.
+
+If you're open to it, I'd like to talk when you feel ready. Until then, I hope this small corner helps you study and feel a little less alone.
+
+— [Your name]
+        </textarea>
+
+        <div class="row" style="margin-top:10px">
+          <button id="download-apology">Download Letter</button>
+          <button id="reset-apology" class="btn-ghost">Reset Template</button>
+        </div>
+
+        <p class="small" style="margin-top:12px">Tip: Keep sentences short, honest and focused on your actions and learning (not on blaming). Mention a plan to change — small, concrete steps.</p>
+      </section>
+
+      <!-- Growth Plan -->
+      <section id="growth" class="card" aria-labelledby="growth-title">
+        <h2 id="growth-title" class="section-title">Growth Plan — Small daily actions</h2>
+        <p class="small">Maturity is practiced, not declared. Pick 1–2 tasks each day. Check them off; they persist locally.</p>
+
+        <div id="growth-list" class="list">
+          <!-- items populated by JS -->
+        </div>
+
+        <div style="margin-top:10px" class="row">
+          <input id="growth-new" type="text" placeholder="Add a small growth action (e.g., 'Listen fully for 3 minutes')" />
+          <button id="growth-add">Add</button>
+        </div>
+
+        <p class="small" style="margin-top:10px">Examples: Active listening for 5 minutes, send one reassuring message, own one mistake and say how you'll change it, plan a small shared activity.</p>
+      </section>
+
+      <!-- Psychology Tips -->
+      <section id="psych" class="card" aria-labelledby="psych-title">
+        <h2 id="psych-title" class="section-title">Psychology-backed tips — be steady and kind</h2>
+        <ol>
+          <li><strong>Listen with attention.</strong> Put your phone away for 3–5 minutes. Reflect back what she says: “I hear that you felt…”</li>
+          <li><strong>Own small actions.</strong> Apologise concisely for your action: “I’m sorry I did X. I will do Y instead.” This increases trust.</li>
+          <li><strong>Consistency beats drama.</strong> Small predictable kindnesses (a message, a note) are more healing than grand gestures.</li>
+          <li><strong>Ask, don’t fix.</strong> If she’s upset, ask “Do you want solutions or just to be heard?” Respect the answer.</li>
+          <li><strong>Self-regulate.</strong> Practice a calm breathing pause before responding — names: box breathing or 4-4-4 helps.</li>
+        </ol>
+        <p class="small">These are simple, practical steps — used over time they rebuild safety and connection.</p>
+      </section>
+
+    </div>
+
+    <!-- Right Column -->
+    <aside>
+
+      <!-- Birthday calendar -->
+      <section id="calendar" class="card" aria-labelledby="calendar-title">
+        <h2 id="calendar-title" class="section-title">Birthday month — add a wish per day</h2>
+        <p class="small">Click any date to add a short wish or plan for that day. Use this to schedule small surprises.</p>
+        <div id="calendar-grid" class="calendar" style="margin-top:10px"></div>
+
+        <div style="margin-top:10px" class="small">Selected date: <span id="cal-selected">none</span></div>
+
+        <div style="margin-top:8px">
+          <input id="cal-wish" type="text" placeholder="Wish / plan for selected day" />
+          <div style="margin-top:8px" class="row">
+            <button id="cal-save">Save for day</button>
+            <button id="cal-clear" class="btn-ghost">Clear day</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gallery -->
+      <section id="gallery" class="card" aria-labelledby="gallery-title">
+        <h2 id="gallery-title" class="section-title">Gallery</h2>
+        <p class="small">Upload a few photos (keeps locally). Best to keep small files (under 1MB each).</p>
+        <input id="gallery-file" type="file" accept="image/*" />
+        <div id="gallery-grid" class="gallery-grid" style="margin-top:10px"></div>
+        <div style="margin-top:8px" class="small">Tip: Add a caption by clicking Edit on the image card.</div>
+      </section>
+
+      <!-- Audio -->
+      <section id="audio" class="card" aria-labelledby="audio-title">
+        <h2 id="audio-title" class="section-title">Audio Messages</h2>
+        <p class="small">Upload voice notes (messsage.m4a) or record elsewhere and upload here. Play inside the page.</p>
+        <input id="audio-file" type="file" accept="audio/*" />
+        <div id="audio-list" class="list" style="margin-top:10px"></div>
+        <div class="small" style="margin-top:8px">Tip: Keep voice notes short (20–45 seconds); speak calmly and honestly.</div>
+      </section>
+
+      <!-- Export / Import -->
+      <section class="card" aria-labelledby="backup">
+        <h2 id="backup" class="section-title">Backup & Settings</h2>
+        <p class="small">Export your whole site content as JSON (save it somewhere safe). Import to restore.</p>
+
+        <div class="export-area">
+          <button id="export-data">Export All</button>
+          <input id="import-file" type="file" accept=".json" class="btn-ghost" />
+        </div>
+
+        <div style="margin-top:10px" class="small">Privacy: Everything is saved in your browser (no server). Export if you want to move devices.</div>
+      </section>
+
+    </aside>
+  </div>
+
+  <div style="margin-top:18px" class="footer-note card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div>
+        <div style="font-weight:700">A small note</div>
+        <div class="small">This place is for steady, honest gestures. Add one small thing every day — a line, a memory, a photo. Consistency matters more than perfection.</div>
+      </div>
+      <div style="text-align:right">
+        <div class="badge">Private • Local</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<main>
+<script>
+/*
+  For Anushka — single-file app
+  Storage keys:
+    - wishes: array of {id, text, date, pinned}
+    - timeline: array of {id, text, date}
+    - growth: array of {id, text, done}
+    - calendar: object {dayString: text}
+    - gallery: array of {id, dataURL, caption, date}
+    - audio: array of {id, dataURL, name, date}
+    - apologyText: string
+*/
 
-  <!-- PERSONAL INTRO -->
-  <section id="for-you" class="card" aria-labelledby="intro-heading">
-    <h2 id="intro-heading">For you, My Anushka:</h2>
-    <p class="intro">
-      I made this page slowly and softly — like a quiet cup of tea on a day that feels too loud. It’s a study guide first, yes, but also something calm to hold onto when everything else feels a little heavy. Take it at your own pace, one sip, one step, one thought at a time. These notes are here to help you study clearly today — and maybe, to bring a bit of comfort tomorrow.
-    </p>
+// utilities
+const uid = ()=>Date.now().toString(36) + Math.random().toString(36).slice(2,7)
+const load = (k, def)=> JSON.parse(localStorage.getItem(k) || JSON.stringify(def))
+const save = (k,v)=> localStorage.setItem(k, JSON.stringify(v))
 
-    <p style="margin-top:8px;">
-      <strong>Quick note:</strong> Christmas is tomorrow; I know plans changed and that this break matters.
-      If you want, use this file as a small gift — the audio section at the end is for the message I recorded.
-    </p>
+/* --- WISHES --- */
+const wishesKey = 'anushka_wishes_v1'
+let wishes = load(wishesKey, [])
+const wishesListEl = document.getElementById('wishes-list')
+const wishInput = document.getElementById('wish-input')
+const wishAddBtn = document.getElementById('wish-add')
 
-    <div class="quote">“Healing doesn’t always look like moving forward. Sometimes it’s just learning how to breathe again.”</div>
-  </section>
+function renderWishes(){
+  wishesListEl.innerHTML = ''
+  if(wishes.length===0){ wishesListEl.innerHTML = '<div class="small">No wishes yet — add the first one above.</div>'; return }
+  // newest first
+  [...wishes].reverse().forEach(w=>{
+    const el = document.createElement('div'); el.className='item'
+    const meta = document.createElement('div'); meta.className='meta'; meta.textContent = new Date(w.date).toLocaleString()
+    const txt = document.createElement('div'); txt.textContent = w.text
+    const ctrl = document.createElement('div'); ctrl.className='controls'
+    const pin = document.createElement('button'); pin.textContent = w.pinned ? 'Pinned' : 'Pin'; pin.className='btn-ghost'
+    pin.onclick = ()=>{ w.pinned = !w.pinned; save(wishesKey,wishes); renderWishes() }
+    const edit = document.createElement('button'); edit.textContent='Edit'; edit.className='btn-ghost'
+    edit.onclick = ()=>{
+      const newt = prompt('Edit wish', w.text); if(newt!=null){ w.text = newt; save(wishesKey,wishes); renderWishes() }
+    }
+    const del = document.createElement('button'); del.textContent='Delete'; del.className='btn-ghost'
+    del.onclick = ()=>{ if(confirm('Delete this wish?')){ wishes = wishes.filter(x=>x.id!==w.id); save(wishesKey,wishes); renderWishes() } }
+    ctrl.append(pin, edit, del)
+    el.appendChild(meta); el.appendChild(txt); el.appendChild(ctrl)
+    if(w.pinned){ el.style.borderLeft = '4px solid var(--accent)'; }
+    wishesListEl.appendChild(el)
+  })
+}
 
-  <!-- UNIT I - Expanded -->
-  <section id="unit1" class="card" aria-labelledby="u1">
-    <h2 id="u1">Unit I — Introduction to Poetry (Core concepts) — Detailed</h2>
+wishAddBtn.addEventListener('click', ()=>{
+  const t = wishInput.value.trim(); if(!t) return alert('Write something small.')
+  const item = {id:uid(), text: t, date: new Date().toISOString(), pinned:false}
+  wishes.push(item); save(wishesKey,wishes); wishInput.value=''; renderWishes()
+})
+renderWishes()
 
-    <h3>1. What poetry does — expanded</h3>
-    <p>
-      Poetry compresses thought and feeling. Where prose explains, poetry suggests: it leaves spaces that a reader must inhabit. For exam answers, say this plainly and illustrate with one example (e.g., “Daffodils uses memory to transform a simple scene into moral calm”).
-    </p>
+/* --- TIMELINE --- */
+const timelineKey = 'anushka_timeline_v1'
+let timeline = load(timelineKey, [])
+const timelineList = document.getElementById('timeline-list')
+const timelineInput = document.getElementById('timeline-input')
+document.getElementById('timeline-add').onclick = ()=>{
+  const t = timelineInput.value.trim(); if(!t) return alert('Write a short memory.')
+  const item = {id:uid(), text:t, date:new Date().toISOString()}
+  timeline.push(item); save(timelineKey,timeline); timelineInput.value=''; renderTimeline()
+}
+document.getElementById('timeline-clear').onclick = ()=>{
+  if(confirm('Clear all memories?')){ timeline = []; save(timelineKey,timeline); renderTimeline() }
+}
+function renderTimeline(){
+  timelineList.innerHTML = ''
+  if(timeline.length===0){ timelineList.innerHTML = '<div class="small">No memories yet — add one above.</div>'; return }
+  [...timeline].reverse().forEach(m=>{
+    const el = document.createElement('div'); el.className='item'
+    const meta = document.createElement('div'); meta.className='meta'; meta.textContent = new Date(m.date).toLocaleString()
+    const txt = document.createElement('div'); txt.textContent = m.text
+    const del = document.createElement('button'); del.textContent='Delete'; del.className='btn-ghost'
+    del.onclick = ()=>{ if(confirm('Delete memory?')){ timeline = timeline.filter(x=>x.id!==m.id); save(timelineKey,timeline); renderTimeline() } }
+    el.append(meta, txt, del)
+    timelineList.appendChild(el)
+  })
+}
+renderTimeline()
 
-    <h3>2. Forms — with quick exam cues</h3>
-    <ul>
-      <li><strong>Epic</strong> — long narrative, heroic action, public values. (Cue: mention plot & heroic code.)</li>
-      <li><strong>Ballad</strong> — narrative + refrain, often oral origins. (Cue: rhythm and repetition.)</li>
-      <li><strong>Ode</strong> — elevated praise, ceremonial tone. (Cue: address/ apostrophe.)</li>
-      <li><strong>Sonnet</strong> — compact argument + volta/turn (Shakespearean: ABAB CDCD EFEF GG). Always point out the turn when asked.</li>
-      <li><strong>Elegy</strong> — lament + consolation (structure: lament → praise → consolation).</li>
-      <li><strong>Lyric</strong> — personal feeling; best for close reading and language points.</li>
-    </ul>
+/* --- APOLOGY TEXT --- */
+const apologyKey = 'anushka_apology_v1'
+const apologyEl = document.getElementById('apology-text')
+const resetApologyBtn = document.getElementById('reset-apology')
+const downloadApologyBtn = document.getElementById('download-apology')
+const defaultApology = apologyEl.value.trim()
+const savedApology = localStorage.getItem(apologyKey)
+if(savedApology) apologyEl.value = savedApology
+apologyEl.addEventListener('input', ()=> save(apologyKey, apologyEl.value))
+resetApologyBtn.onclick = ()=>{ if(confirm('Reset template?')){ apologyEl.value = defaultApology; save(apologyKey, apologyEl.value)} }
+downloadApologyBtn.onclick = ()=> {
+  const blob = new Blob([apologyEl.value], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='apology_for_anushka.txt'; a.click(); URL.revokeObjectURL(url);
+}
 
-    <h3>3. Devices — what to spot and how to write about them</h3>
-    <p>When a poem asks for “language” or “style”, use this checklist and quote a short phrase (1–6 words) as evidence:</p>
-    <ul>
-      <li><strong>Sound:</strong> alliteration / assonance / rhyme — mention how sound matches meaning (e.g., soft sounds for calm).</li>
-      <li><strong>Imagery:</strong> visual, auditory, tactile — link an image to emotion.</li>
-      <li><strong>Figurative speech:</strong> metaphor, simile, personification — explain briefly what two things the poet compares and why.</li>
-      <li><strong>Form & structure:</strong> stanza length, rhyme scheme, enjambment — say what the structure does (e.g., breaks thought, speeds up pace).</li>
-      <li><strong>Tone & voice:</strong> speaker’s attitude — isolate words that show irony, wonder, anger, tenderness.</li>
-    </ul>
+/* --- GROWTH PLAN --- */
+const growthKey = 'anushka_growth_v1'
+let growth = load(growthKey, [
+  {id:uid(), text:'Listen without interrupting for 3 minutes', done:false},
+  {id:uid(), text:'Send one thoughtful text (no defense)', done:false},
+  {id:uid(), text:'Plan a small shared activity', done:false}
+])
+const growthList = document.getElementById('growth-list')
+const growthNew = document.getElementById('growth-new')
+document.getElementById('growth-add').onclick = ()=>{
+  const t = growthNew.value.trim(); if(!t) return alert('Write an action.')
+  growth.push({id:uid(), text:t, done:false}); save(growthKey,growth); growthNew.value=''; renderGrowth()
+}
+function renderGrowth(){
+  growthList.innerHTML = ''
+  if(growth.length===0){ growthList.innerHTML = '<div class="small">No actions yet.</div>'; return }
+  growth.forEach(g=>{
+    const el = document.createElement('div'); el.className='item'
+    const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = !!g.done
+    cb.onchange = ()=>{ g.done = cb.checked; save(growthKey,growth); renderGrowth() }
+    const label = document.createElement('span'); label.style.marginLeft='8px'; label.textContent=g.text
+    const del = document.createElement('button'); del.textContent='Delete'; del.className='btn-ghost'
+    del.onclick = ()=>{ if(confirm('Delete this action?')){ growth = growth.filter(x=>x.id!==g.id); save(growthKey,growth); renderGrowth() } }
+    el.append(cb,label, del)
+    growthList.appendChild(el)
+  })
+}
+renderGrowth()
 
-    <h3>4. Quick one-paragraph sample answer (use as template)</h3>
-    <p><em>Question:</em> What does <b>Daffodils</b> say about memory?</p>
-    <p><strong>Answer (sample, 6–8 lines):</strong> Wordsworth’s <i>Daffodils</i> suggests that memory is a moral resource. The poem transforms a visual scene of flowers into a lasting interior joy; images of “dancing” daffodils and the solitude of the speaker create contrast. The final stanza shows that recollection restores tranquility — memory is the mind’s garden that can be tended and returned to in difficulty. (Finish by naming poetic device: personification and recollection.)</p>
+/* --- CALENDAR (Birthday month) --- */
+const calendarKey = 'anushka_calendar_v1'
+let calendar = load(calendarKey, {})
+const calGrid = document.getElementById('calendar-grid')
+const calSelected = document.getElementById('cal-selected')
+const calWishInput = document.getElementById('cal-wish')
+document.getElementById('cal-save').onclick = ()=>{
+  const sel = calSelected.dataset.day
+  if(!sel) return alert('Select a day first.')
+  const t = calWishInput.value.trim()
+  if(!t){ delete calendar[sel]; } else { calendar[sel]=t }
+  save(calendarKey, calendar); renderCalendar(); calWishInput.value=''
+}
+document.getElementById('cal-clear').onclick = ()=>{
+  const sel = calSelected.dataset.day
+  if(!sel) return alert('Select a day first.')
+  if(confirm('Clear wish for this day?')){ delete calendar[sel]; save(calendarKey,calendar); renderCalendar(); calWishInput.value='' }
+}
 
-    <h3>5. Probable short questions (Section A style)</h3>
-    <ul>
-      <li>Define lyric poem with an example.</li>
-      <li>Explain blank verse and give a line feature.</li>
-      <li>What is a conceit? Give a short example (Donne).</li>
-    </ul>
+function renderCalendar(){
+  calGrid.innerHTML = ''
+  const days = Array.from({length:31}, (_,i)=>i+1)
+  const today = new Date().getDate()
+  days.forEach(d=>{
+    const el = document.createElement('div'); el.className='cal-day'; el.textContent=d
+    el.dataset.day = d
+    if(d===today) el.classList.add('today')
+    if(calendar[d]) {
+      const note = document.createElement('div'); note.style.fontSize='12px'; note.style.marginTop='6px'; note.style.color='var(--muted)'
+      note.textContent = calendar[d].slice(0,40) + (calendar[d].length>40 ? '…' : '')
+      el.appendChild(note)
+    }
+    el.onclick = ()=>{ calSelected.textContent = d; calSelected.dataset.day = d; calWishInput.value = calendar[d] || '' }
+    calGrid.appendChild(el)
+  })
+}
+renderCalendar()
 
-    <div class="exam-tip"><strong>Exam tip:</strong> For any short note, begin with a one-line definition, then add one example line and one effect sentence. That wins full marks.</div>
-  </section>
+/* --- GALLERY --- */
+const galleryKey = 'anushka_gallery_v1'
+let gallery = load(galleryKey, [])
+const galleryInput = document.getElementById('gallery-file')
+const galleryGrid = document.getElementById('gallery-grid')
+galleryInput.addEventListener('change', async (e)=>{
+  const f = e.target.files[0]; if(!f) return
+  if(f.size > 1024*1024*1.6){ if(!confirm('Image is large; saving may hit storage limits. Continue?')) return }
+  const data = await fileToDataURL(f)
+  gallery.push({id:uid(), dataURL:data, caption:'', date:new Date().toISOString()})
+  save(galleryKey,gallery); renderGallery(); galleryInput.value=''
+})
+function renderGallery(){
+  galleryGrid.innerHTML = ''
+  if(!gallery || gallery.length===0){ galleryGrid.innerHTML = '<div class="small">No images yet.</div>'; return }
+  gallery.slice().reverse().forEach(img=>{
+    const card = document.createElement('div'); card.className='item'
+    const image = document.createElement('img'); image.src = img.dataURL; image.className='thumb'
+    const cap = document.createElement('div'); cap.className='small'; cap.textContent = img.caption || ''
+    const edit = document.createElement('button'); edit.textContent='Edit'; edit.className='btn-ghost'
+    edit.onclick = ()=>{
+      const newc = prompt('Caption', img.caption||'')
+      if(newc!=null){ img.caption=newc; save(galleryKey,gallery); renderGallery() }
+    }
+    const del = document.createElement('button'); del.textContent='Delete'; del.className='btn-ghost'
+    del.onclick = ()=>{ if(confirm('Delete image?')){ gallery = gallery.filter(x=>x.id!==img.id); save(galleryKey,gallery); renderGallery() } }
+    card.append(image, cap, edit, del)
+    galleryGrid.appendChild(card)
+  })
+}
+renderGallery()
 
-  <!-- UNIT II - Expanded -->
-  <section id="unit2" class="card" aria-labelledby="u2">
-    <h2 id="u2">Unit II — Classical & Metaphysical Poetry — Detailed notes & models</h2>
+/* --- AUDIO --- */
+const audioKey = 'anushka_audio_v1'
+let audios = load(audioKey, [])
+const audioInput = document.getElementById('audio-file')
+const audioList = document.getElementById('audio-list')
+audioInput.addEventListener('change', async (e)=>{
+  const f = e.target.files[0]; if(!f) return
+  if(f.size > 1024*1024*4){ if(!confirm('Audio is large; saving may hit storage limits. Continue?')) return }
+  const data = await fileToDataURL(f)
+  audios.push({id:uid(), dataURL:data, name:f.name, date:new Date().toISOString()})
+  save(audioKey,audios); renderAudio(); audioInput.value=''
+})
+function renderAudio(){
+  audioList.innerHTML = ''
+  if(!audios || audios.length===0) { audioList.innerHTML = '<div class="small">No audio yet.</div>'; return }
+  audios.slice().reverse().forEach(a=>{
+    const el = document.createElement('div'); el.className='item'
+    const meta = document.createElement('div'); meta.className='meta'; meta.textContent = a.name + ' — ' + new Date(a.date).toLocaleString()
+    const audio = document.createElement('audio'); audio.controls=true; audio.src=a.dataURL; audio.style.width='100%'
+    const del = document.createElement('button'); del.textContent='Delete'; del.className='btn-ghost'
+    del.onclick = ()=>{ if(confirm('Delete audio?')){ audios = audios.filter(x=>x.id!==a.id); save(audioKey,audios); renderAudio() } }
+    el.append(meta, audio, del)
+    audioList.appendChild(el)
+  })
+}
+renderAudio()
 
-    <h3>Homer — short context + what to write (extract from Iliad)</h3>
-    <p>
-      <strong>Context:</strong> The <i>Iliad</i> centers on the Trojan War and the tension between personal honour and communal fate. For an extract, identify the speaker and situation (who is speaking? what triggered the scene?).</p>
-    <p><strong>How to answer:</strong> Summarize the extract (2 lines), mention its thematic link to the epic (e.g., heroism, mortality), and point to Homer's style (epic similes, elevated diction).</p>
+/* --- Backup / Export / Import --- */
+const exportBtn = document.getElementById('export-data')
+const importFile = document.getElementById('import-file')
+exportBtn.onclick = ()=>{
+  const dump = {
+    wishes, timeline, growth, calendar, gallery, audios, apology: localStorage.getItem(apologyKey) || ''
+  }
+  const blob = new Blob([JSON.stringify(dump, null, 2)], {type:'application/json'})
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a'); a.href = url; a.download = 'anushka_backup_'+new Date().toISOString().slice(0,10)+'.json'; a.click(); URL.revokeObjectURL(url)
+}
+importFile.addEventListener('change', async (e)=>{
+  const f = e.target.files[0]; if(!f) return
+  if(!confirm('Importing will replace current data. Continue?')) { importFile.value=''; return }
+  const txt = await f.text()
+  try{
+    const obj = JSON.parse(txt)
+    wishes = obj.wishes || []; save(wishesKey,wishes)
+    timeline = obj.timeline || []; save(timelineKey,timeline)
+    growth = obj.growth || []; save(growthKey,growth)
+    calendar = obj.calendar || {}; save(calendarKey,calendar)
+    gallery = obj.gallery || []; save(galleryKey,gallery)
+    audios = obj.audios || []; save(audioKey,audios)
+    if(obj.apology) { apologyEl.value = obj.apology; save(apologyKey,obj.apology) }
+    renderAll()
+    alert('Import complete.')
+  }catch(err){ alert('Invalid file.') }
+  importFile.value=''
+})
 
-    <h3>Shakespeare — songs & Sonnet 30</h3>
-    <ul>
-      <li><strong>“Blow, Blow, Thou Winter Wind”</strong> — Tone: bitterly comic; technique: apostrophe to the wind, antithesis (wind vs human ingratitude). Exam cue: say how nature exposes human ingratitude.</li>
-      <li><strong>Sonnet 30</strong> — Theme: recollection & consolation; structure: problem (loss) → recovery (memory of friend). Cue: point to volta where consolation arrives.</li>
-    </ul>
+/* --- helpers --- */
+function fileToDataURL(file){ return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=()=>rej(); fr.readAsDataURL(file) }) }
 
-    <h3>John Donne — <i>A Valediction: Forbidding Mourning</i></h3>
-    <p>
-      <strong>Context & purpose:</strong> A farewell poem where the speaker reassures his beloved of spiritual unity despite physical separation.</p>
-    <p><strong>Key features to write about:</strong></p>
-    <ul>
-      <li><b>Conceit of the compass:</b> the two lovers like the two legs — they remain one movement. Explain how the conceit fuses idea and feeling.</li>
-      <li><b>Tone:</b> calm, confident, philosophical. Point to the paradox that separation deepens love’s “sublimity”.</li>
-      <li><b>Form:</b> metaphysical wit — abrupt images that force intellectual engagement.</li>
-    </ul>
-    <p><strong>Short model paragraph (exam):</strong> Donne’s compass conceit connects physical geometry to emotional fidelity; the sturdiness of the compass leg images the constancy and guidance of love. The effect is to elevate domestic devotion to metaphysical truth.</p>
+function renderAll(){ renderWishes(); renderTimeline(); renderGrowth(); renderCalendar(); renderGallery(); renderAudio() }
 
-    <h3>John Milton — extract (style points)</h3>
-    <ul>
-      <li>Write about Milton’s blank verse: formal, elevated diction, syntactic complexity.</li>
-      <li>Note rhetorical devices: apostrophe to God or fate, use of antithesis (earthly/political tensions).</li>
-      <li>Exam cue: point out one or two strong images and explain their effect.</li>
-    </ul>
+/* initial render done above; keep functions available if needed */
+window.renderAll = renderAll
 
-    <h3>Probable long-answer (example)</h3>
-    <p><strong>Q:</strong> “Explain the use of conceits in Donne and how they shape meaning.”</p>
-    <p><strong>A:</strong> Define conceit, give the compass example and one additional (e.g., beaten gold or the cathedral image), and explain how the intellectual surprise makes the feeling clearer — it demands reader reasoning — end with a sentence about tone and audience.</p>
-  </section>
-
-  <!-- UNIT III - Expanded -->
-  <section id="unit3" class="card" aria-labelledby="u3">
-    <h2 id="u3">Unit III — Neo-Classical Poetry — Detailed</h2>
-
-    <h3>Alexander Pope — short guide</h3>
-    <p>
-      <strong>Context:</strong> Pope writes in the Augustan tradition: balance, order, satiric voice. Use heroic couplets (two-line rhymed units) to discuss form and its epigrammatic effect.
-    </p>
-    <p><strong>What to write:</strong> Identify Pope’s moral argument (e.g., limits of human reason in <i>An Essay on Man</i>), show one couplet’s function, and mention satire as social critique.</p>
-    <p><strong>Exam line to memorize:</strong> Don’t quote long lines — refer to the idea: “Pope compresses moral paradox into neat couplets” and give an example paraphrase.</p>
-
-    <h3>Thomas Gray — <i>Elegy Written in a Country Churchyard</i></h3>
-    <p>
-      <strong>Context:</strong> Mid-18th-century reflection on ordinary lives. The elegy is not just private grief; it is public moral instruction.
-    </p>
-    <h4>Structure & how to write it in exam</h4>
-    <ul>
-      <li><strong>Opening lines:</strong> set the setting (churchyard at evening) — note mood & landscape.</li>
-      <li><strong>Middle stanzas:</strong> recall the common man’s unheralded worth — use examples: husbandry, simple virtue.</li>
-      <li><strong>Final stanzas:</strong> consolatory, general moral: fame is fragile; virtue is true value.</li>
-    </ul>
-
-    <h4>Key things to quote/paraphrase</h4>
-    <p>Use short paraphrases like “the paths of glory lead to the grave” (paraphrase the theme instead of quoting long lines). Identify imagery: “rural stillness”, “epitaphic voice”.</p>
-
-    <h3>Sample 10-line model answer (Gray)</h3>
-    <p>Gray’s elegy solemnly records the dignity of ordinary lives. The rural imagery creates a reflective mood; the poem’s turn to memory and epitaph shows that social worth is not only public renown but private virtue. In examinations, emphasize the egalitarian theme and Gray’s use of pastoral devices to dignify everyday labour.</p>
-  </section>
-
-  <!-- UNIT IV - Expanded -->
-  <section id="unit4" class="card" aria-labelledby="u4">
-    <h2 id="u4">Unit IV — Romantic Poetry — Detailed</h2>
-
-    <h3>William Blake — <i>The Tyger</i> (how to answer)</h3>
-    <p>
-      <strong>Core idea:</strong> Blake explores creation’s paradox — fierce beauty & fearful symmetry. He asks who could craft both the lamb and the tiger.
-    </p>
-    <ul>
-      <li><strong>Imagery:</strong> fire & forge; blacksmith imagery (creation as craft).</li>
-      <li><strong>Form:</strong> regular trochaic rhythm — creates a hammering effect (imitates forging).</li>
-      <li><strong>Exam cue:</strong> mention innocence/experience contrast (Blake’s two books).</li>
-    </ul>
-
-    <h3>Wordsworth — <i>I Wandered Lonely as a Cloud (Daffodils)</i></h3>
-    <p>
-      <strong>What to emphasise:</strong> Wordsworth’s use of nature as restorative memory. The poem progresses from solitary feeling to the recollected bliss that sustains the speaker later.
-    </p>
-    <ul>
-      <li>Point out device: personification of daffodils (they “dance”).</li>
-      <li>Note theme: imagination & recollection — memory converts passing sight into moral calm.</li>
-    </ul>
-
-    <h3>Coleridge — <i>Dejection: An Ode</i></h3>
-    <p>
-      Focus on the speaker’s failure of imaginative power and the resulting melancholic tone; discuss how the poem's shift from outward description to inward confession maps the poet's crisis.
-    </p>
-
-    <h3>Shelley — <i>To a Skylark</i></h3>
-    <p>
-      The skylark is an emblem of spontaneous joy; Shelley uses ecstatic imagery and hypothetical comparisons (poetry can’t fully capture the skylark’s felicity). Mention Shelley’s idealism and musical syntax.
-    </p>
-
-    <h3>Keats — <i>Ode to a Nightingale</i></h3>
-    <p>
-      Stress Keats’s sensual images and the tension between transience (mortality) and the nightingale’s seeming eternity. Discuss the poem’s desire to escape through imagination and the final acceptance of mortality.
-    </p>
-
-    <h4>Quick exam strategy (Romantics)</h4>
-    <ul>
-      <li>Always quote one short line (under 15 words) as a textual anchor.</li>
-      <li>Note the poem’s emotional movement (beginning → middle → end): describe how language changes to match feeling.</li>
-    </ul>
-  </section>
-
-  <!-- UNIT V - Expanded -->
-  <section id="unit5" class="card" aria-labelledby="u5">
-    <h2 id="u5">Unit V — Victorian & Modern Poetry — Detailed</h2>
-
-    <h3>Tennyson — <i>Break, Break, Break</i></h3>
-    <p>
-      Speak about the poem’s use of the sea as rhythmic background to personal grief; structure is short and brittle, echoing the speaker’s broken feeling. Mention use of repetition & short clauses to mimic waves and interruption.
-    </p>
-
-    <h3>Robert Browning — <i>Prospice</i></h3>
-    <p>
-      Browning confronts death with defiance; the poem is dramatic and celebrates courage (“I shall be more” — paraphrase). Analyze the speaker’s voice and use of heroic tone.
-    </p>
-
-    <h3>W. B. Yeats — <i>A Prayer for My Daughter</i></h3>
-    <p>
-      Yeats blends public anxiety and private wish: his prayer is for stability, rootedness, moral order for his child. Use the poem’s political context (post-revolution) to explain the anxious mood.
-    </p>
-
-    <h3>Sarojini Naidu — <i>Indian Weavers</i></h3>
-    <p>
-      Focus on imagery of craft; the poem celebrates communal work, tradition, and the music of labour. Use cultural vocabulary as answer points — colour, rhythm, tactile images.
-    </p>
-
-    <h3>Eunice de Souza — <i>Marriages Are Made</i></h3>
-    <p>
-      This modern poem is sharp and ironic. Point out its conversational diction, its domestic images, and the way irony reveals social constraints.
-    </p>
-
-    <h4>Exam quick checks (modern poems)</h4>
-    <ul>
-      <li>Identify tone (ironic, bitter, elegiac). Modern poems often reward a statement about social context.</li>
-      <li>Short quotes + a note on diction (colloquial vs elevated) win marks.</li>
-    </ul>
-  </section>
-
-  <!-- Section A exact -->
-  <section id="sectiona" class="card" aria-labelledby="secA">
-    <h2 id="secA">Section A — Exact answers (copy them, learn them)</h2>
-
-    <p>Memorize any five. Each block is 50–70 words and exam-ready.</p>
-
-    <div class="section-a" aria-hidden="false">
-1) Poetry is a literary form that expresses emotions and ideas through rhythm, imagery,
-and symbolic language. It differs from prose in its musical structure and condensed expression.
-
-2) A sonnet is a fourteen-line poem written in iambic pentameter, commonly associated
-with themes of love, time, and beauty. The sonnet often contains a turn (volta).
-
-3) An elegy is a poem of mourning that reflects on death, loss, and the passage
-of time; it commonly moves from lament towards consolation or reflection.
-
-4) Metaphysical poetry is characterised by intellectual imagery, philosophical themes,
-and extended conceits — its rhetoric is argumentative and playful, as in Donne.
-
-5) Romantic poetry emphasises emotion, imagination, nature, and individual experience,
-reacting against neoclassical restraint and valuing spontaneity and insight.
-    </div>
-
-    <div class="quote" style="margin-top:12px">“Sometimes learning is healing — one word, one line, one small victory at a time.”</div>
-  </section>
-
-  <!-- Section B guidance - expanded with sample models -->
-  <section id="sectionb" class="card" aria-labelledby="secB">
-    <h2 id="secB">Section B — How to write a 15-mark answer (Detailed, spoon-fed)</h2>
-
-    <p>Follow this structured template. Write headings in the answer, keep neat paragraphs, and include one short textual quote (1–10 words) in every answer.</p>
-
-    <div class="model-structure">
-      <ol>
-        <li><strong>Intro (2 lines):</strong> State poet, poem, period; one-line thesis (what the poem does).</li>
-        <li><strong>Summary (2–3 lines):</strong> Very concise — avoid plot detail except where relevant.</li>
-        <li><strong>Themes (3 bullets):</strong> Each theme — 1 sentence example + short explanation.</li>
-        <li><strong>Imagery & devices (3 bullets):</strong> Name device, quote 1–8 words, say effect.</li>
-        <li><strong>Tone & structure:</strong> Note stanza form, any shifts (volta), sound patterns.</li>
-        <li><strong>Conclusion (2 lines):</strong> Sum up poet’s aim and poem’s lasting effect.</li>
-      </ol>
-    </div>
-
-    <h3>Model answer 1 — Donne: <i>A Valediction: Forbidding Mourning</i> (handwriting-ready)</h3>
-    <ol>
-      <li><strong>Intro:</strong> John Donne’s lyric reassures a beloved about separation — metaphysical conceits replace emotional panic with reasoned faith.</li>
-      <li><strong>Summary:</strong> The speaker instructs against public displays of grief and uses the compass conceit to show spiritual unity despite distance.</li>
-      <li><strong>Themes:</strong>
-        <ul>
-          <li>Enduring love — beyond physical separation.</li>
-          <li>Spiritual unity — love as metaphysical bond.</li>
-          <li>Calm stoicism — the proper response to parting.</li>
-        </ul>
-      </li>
-      <li><strong>Imagery & devices:</strong>
-        <ul>
-          <li>Conceit (compass): maps emotion to geometry.</li>
-          <li>Paradox: “two, they are one” — unity in separation.</li>
-        </ul>
-      </li>
-      <li><strong>Tone & structure:</strong> Argumentative, calm; use of irregular metre heightens rhetorical control.</li>
-      <li><strong>Conclusion:</strong> Donne transforms personal farewell into philosophical proof of love’s endurance.</li>
-    </ol>
-
-    <h3 style="margin-top:12px">Model answer 2 — Wordsworth: <i>Daffodils</i></h3>
-    <ol>
-      <li><strong>Intro:</strong> Wordsworth’s lyric celebrates the mind’s power to transform a visual scene into ongoing joy.</li>
-      <li><strong>Summary:</strong> A speaker sees dancing daffodils and later retrieves the image as comforting memory.</li>
-      <li><strong>Themes:</strong> Nature as solace; memory & imagination; solitude to connectedness.</li>
-      <li><strong>Imagery & devices:</strong> Personification (flowers “dance”); visual images; simple diction for accessibility.</li>
-      <li><strong>Tone & structure:</strong> Reflective; four stanzas moving from sight to recollection.</li>
-      <li><strong>Conclusion:</strong> The poem argues that memory is a moral resource that sustains inner peace.</li>
-    </ol>
-
-    <h3 style="margin-top:12px">Model answer 3 — Gray: <i>Elegy Written in a Country Churchyard</i></h3>
-    <ol>
-      <li><strong>Intro:</strong> Gray’s elegy reflects on the dignity of ordinary lives and the limits of fame.</li>
-      <li><strong>Summary:</strong> In a rural setting the speaker imagines the lives of the dead and recommends humility.</li>
-      <li><strong>Themes:</strong> Mortality; equality of death; memory’s moral function.</li>
-      <li><strong>Imagery & devices:</strong> Pastoral imagery; epitaphic tone; rhetorical questions to universalize experience.</li>
-      <li><strong>Conclusion:</strong> Gray dignifies humble virtue and cautions the proud about transience.</li>
-    </ol>
-
-    <div class="exam-tip" style="margin-top:12px">
-      <strong>Final exam checklist for Section B:</strong>
-      <ul>
-        <li>Underline one short quote per answer (helps the marker see textual knowledge).</li>
-        <li>Use headings and 3–5 clear bullets inside the body — markers award structure.</li>
-        <li>Write the first 2–3 lines slowly — clear opening scores marks for coherence.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- MESSAGE / AUDIO -->
-  <section id="message" class="card" aria-labelledby="msg">
-    <h2 id="msg">A Quiet Message — For Bhura!</h2>
-
-    <div class="audio-box" role="region" aria-label="Voice message for Anushka">
-      <p style="margin-bottom:12px">Sometimes words on a screen can’t hold everything I want to say —  
-so I recorded something just for you..</p>
-
-      <audio controls preload="none" style="max-width:100%;">
-        <source src="message.m4a" type="audio/mp4">
-        Your browser does not support the audio element. Save the file as <code>message.m4a</code> in the same folder.
-      </audio>
-
-      <p class="quote" style="margin-top:12px">“Some things are easier to say when the world is quiet.”</p>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-<p>
-  Built patiently, written softly, and dedicated wholly — to you, Anushka.  
-  May this small effort remind you that you’re not alone, that you’re loved deeply,  
-  and that no matter how hard it gets, you have someone quietly rooting for you always.  
-</p>
-<p>— Yours, always and forever! 🧿❤️🐢</p>
-</footer>
-
+</script>
 
 </body>
 </html>
