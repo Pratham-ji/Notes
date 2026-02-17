@@ -2,545 +2,498 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>If You Ever Doubt Us Again</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18th February</title>
     <style>
-        /* Chosen Palette: Soft Beige (#FDFBF7), Warm Blush (#E6D5CC), Muted Brown (#8C7B70), Deep Charcoal (#2D2D2D) */
-        
-        body, html {
+        /* THEME: Cosmic Gallery / Midnight in Greece
+           PALETTE: Deep Black, Starlight Yellow, Soft Pink
+        */
+        :root {
+            --bg-deep: #050505;
+            --text-cream: #eaeaea;
+            --accent-yellow: #fceea7; /* Soft Moon Yellow */
+            --accent-pink: #f2c1d1;   /* Muted Rose Pink */
+            --glass-panel: rgba(20, 20, 20, 0.6);
+            --border-glow: rgba(252, 238, 167, 0.2);
+            --font-serif: "Playfair Display", "Times New Roman", serif;
+            --font-mono: "Courier New", monospace;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            font-family: 'Montserrat', sans-serif;
-            background-color: #FDFBF7;
-            color: #2D2D2D;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-cream);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
         }
 
-        h1, h2, h3, .serif-font {
-            font-family: 'Cormorant Garamond', serif;
-        }
-
-        /* Chart Container - Explicit Height for Mobile Safety */
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            height: 350px;
-            margin: 0 auto;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
-        }
-
-        /* --- INTRO SCREEN FIXES --- */
-        #intro-screen {
+        /* CANVAS BACKGROUND */
+        #starfield {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100dvh; /* Use dynamic viewport height for mobile browsers */
-            background-color: #000;
-            z-index: 9999;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+        }
+
+        .pink-text { color: var(--accent-pink); }
+        .yellow-text { color: var(--accent-yellow); }
+        
+        .mono-sub {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* LAYOUT UTILITIES */
+        .screen {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2rem; /* Padding to keep text off edges */
-            box-sizing: border-box;
-            transition: opacity 1.5s ease-in-out;
-        }
-
-        /* Grid Stack Technique: Keeps layout flow intact */
-        .intro-text-stack {
-            display: grid;
-            grid-template-areas: "stack"; /* Define a single area */
-            place-items: center;
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
-            margin-bottom: 3rem; /* Safe space between text and button */
-        }
-
-        .intro-text {
-            grid-area: stack; /* Put both paragraphs in the same spot */
-            color: #d6d3d1;
-            transition: opacity 1.5s ease;
-            margin: 0;
-            width: 100%;
-        }
-
-        /* Button Styling */
-        .btn-glow {
-            box-shadow: 0 0 10px rgba(230, 213, 204, 0.3);
-            animation: glow 3s infinite;
-        }
-
-        @keyframes glow {
-            0% { box-shadow: 0 0 5px rgba(230, 213, 204, 0.2); border-color: #57534e; }
-            50% { box-shadow: 0 0 20px rgba(230, 213, 204, 0.5), 0 0 10px rgba(255,255,255,0.1); border-color: #d6d3d1; }
-            100% { box-shadow: 0 0 5px rgba(230, 213, 204, 0.2); border-color: #57534e; }
-        }
-
-        /* Content Visibility Transitions */
-        .content-hidden {
+            padding: 2rem;
+            position: relative;
             opacity: 0;
-            display: none; 
+            transform: translateY(30px);
+            transition: all 1.2s ease-out;
         }
 
-        .content-visible {
-            display: block;
-            animation: fadeInPage 1.5s forwards;
-        }
-
-        @keyframes fadeInPage {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Scroll Animations */
-        .reveal-item {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        .reveal-item.active {
+        .screen.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Delays */
-        .delay-200 { transition-delay: 200ms; }
-        .delay-400 { transition-delay: 400ms; }
-        .delay-600 { transition-delay: 600ms; }
-        .delay-800 { transition-delay: 800ms; }
-        .delay-1000 { transition-delay: 1000ms; }
-
-        /* Horizon Canvas */
-        #horizon-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .container {
+            max-width: 700px;
             width: 100%;
-            height: 100%;
-            z-index: 0;
+            text-align: center;
+        }
+
+        /* CARDS (Museum Exhibits) */
+        .exhibit-card {
+            background: var(--glass-panel);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glow);
+            padding: 3rem;
+            border-radius: 2px; /* Museum tag style */
+            position: relative;
+            margin: 2rem 0;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .exhibit-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: var(--accent-yellow);
+            box-shadow: 0 0 10px var(--accent-yellow);
+        }
+
+        /* SCROLL DOWN INDICATOR */
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            font-size: 2rem;
+            color: var(--accent-pink);
+            animation: bounce 2s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* HERO SECTION */
+        .hero-title {
+            font-size: 4rem;
+            line-height: 1.1;
+            background: linear-gradient(to right, var(--text-cream), var(--accent-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        /* COUNTDOWN */
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 2rem;
+        }
+
+        .time-unit {
+            border-top: 1px solid var(--accent-pink);
+            padding-top: 10px;
+        }
+
+        .time-val {
+            font-size: 2.5rem;
+            font-family: var(--font-serif);
+            display: block;
+        }
+
+        .time-label {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+
+        /* THE DOGS SECTION */
+        .dog-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .dog-tag {
+            border: 1px solid var(--accent-yellow);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--accent-yellow);
+        }
+
+        /* LOCKED SECTION */
+        .locked-overlay {
+            filter: blur(8px);
+            user-select: none;
+            transition: filter 1.5s ease;
         }
         
-        /* Mobile Text Adjustments */
-        .text-balance {
-            text-wrap: balance; /* Prevents orphaned words on new lines */
+        .unlock-msg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 100%;
         }
+
+        .is-unlocked .locked-overlay {
+            filter: blur(0);
+        }
+        .is-unlocked .unlock-msg {
+            display: none;
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .exhibit-card { padding: 2rem 1.5rem; }
+            .countdown-grid { gap: 5px; }
+            .time-val { font-size: 1.5rem; }
+        }
+
     </style>
-    <!-- Application Structure Plan:
-         1. Intro Screen: Uses CSS Grid to stack text. This allows the container to grow 
-            vertically if text wraps on mobile, forcing the button down. 
-            No overlap possible.
-         2. Main Content: Standard sections.
-         3. Chart: Confined in a sized container.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
 <body>
 
-    <!-- INTRO SCREEN -->
-    <div id="intro-screen">
-        <!-- Text Stack: Grid ensures the container is as tall as the tallest text -->
-        <div class="intro-text-stack">
-            <!-- Text 1 -->
-            <p id="intro-1" class="serif-font text-2xl md:text-4xl font-light tracking-wide intro-text opacity-0 text-balance leading-relaxed">
-                Before you scroll…<br>breathe.
-            </p>
-            <!-- Text 2 -->
-            <p id="intro-2" class="serif-font text-2xl md:text-4xl font-light tracking-wide intro-text opacity-0 text-balance leading-relaxed">
-                Now remember why we chose each other.
+    <!-- BACKGROUND: The "Constellation" Factor -->
+    <canvas id="starfield"></canvas>
+
+    <!-- 1. OPENING: MIDNIGHT -->
+    <section class="screen visible" id="home">
+        <div class="container">
+            <span class="mono-sub yellow-text">Current Date: 18th Feb</span>
+            <h1 class="hero-title">Two days before the <br>stars aligned.</h1>
+            <p style="margin-top: 20px; font-weight: 300; opacity: 0.8;">
+                Welcome to the quiet hours. <br>The world is asleep, but my mind is loud with you.
             </p>
         </div>
-        
-        <!-- Button: Positioned via standard flow (margin), not absolute -->
-        <div class="z-50">
-            <button id="start-btn" class="px-10 py-4 border border-stone-600 text-stone-300 rounded-full font-light text-sm tracking-widest uppercase hover:bg-stone-900 hover:text-white transition-all duration-500 opacity-0 btn-glow cursor-pointer select-none touch-manipulation">
-                Start
-            </button>
+        <div class="scroll-hint">↓</div>
+    </section>
+
+    <!-- 2. COUNTDOWN -->
+    <section class="screen">
+        <div class="container">
+            <div class="exhibit-card">
+                <span class="mono-sub pink-text">Coordinate: The 20th</span>
+                <h2>Counting down to your moment</h2>
+                
+                <div class="countdown-grid">
+                    <div class="time-unit">
+                        <span class="time-val" id="d">00</span>
+                        <span class="time-label">Days</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-val" id="h">00</span>
+                        <span class="time-label">Hours</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-val" id="m">00</span>
+                        <span class="time-label">Mins</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-val" id="s">00</span>
+                        <span class="time-label">Secs</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- MAIN CONTENT -->
-    <main id="main-content" class="content-hidden">
-        
-        <!-- SECTION 1: THE HONEST MIRROR -->
-        <section class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-[#FDFBF7]">
-            <div class="max-w-2xl text-center space-y-8 w-full">
-                <h2 class="serif-font text-3xl md:text-5xl text-stone-800 mb-8 reveal-item js-scroll">The Honest Mirror</h2>
-                
-                <div class="space-y-6 text-lg md:text-2xl text-stone-600 font-light leading-relaxed" id="mirror-text-container">
-                    <p class="reveal-item">“We are not perfect.”</p>
-                    <p class="reveal-item delay-200">“We overthink.”</p>
-                    <p class="reveal-item delay-400">“We get scared.”</p>
-                    <p class="reveal-item delay-600">“We fight.”</p>
-                    <p class="serif-font text-2xl md:text-3xl text-stone-800 pt-4 reveal-item delay-1000">“But we come back.”</p>
-                </div>
-            </div>
-            <!-- Scroll Hint -->
-            <div class="absolute bottom-10 animate-bounce text-stone-400 text-xl opacity-0 transition-opacity duration-1000" id="scroll-hint">
-                ↓
-            </div>
-        </section>
-
-        <!-- SECTION 2: WHAT I'VE LEARNED -->
-        <section class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-stone-50">
-            <div class="max-w-4xl w-full">
-                <div class="mb-16 text-center">
-                    <h2 class="serif-font text-2xl md:text-4xl text-stone-800 reveal-item js-scroll">What I’ve Learned About You</h2>
-                    <p class="mt-4 text-stone-500 font-light text-sm md:text-base reveal-item js-scroll delay-200">The quiet things I notice when you think I'm not looking.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                    <!-- Cards -->
-                    <div class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] reveal-item js-scroll">
-                        <h3 class="serif-font text-xl text-stone-800 mb-3">Control vs. Safety</h3>
-                        <p class="text-stone-600 font-light leading-relaxed">
-                            “You don’t need control. You need emotional safety. When you feel held, you soften.”
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] reveal-item js-scroll delay-200">
-                        <h3 class="serif-font text-xl text-stone-800 mb-3">Your Silence</h3>
-                        <p class="text-stone-600 font-light leading-relaxed">
-                            “When you’re quiet, you’re overwhelmed — not distant. I'm learning to wait in the doorway.”
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] reveal-item js-scroll">
-                        <h3 class="serif-font text-xl text-stone-800 mb-3">Your Love Language</h3>
-                        <p class="text-stone-600 font-light leading-relaxed">
-                            “You love deeply, even when you struggle to show it. It's in the way you check if I've eaten.”
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] reveal-item js-scroll delay-200">
-                        <h3 class="serif-font text-xl text-stone-800 mb-3">Meaning of Gestures</h3>
-                        <p class="text-stone-600 font-light leading-relaxed">
-                            “Gestures matter to you because they mean security. Consistency is your true romance.”
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 3: WHAT I'M WORKING ON -->
-        <section class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-[#FDFBF7]">
-            <div class="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                
-                <!-- Text -->
-                <div class="order-2 lg:order-1 space-y-8">
-                    <h2 class="serif-font text-2xl md:text-4xl text-stone-800 reveal-item js-scroll">What I’m Working On</h2>
-                    <p class="text-stone-500 font-light italic mb-6 reveal-item js-scroll delay-200">My promise to build a better us.</p>
-                    
-                    <ul class="space-y-6">
-                        <li class="flex items-start reveal-item js-scroll delay-200">
-                            <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
-                            <span class="text-stone-700 font-light text-lg">Responding, not reacting. Taking that 3-second pause.</span>
-                        </li>
-                        <li class="flex items-start reveal-item js-scroll delay-400">
-                            <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
-                            <span class="text-stone-700 font-light text-lg">Listening fully, without planning my defense.</span>
-                        </li>
-                        <li class="flex items-start reveal-item js-scroll delay-600">
-                            <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
-                            <span class="text-stone-700 font-light text-lg">Not competing with your space. Letting you be.</span>
-                        </li>
-                        <li class="flex items-start reveal-item js-scroll delay-800">
-                            <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
-                            <span class="text-stone-700 font-light text-lg">Choosing calm over ego.</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Chart -->
-                <div class="order-1 lg:order-2 reveal-item js-scroll flex justify-center items-center w-full">
-                    <div class="chart-container">
-                        <canvas id="growthChart"></canvas>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECTION 4: OUR FUTURE -->
-        <section class="relative min-h-screen flex flex-col justify-center items-center px-6 overflow-hidden">
-            <canvas id="horizon-canvas"></canvas>
-            
-            <div class="relative z-10 text-center max-w-3xl space-y-12">
-                <h2 class="serif-font text-3xl md:text-5xl text-stone-100 reveal-item js-scroll drop-shadow-lg">Our Horizon</h2>
-                
-                <div class="space-y-8">
-                    <p class="text-xl md:text-2xl text-stone-200 font-light reveal-item js-scroll delay-200 drop-shadow-md">
-                        “One day, we’ll laugh about how dramatic we were.”
-                    </p>
-                    <p class="text-xl md:text-2xl text-stone-200 font-light reveal-item js-scroll delay-400 drop-shadow-md">
-                        “One day, this will feel small.”
-                    </p>
-                    <p class="text-xl md:text-2xl text-stone-100 font-medium reveal-item js-scroll delay-600 drop-shadow-md">
-                        “One day, we’ll be proud we didn’t give up.”
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- OUTRO -->
-        <section class="min-h-[80vh] flex flex-col justify-center items-center px-6 py-20 bg-[#FDFBF7] text-center">
-            <div class="space-y-6 mb-12">
-                <p class="serif-font text-2xl text-stone-600 reveal-item js-scroll">No grand promises.</p>
-                <p class="serif-font text-2xl text-stone-600 reveal-item js-scroll delay-200">No fear.</p>
-                <p class="serif-font text-2xl text-stone-600 reveal-item js-scroll delay-400">No pressure.</p>
-                <p class="serif-font text-3xl md:text-4xl text-stone-800 mt-8 reveal-item js-scroll delay-600 font-medium">
-                    Just choosing you — calmly.
+    <!-- 3. THE PROMISE (Landlord Ji) -->
+    <section class="screen">
+        <div class="container">
+            <div class="exhibit-card" style="border-color: var(--accent-yellow);">
+                <span class="mono-sub yellow-text">Exhibit A: A Vow</span>
+                <h3 style="font-size: 1.8rem; margin-bottom: 20px;">The Protector</h3>
+                <p style="line-height: 1.8; margin-bottom: 20px;">
+                    I know I am not him. No one can ever be him.<br>
+                    But I promise to take care of you with the same ferocity.<br>
+                    To check the locks. To worry about your meals.<br> 
+                    To be the wall between you and the world when it gets too loud.
+                </p>
+                <p class="yellow-text" style="font-style: italic;">
+                    Like I promised Landlord Ji, always watching over you.
                 </p>
             </div>
+        </div>
+    </section>
 
-            <button onclick="window.location.reload()" class="reveal-item js-scroll delay-800 px-10 py-4 bg-stone-800 text-stone-200 rounded-full font-light tracking-wide hover:bg-stone-700 transition-all duration-300 shadow-lg transform hover:scale-105 cursor-pointer touch-manipulation">
-                Close this. Come hug me.
-            </button>
-        </section>
+    <!-- 4. GREECE & AUTHENTICITY -->
+    <section class="screen">
+        <div class="container">
+            <span class="mono-sub pink-text">Future Destination</span>
+            <h2 style="font-size: 2.5rem; margin-bottom: 30px;">Greece, One Day.</h2>
+            
+            <p style="margin-bottom: 40px; font-size: 1.1rem;">
+                Walking through quiet museums. <br>Just us, history, and the art of staying real.
+            </p>
 
-        <footer class="py-8 text-center text-stone-400 text-xs font-light tracking-widest uppercase bg-[#FDFBF7]">
-            Built with awareness, not impulse.
-        </footer>
+            <div style="border-left: 1px solid var(--accent-pink); padding-left: 20px; text-align: left; margin: 0 auto; max-width: 400px;">
+                <p style="font-style: italic; opacity: 0.9;">
+                    "Not to change. <br>
+                    Not to pretend.<br>
+                    Just to be real. Always."
+                </p>
+            </div>
+        </div>
+    </section>
 
-    </main>
+    <!-- 5. THE CHAOS (DOGS) -->
+    <section class="screen">
+        <div class="container">
+            <div class="exhibit-card">
+                <span class="mono-sub yellow-text">The Plan</span>
+                <h3>Our House of Chaos</h3>
+                <p style="margin: 20px 0;">You love dogs. So naturally...</p>
+                
+                <p style="font-size: 1.2rem; margin-bottom: 20px; color: var(--accent-pink);">
+                    "You'll eat the cats."
+                </p>
+
+                <div class="dog-grid">
+                    <span class="dog-tag">Husky (Drama)</span>
+                    <span class="dog-tag">Shih Tzu (Sass)</span>
+                    <span class="dog-tag">Corgi (Loaf)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. LOCKED MESSAGE -->
+    <section class="screen">
+        <div class="container">
+            <div class="exhibit-card" id="lock-box">
+                
+                <div class="unlock-msg">
+                    <h2 style="font-size: 3rem;">🔒</h2>
+                    <p class="mono-sub">Locked until Feb 20th</p>
+                </div>
+
+                <div class="locked-overlay">
+                    <span class="mono-sub yellow-text">Top Secret</span>
+                    <h2 style="font-size: 2.5rem; color: var(--accent-pink); margin-bottom: 20px;">
+                        Happy Birthday, Anushka.
+                    </h2>
+                    <p style="line-height: 1.8;">
+                        I put the stars in this background, <br>
+                        but you are the one who lights up the room.<br>
+                        <br>
+                        The world is upside down without you.<br>
+                        Thank you for existing.
+                    </p>
+                </div>
+
+            </div>
+            
+            <footer style="margin-top: 50px; opacity: 0.5; font-size: 0.8rem;">
+                Built for the 20th. With love.
+            </footer>
+        </div>
+    </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- VARIABLES ---
-            const introScreen = document.getElementById('intro-screen');
-            const intro1 = document.getElementById('intro-1');
-            const intro2 = document.getElementById('intro-2');
-            const startBtn = document.getElementById('start-btn');
-            const mainContent = document.getElementById('main-content');
-            const scrollHint = document.getElementById('scroll-hint');
+        // --- 1. STARFIELD BACKGROUND (The Constellation X-Factor) ---
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let stars = [];
+        const colors = ['#fceea7', '#f2c1d1', '#ffffff']; // Yellow, Pink, White
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.opacity = Math.random();
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Wrap around screen
+                if (this.x < 0) this.x = width;
+                if (this.x > width) this.x = 0;
+                if (this.y < 0) this.y = height;
+                if (this.y > height) this.y = 0;
+
+                // Twinkle effect
+                this.opacity += (Math.random() - 0.5) * 0.05;
+                if (this.opacity < 0.1) this.opacity = 0.1;
+                if (this.opacity > 1) this.opacity = 1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < 150; i++) {
+                stars.push(new Star());
+            }
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, width, height);
             
-            // --- INTRO SEQUENCE ---
-            // 1. Fade in first text
-            setTimeout(() => {
-                intro1.style.opacity = '1';
-            }, 500);
+            // Connect stars that are close (Constellation effect)
+            ctx.strokeStyle = 'rgba(252, 238, 167, 0.05)';
+            ctx.lineWidth = 0.5;
+            
+            for (let i = 0; i < stars.length; i++) {
+                stars[i].update();
+                stars[i].draw();
 
-            // 2. Switch texts
-            setTimeout(() => {
-                intro1.style.opacity = '0'; // Fade out 1
-                
-                setTimeout(() => {
-                    // Because of grid stacking, we don't need to hide/display:none the first text.
-                    // It just fades out, and the second one fades in over it.
-                    // This maintains layout stability.
-                    intro2.style.opacity = '1'; 
-                    
-                    // Show Button logic
-                    setTimeout(() => {
-                        startBtn.style.opacity = '1';
-                    }, 1500); 
+                // Draw lines between close stars
+                for (let j = i + 1; j < stars.length; j++) {
+                    const dx = stars[i].x - stars[j].x;
+                    const dy = stars[i].y - stars[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
 
-                }, 1500); 
-            }, 3500);
-
-            // --- START BUTTON ACTION ---
-            startBtn.addEventListener('click', () => {
-                // 1. Start fading out the black screen
-                introScreen.style.opacity = '0';
-                
-                // 2. Wait for the fade out to finish (1.5s in CSS)
-                setTimeout(() => {
-                    // 3. Remove intro from layout
-                    introScreen.style.display = 'none';
-                    
-                    // 4. Make main content display: block
-                    mainContent.classList.remove('content-hidden');
-                    mainContent.classList.add('content-visible');
-                    
-                    // 5. Trigger the text reveal for Section 1 specifically
-                    setTimeout(() => {
-                        triggerSection1();
-                    }, 100);
-
-                }, 1500);
-            });
-
-            // --- SECTION 1 MANUAL TRIGGER ---
-            function triggerSection1() {
-                const mirrorTexts = document.querySelectorAll('#mirror-text-container .reveal-item');
-                const title = document.querySelector('h2.reveal-item'); 
-                
-                if(title) title.classList.add('active');
-
-                mirrorTexts.forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('active');
-                    }, index * 800);
-                });
-                
-                // Show scroll hint
-                setTimeout(() => {
-                    if(scrollHint) scrollHint.style.opacity = '1';
-                }, 5000);
-            }
-
-            // --- SCROLL OBSERVER ---
-            const observerOptions = {
-                threshold: 0.15,
-                rootMargin: "0px"
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        
-                        // Check if we need to init the chart
-                        const canvas = entry.target.querySelector('#growthChart');
-                        if (canvas) {
-                            initChart(canvas);
-                        }
-
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.js-scroll').forEach(el => {
-                observer.observe(el);
-            });
-
-            // --- CHART.JS INITIALIZATION ---
-            let chartInstance = null;
-
-            function initChart(canvasElement) {
-                if (chartInstance) return; 
-                if (typeof Chart === 'undefined') return;
-
-                const ctx = canvasElement.getContext('2d');
-                
-                chartInstance = new Chart(ctx, {
-                    type: 'radar',
-                    data: {
-                        labels: ['Listening', 'Calmness', 'Patience', 'Vulnerability', 'Space'],
-                        datasets: [{
-                            label: 'Focus Level',
-                            data: [85, 75, 90, 80, 85],
-                            fill: true,
-                            backgroundColor: 'rgba(230, 213, 204, 0.6)', // Warm Blush
-                            borderColor: '#8C7B70', // Muted Brown
-                            pointBackgroundColor: '#8C7B70',
-                            pointBorderColor: '#fff',
-                            borderWidth: 1.5,
-                            tension: 0.4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            r: {
-                                angleLines: { color: 'rgba(140, 123, 112, 0.1)' },
-                                grid: { color: 'rgba(140, 123, 112, 0.1)' },
-                                pointLabels: {
-                                    font: { family: "'Montserrat', sans-serif", size: 12 },
-                                    color: '#57534e'
-                                },
-                                ticks: { display: false, maxTicksLimit: 5 },
-                                suggestedMin: 0,
-                                suggestedMax: 100
-                            }
-                        },
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                backgroundColor: '#FDFBF7',
-                                titleColor: '#2D2D2D',
-                                bodyColor: '#57534e',
-                                borderColor: '#E6D5CC',
-                                borderWidth: 1,
-                                padding: 10,
-                                displayColors: false,
-                                callbacks: {
-                                    label: function(context) {
-                                        return `Current Effort: ${context.raw}%`;
-                                    }
-                                }
-                            }
-                        },
-                        animation: {
-                            duration: 2000,
-                            easing: 'easeOutQuart'
-                        }
-                    }
-                });
-            }
-
-            // --- CANVAS HORIZON ANIMATION ---
-            function initHorizon() {
-                const canvas = document.getElementById('horizon-canvas');
-                if (!canvas) return;
-                const ctx = canvas.getContext('2d');
-                let width, height;
-
-                function resize() {
-                    width = window.innerWidth;
-                    height = window.innerHeight;
-                    canvas.width = width;
-                    canvas.height = height;
-                }
-                window.addEventListener('resize', resize);
-                resize();
-
-                let time = 0;
-
-                function draw() {
-                    if (!ctx) return;
-                    
-                    // Animated Gradient
-                    const gradient = ctx.createLinearGradient(0, 0, 0, height);
-                    const shift = Math.sin(time * 0.0005) * 0.1;
-                    
-                    // Colors: Dark Brown/Charcoal -> Muted Stone -> Light Beige
-                    gradient.addColorStop(0, '#1c1917'); 
-                    gradient.addColorStop(0.4 + shift, '#44403c'); 
-                    gradient.addColorStop(0.6 + shift, '#78716c'); 
-                    gradient.addColorStop(1, '#a8a29e'); 
-
-                    ctx.fillStyle = gradient;
-                    ctx.fillRect(0, 0, width, height);
-
-                    // Dust Motes / Stars
-                    for (let i = 0; i < 40; i++) {
-                        const x = (Math.sin(i * 123.45 + time * 0.0002) * 0.5 + 0.5) * width;
-                        const y = (Math.cos(i * 67.89 + time * 0.0003) * 0.5 + 0.5) * (height * 0.7); 
-                        
-                        const alpha = (Math.sin(time * 0.001 + i) * 0.5 + 0.5) * 0.4;
-                        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                    if (dist < 100) {
                         ctx.beginPath();
-                        ctx.arc(x, y, Math.random() * 1.5, 0, Math.PI * 2);
-                        ctx.fill();
+                        ctx.moveTo(stars[i].x, stars[i].y);
+                        ctx.lineTo(stars[j].x, stars[j].y);
+                        ctx.stroke();
                     }
-
-                    time++;
-                    requestAnimationFrame(draw);
                 }
-                draw();
+            }
+            requestAnimationFrame(animateStars);
+        }
+
+        window.addEventListener('resize', () => { resize(); initStars(); });
+        resize();
+        initStars();
+        animateStars();
+
+
+        // --- 2. COUNTDOWN LOGIC ---
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            // Target: Feb 20th
+            let target = new Date(`February 20, ${currentYear} 00:00:00`);
+            
+            // If already passed this year, logic can adjust, 
+            // but for this specific request, we stick to current upcoming date.
+            
+            const diff = target - now;
+
+            if (diff <= 0) {
+                // Unlock!
+                document.getElementById('lock-box').classList.add('is-unlocked');
+                ['d','h','m','s'].forEach(id => document.getElementById(id).innerText = "00");
+                return;
             }
 
-            initHorizon();
-        });
+            // Normal countdown
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('d').innerText = d < 10 ? '0'+d : d;
+            document.getElementById('h').innerText = h < 10 ? '0'+h : h;
+            document.getElementById('m').innerText = m < 10 ? '0'+m : m;
+            document.getElementById('s').innerText = s < 10 ? '0'+s : s;
+
+            // Auto unlock check based on date (Back up logic)
+            if (now.getDate() >= 20 && now.getMonth() === 1) { // Month 1 is Feb
+                 document.getElementById('lock-box').classList.add('is-unlocked');
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+
+        // --- 3. SCROLL REVEAL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.screen').forEach(el => observer.observe(el));
+
     </script>
 </body>
 </html>
