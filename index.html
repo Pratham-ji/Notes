@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>If You Ever Doubt Us Again</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,76 +14,118 @@
     <style>
         /* Chosen Palette: Soft Beige (#FDFBF7), Warm Blush (#E6D5CC), Muted Brown (#8C7B70), Deep Charcoal (#2D2D2D) */
         
-        body {
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             font-family: 'Montserrat', sans-serif;
             background-color: #FDFBF7;
             color: #2D2D2D;
             overflow-x: hidden;
-            margin: 0;
-            padding: 0;
+            -webkit-font-smoothing: antialiased;
         }
 
         h1, h2, h3, .serif-font {
             font-family: 'Cormorant Garamond', serif;
         }
 
-        /* Utility Classes for Transitions */
-        .fade-enter {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-        }
-
-        .fade-enter-active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-200 { transition-delay: 200ms; }
-        .delay-400 { transition-delay: 400ms; }
-        .delay-600 { transition-delay: 600ms; }
-        .delay-800 { transition-delay: 800ms; }
-        .delay-1000 { transition-delay: 1000ms; }
-
-        /* Chart Container */
+        /* Chart Container - Explicit Height for Mobile Safety */
         .chart-container {
             position: relative;
             width: 100%;
             max-width: 500px;
-            height: 400px;
+            height: 350px;
             margin: 0 auto;
         }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
 
-        /* Intro Screen Styles */
+        /* --- INTRO SCREEN FIXES --- */
         #intro-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 100dvh; /* Use dynamic viewport height for mobile browsers */
             background-color: #000;
-            z-index: 50;
+            z-index: 9999;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 2rem; /* Padding to keep text off edges */
+            box-sizing: border-box;
             transition: opacity 1.5s ease-in-out;
         }
 
-        .intro-text {
-            color: #d6d3d1; /* stone-300 */
-            transition: opacity 1.5s ease;
+        /* Grid Stack Technique: Keeps layout flow intact */
+        .intro-text-stack {
+            display: grid;
+            grid-template-areas: "stack"; /* Define a single area */
+            place-items: center;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 3rem; /* Safe space between text and button */
         }
 
-        /* Button Glow */
-        @keyframes glow {
-            0% { box-shadow: 0 0 5px #E6D5CC; }
-            50% { box-shadow: 0 0 20px #E6D5CC, 0 0 10px #fff; }
-            100% { box-shadow: 0 0 5px #E6D5CC; }
+        .intro-text {
+            grid-area: stack; /* Put both paragraphs in the same spot */
+            color: #d6d3d1;
+            transition: opacity 1.5s ease;
+            margin: 0;
+            width: 100%;
         }
+
+        /* Button Styling */
         .btn-glow {
+            box-shadow: 0 0 10px rgba(230, 213, 204, 0.3);
             animation: glow 3s infinite;
         }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(230, 213, 204, 0.2); border-color: #57534e; }
+            50% { box-shadow: 0 0 20px rgba(230, 213, 204, 0.5), 0 0 10px rgba(255,255,255,0.1); border-color: #d6d3d1; }
+            100% { box-shadow: 0 0 5px rgba(230, 213, 204, 0.2); border-color: #57534e; }
+        }
+
+        /* Content Visibility Transitions */
+        .content-hidden {
+            opacity: 0;
+            display: none; 
+        }
+
+        .content-visible {
+            display: block;
+            animation: fadeInPage 1.5s forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Scroll Animations */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .reveal-item.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Delays */
+        .delay-200 { transition-delay: 200ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-600 { transition-delay: 600ms; }
+        .delay-800 { transition-delay: 800ms; }
+        .delay-1000 { transition-delay: 1000ms; }
 
         /* Horizon Canvas */
         #horizon-canvas {
@@ -94,16 +136,18 @@
             height: 100%;
             z-index: 0;
         }
+        
+        /* Mobile Text Adjustments */
+        .text-balance {
+            text-wrap: balance; /* Prevents orphaned words on new lines */
+        }
     </style>
     <!-- Application Structure Plan:
-         - Intro: Fullscreen black overlay. Controlled by JS states.
-         - Main: Hidden until "Start" is clicked.
-         - Sections: 
-            1. Mirror (Text Reveal)
-            2. Learned (Cards)
-            3. Working On (Radar Chart)
-            4. Future (Canvas Horizon)
-            5. Outro (Simple Text)
+         1. Intro Screen: Uses CSS Grid to stack text. This allows the container to grow 
+            vertically if text wraps on mobile, forcing the button down. 
+            No overlap possible.
+         2. Main Content: Standard sections.
+         3. Chart: Confined in a sized container.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
@@ -111,31 +155,40 @@
 
     <!-- INTRO SCREEN -->
     <div id="intro-screen">
-        <p id="intro-1" class="serif-font text-3xl md:text-5xl font-light tracking-wide intro-text opacity-0">
-            Before you scroll… breathe.
-        </p>
-        <p id="intro-2" class="serif-font text-2xl md:text-4xl font-light tracking-wide intro-text absolute opacity-0">
-            Now remember why we chose each other.
-        </p>
-        <button id="start-btn" class="mt-12 px-10 py-3 border border-stone-600 text-stone-300 rounded-full font-light text-sm tracking-widest uppercase hover:bg-stone-900 hover:text-white transition-all duration-500 opacity-0 hidden btn-glow">
-            Start
-        </button>
+        <!-- Text Stack: Grid ensures the container is as tall as the tallest text -->
+        <div class="intro-text-stack">
+            <!-- Text 1 -->
+            <p id="intro-1" class="serif-font text-2xl md:text-4xl font-light tracking-wide intro-text opacity-0 text-balance leading-relaxed">
+                Before you scroll…<br>breathe.
+            </p>
+            <!-- Text 2 -->
+            <p id="intro-2" class="serif-font text-2xl md:text-4xl font-light tracking-wide intro-text opacity-0 text-balance leading-relaxed">
+                Now remember why we chose each other.
+            </p>
+        </div>
+        
+        <!-- Button: Positioned via standard flow (margin), not absolute -->
+        <div class="z-50">
+            <button id="start-btn" class="px-10 py-4 border border-stone-600 text-stone-300 rounded-full font-light text-sm tracking-widest uppercase hover:bg-stone-900 hover:text-white transition-all duration-500 opacity-0 btn-glow cursor-pointer select-none touch-manipulation">
+                Start
+            </button>
+        </div>
     </div>
 
     <!-- MAIN CONTENT -->
-    <main id="main-content" class="opacity-0 transition-opacity duration-1000 hidden">
+    <main id="main-content" class="content-hidden">
         
         <!-- SECTION 1: THE HONEST MIRROR -->
         <section class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-[#FDFBF7]">
-            <div class="max-w-2xl text-center space-y-8">
-                <h2 class="serif-font text-4xl md:text-5xl text-stone-800 mb-12 fade-enter js-scroll">The Honest Mirror</h2>
+            <div class="max-w-2xl text-center space-y-8 w-full">
+                <h2 class="serif-font text-3xl md:text-5xl text-stone-800 mb-8 reveal-item js-scroll">The Honest Mirror</h2>
                 
                 <div class="space-y-6 text-lg md:text-2xl text-stone-600 font-light leading-relaxed" id="mirror-text-container">
-                    <p class="fade-enter">“We are not perfect.”</p>
-                    <p class="fade-enter delay-200">“We overthink.”</p>
-                    <p class="fade-enter delay-400">“We get scared.”</p>
-                    <p class="fade-enter delay-600">“We fight.”</p>
-                    <p class="serif-font text-2xl md:text-3xl text-stone-800 pt-4 fade-enter delay-1000">“But we come back.”</p>
+                    <p class="reveal-item">“We are not perfect.”</p>
+                    <p class="reveal-item delay-200">“We overthink.”</p>
+                    <p class="reveal-item delay-400">“We get scared.”</p>
+                    <p class="reveal-item delay-600">“We fight.”</p>
+                    <p class="serif-font text-2xl md:text-3xl text-stone-800 pt-4 reveal-item delay-1000">“But we come back.”</p>
                 </div>
             </div>
             <!-- Scroll Hint -->
@@ -148,34 +201,34 @@
         <section class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-stone-50">
             <div class="max-w-4xl w-full">
                 <div class="mb-16 text-center">
-                    <h2 class="serif-font text-3xl md:text-4xl text-stone-800 fade-enter js-scroll">What I’ve Learned About You</h2>
-                    <p class="mt-4 text-stone-500 font-light fade-enter js-scroll delay-200">The quiet things I notice when you think I'm not looking.</p>
+                    <h2 class="serif-font text-2xl md:text-4xl text-stone-800 reveal-item js-scroll">What I’ve Learned About You</h2>
+                    <p class="mt-4 text-stone-500 font-light text-sm md:text-base reveal-item js-scroll delay-200">The quiet things I notice when you think I'm not looking.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     <!-- Cards -->
-                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] fade-enter js-scroll">
+                    <div class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] reveal-item js-scroll">
                         <h3 class="serif-font text-xl text-stone-800 mb-3">Control vs. Safety</h3>
                         <p class="text-stone-600 font-light leading-relaxed">
                             “You don’t need control. You need emotional safety. When you feel held, you soften.”
                         </p>
                     </div>
 
-                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] fade-enter js-scroll delay-200">
+                    <div class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] reveal-item js-scroll delay-200">
                         <h3 class="serif-font text-xl text-stone-800 mb-3">Your Silence</h3>
                         <p class="text-stone-600 font-light leading-relaxed">
                             “When you’re quiet, you’re overwhelmed — not distant. I'm learning to wait in the doorway.”
                         </p>
                     </div>
 
-                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] fade-enter js-scroll">
+                    <div class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] reveal-item js-scroll">
                         <h3 class="serif-font text-xl text-stone-800 mb-3">Your Love Language</h3>
                         <p class="text-stone-600 font-light leading-relaxed">
                             “You love deeply, even when you struggle to show it. It's in the way you check if I've eaten.”
                         </p>
                     </div>
 
-                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] fade-enter js-scroll delay-200">
+                    <div class="bg-white p-8 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] reveal-item js-scroll delay-200">
                         <h3 class="serif-font text-xl text-stone-800 mb-3">Meaning of Gestures</h3>
                         <p class="text-stone-600 font-light leading-relaxed">
                             “Gestures matter to you because they mean security. Consistency is your true romance.”
@@ -191,23 +244,23 @@
                 
                 <!-- Text -->
                 <div class="order-2 lg:order-1 space-y-8">
-                    <h2 class="serif-font text-3xl md:text-4xl text-stone-800 fade-enter js-scroll">What I’m Working On</h2>
-                    <p class="text-stone-500 font-light italic mb-6 fade-enter js-scroll delay-200">My promise to build a better us.</p>
+                    <h2 class="serif-font text-2xl md:text-4xl text-stone-800 reveal-item js-scroll">What I’m Working On</h2>
+                    <p class="text-stone-500 font-light italic mb-6 reveal-item js-scroll delay-200">My promise to build a better us.</p>
                     
                     <ul class="space-y-6">
-                        <li class="flex items-start fade-enter js-scroll delay-200">
+                        <li class="flex items-start reveal-item js-scroll delay-200">
                             <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
                             <span class="text-stone-700 font-light text-lg">Responding, not reacting. Taking that 3-second pause.</span>
                         </li>
-                        <li class="flex items-start fade-enter js-scroll delay-400">
+                        <li class="flex items-start reveal-item js-scroll delay-400">
                             <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
                             <span class="text-stone-700 font-light text-lg">Listening fully, without planning my defense.</span>
                         </li>
-                        <li class="flex items-start fade-enter js-scroll delay-600">
+                        <li class="flex items-start reveal-item js-scroll delay-600">
                             <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
                             <span class="text-stone-700 font-light text-lg">Not competing with your space. Letting you be.</span>
                         </li>
-                        <li class="flex items-start fade-enter js-scroll delay-800">
+                        <li class="flex items-start reveal-item js-scroll delay-800">
                             <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
                             <span class="text-stone-700 font-light text-lg">Choosing calm over ego.</span>
                         </li>
@@ -215,7 +268,7 @@
                 </div>
 
                 <!-- Chart -->
-                <div class="order-1 lg:order-2 fade-enter js-scroll flex justify-center items-center">
+                <div class="order-1 lg:order-2 reveal-item js-scroll flex justify-center items-center w-full">
                     <div class="chart-container">
                         <canvas id="growthChart"></canvas>
                     </div>
@@ -229,16 +282,16 @@
             <canvas id="horizon-canvas"></canvas>
             
             <div class="relative z-10 text-center max-w-3xl space-y-12">
-                <h2 class="serif-font text-4xl md:text-5xl text-stone-100 fade-enter js-scroll drop-shadow-lg">Our Horizon</h2>
+                <h2 class="serif-font text-3xl md:text-5xl text-stone-100 reveal-item js-scroll drop-shadow-lg">Our Horizon</h2>
                 
                 <div class="space-y-8">
-                    <p class="text-xl md:text-2xl text-stone-200 font-light fade-enter js-scroll delay-200 drop-shadow-md">
+                    <p class="text-xl md:text-2xl text-stone-200 font-light reveal-item js-scroll delay-200 drop-shadow-md">
                         “One day, we’ll laugh about how dramatic we were.”
                     </p>
-                    <p class="text-xl md:text-2xl text-stone-200 font-light fade-enter js-scroll delay-400 drop-shadow-md">
+                    <p class="text-xl md:text-2xl text-stone-200 font-light reveal-item js-scroll delay-400 drop-shadow-md">
                         “One day, this will feel small.”
                     </p>
-                    <p class="text-xl md:text-2xl text-stone-100 font-medium fade-enter js-scroll delay-600 drop-shadow-md">
+                    <p class="text-xl md:text-2xl text-stone-100 font-medium reveal-item js-scroll delay-600 drop-shadow-md">
                         “One day, we’ll be proud we didn’t give up.”
                     </p>
                 </div>
@@ -248,15 +301,15 @@
         <!-- OUTRO -->
         <section class="min-h-[80vh] flex flex-col justify-center items-center px-6 py-20 bg-[#FDFBF7] text-center">
             <div class="space-y-6 mb-12">
-                <p class="serif-font text-2xl text-stone-600 fade-enter js-scroll">No grand promises.</p>
-                <p class="serif-font text-2xl text-stone-600 fade-enter js-scroll delay-200">No fear.</p>
-                <p class="serif-font text-2xl text-stone-600 fade-enter js-scroll delay-400">No pressure.</p>
-                <p class="serif-font text-3xl md:text-4xl text-stone-800 mt-8 fade-enter js-scroll delay-600 font-medium">
+                <p class="serif-font text-2xl text-stone-600 reveal-item js-scroll">No grand promises.</p>
+                <p class="serif-font text-2xl text-stone-600 reveal-item js-scroll delay-200">No fear.</p>
+                <p class="serif-font text-2xl text-stone-600 reveal-item js-scroll delay-400">No pressure.</p>
+                <p class="serif-font text-3xl md:text-4xl text-stone-800 mt-8 reveal-item js-scroll delay-600 font-medium">
                     Just choosing you — calmly.
                 </p>
             </div>
 
-            <button onclick="window.location.reload()" class="fade-enter js-scroll delay-800 px-10 py-4 bg-stone-800 text-stone-200 rounded-full font-light tracking-wide hover:bg-stone-700 transition-all duration-300 shadow-lg transform hover:scale-105">
+            <button onclick="window.location.reload()" class="reveal-item js-scroll delay-800 px-10 py-4 bg-stone-800 text-stone-200 rounded-full font-light tracking-wide hover:bg-stone-700 transition-all duration-300 shadow-lg transform hover:scale-105 cursor-pointer touch-manipulation">
                 Close this. Come hug me.
             </button>
         </section>
@@ -268,7 +321,7 @@
     </main>
 
     <script>
-        window.addEventListener('load', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             // --- VARIABLES ---
             const introScreen = document.getElementById('intro-screen');
             const intro1 = document.getElementById('intro-1');
@@ -285,55 +338,61 @@
 
             // 2. Switch texts
             setTimeout(() => {
-                intro1.style.opacity = '0';
+                intro1.style.opacity = '0'; // Fade out 1
                 
                 setTimeout(() => {
-                    intro1.style.display = 'none'; // Clear space
-                    intro2.style.opacity = '1';
-                }, 1500); // Wait for fade out
-            }, 3500);
+                    // Because of grid stacking, we don't need to hide/display:none the first text.
+                    // It just fades out, and the second one fades in over it.
+                    // This maintains layout stability.
+                    intro2.style.opacity = '1'; 
+                    
+                    // Show Button logic
+                    setTimeout(() => {
+                        startBtn.style.opacity = '1';
+                    }, 1500); 
 
-            // 3. Show Button
-            setTimeout(() => {
-                startBtn.classList.remove('hidden');
-                // Small delay to allow display change to register before opacity transition
-                setTimeout(() => {
-                    startBtn.style.opacity = '1';
-                }, 50);
-            }, 6000);
+                }, 1500); 
+            }, 3500);
 
             // --- START BUTTON ACTION ---
             startBtn.addEventListener('click', () => {
-                // Fade out intro screen
+                // 1. Start fading out the black screen
                 introScreen.style.opacity = '0';
                 
+                // 2. Wait for the fade out to finish (1.5s in CSS)
                 setTimeout(() => {
+                    // 3. Remove intro from layout
                     introScreen.style.display = 'none';
                     
-                    // Reveal Main Content
-                    mainContent.classList.remove('hidden');
-                    // Force reflow
-                    void mainContent.offsetWidth; 
-                    mainContent.style.opacity = '1';
+                    // 4. Make main content display: block
+                    mainContent.classList.remove('content-hidden');
+                    mainContent.classList.add('content-visible');
+                    
+                    // 5. Trigger the text reveal for Section 1 specifically
+                    setTimeout(() => {
+                        triggerSection1();
+                    }, 100);
 
-                    // Trigger Section 1 Animations immediately
-                    triggerSection1();
                 }, 1500);
             });
 
             // --- SECTION 1 MANUAL TRIGGER ---
             function triggerSection1() {
-                const mirrorTexts = document.querySelectorAll('#mirror-text-container p');
+                const mirrorTexts = document.querySelectorAll('#mirror-text-container .reveal-item');
+                const title = document.querySelector('h2.reveal-item'); 
+                
+                if(title) title.classList.add('active');
+
                 mirrorTexts.forEach((el, index) => {
                     setTimeout(() => {
-                        el.classList.add('fade-enter-active');
-                    }, index * 1000); // Staggered reveal
+                        el.classList.add('active');
+                    }, index * 800);
                 });
                 
                 // Show scroll hint
                 setTimeout(() => {
-                    scrollHint.style.opacity = '1';
-                }, 6000);
+                    if(scrollHint) scrollHint.style.opacity = '1';
+                }, 5000);
             }
 
             // --- SCROLL OBSERVER ---
@@ -345,7 +404,7 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-enter-active');
+                        entry.target.classList.add('active');
                         
                         // Check if we need to init the chart
                         const canvas = entry.target.querySelector('#growthChart');
@@ -366,8 +425,8 @@
             let chartInstance = null;
 
             function initChart(canvasElement) {
-                if (chartInstance) return; // Prevent double init
-                if (typeof Chart === 'undefined') return; // Safety check
+                if (chartInstance) return; 
+                if (typeof Chart === 'undefined') return;
 
                 const ctx = canvasElement.getContext('2d');
                 
