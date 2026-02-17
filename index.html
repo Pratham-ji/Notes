@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>If You Ever Doubt Us Again</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    
     <style>
         /* Chosen Palette: Soft Beige (#FDFBF7), Warm Blush (#E6D5CC), Muted Brown (#8C7B70), Deep Charcoal (#2D2D2D) */
         
@@ -15,58 +19,63 @@
             background-color: #FDFBF7;
             color: #2D2D2D;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
 
         h1, h2, h3, .serif-font {
             font-family: 'Cormorant Garamond', serif;
         }
 
-        .fade-in {
-            animation: fadeIn 2s ease-in forwards;
-        }
-
-        .fade-in-slow {
+        /* Utility Classes for Transitions */
+        .fade-enter {
             opacity: 0;
-            transition: opacity 2s ease-in-out, transform 1.5s ease-out;
+            transform: translateY(20px);
+            transition: opacity 1.5s ease-out, transform 1.5s ease-out;
         }
 
-        .visible {
+        .fade-enter-active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .hidden-el {
-            opacity: 0;
-            transform: translateY(20px);
-        }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-600 { transition-delay: 600ms; }
+        .delay-800 { transition-delay: 800ms; }
+        .delay-1000 { transition-delay: 1000ms; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #FDFBF7;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #E6D5CC;
-            border-radius: 4px;
-        }
-
-        /* Chart Container Override */
+        /* Chart Container */
         .chart-container {
             position: relative;
             width: 100%;
             max-width: 500px;
-            margin: 0 auto;
             height: 400px;
+            margin: 0 auto;
         }
-        
-        /* Smooth glow animation for button */
+
+        /* Intro Screen Styles */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .intro-text {
+            color: #d6d3d1; /* stone-300 */
+            transition: opacity 1.5s ease;
+        }
+
+        /* Button Glow */
         @keyframes glow {
             0% { box-shadow: 0 0 5px #E6D5CC; }
             50% { box-shadow: 0 0 20px #E6D5CC, 0 0 10px #fff; }
@@ -76,104 +85,97 @@
             animation: glow 3s infinite;
         }
 
-        /* Gradient Animation for Section 4 */
+        /* Horizon Canvas */
         #horizon-canvas {
-            width: 100%;
-            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 0;
         }
     </style>
-    <!-- Application Structure Plan: 
-         1. Intro Overlay: A distinct, black-screen experience to reset the user's emotional state before entering the main content.
-         2. Main Scroll View: A single column layout designed for focused reading.
-            - Section 1 (Honest Mirror): Text-heavy, timed reveal to force pacing.
-            - Section 2 (Insights): Card grid for digestible "truths".
-            - Section 3 (Growth): Interactive Radar Chart to visualize abstract emotional efforts + textual commitment.
-            - Section 4 (Future): Atmospheric Canvas background to evoke a sense of horizon and calm.
-         3. Outro: Simple call to action (connection).
-         Rationale: The structure moves from Acknowledgement (S1) -> Understanding (S2) -> Action (S3) -> Vision (S4), a therapeutic flow.
-    -->
-    <!-- Visualization & Content Choices:
-         - Radar Chart (Chart.js): Used in "What I'm Working On" to visualize the balance of emotional efforts (Listening, Calm, Space, etc.). A chart makes these abstract commitments feel tangible and measured.
-         - Canvas API: Used in "Our Future" to generate a slow-moving, calming horizon gradient. This avoids large video files/images (NO SVG) and creates a unique, code-generated atmosphere.
-         - Interaction: Intersection Observers trigger fade-ins to ensure the user reads at the intended rhythm.
+    <!-- Application Structure Plan:
+         - Intro: Fullscreen black overlay. Controlled by JS states.
+         - Main: Hidden until "Start" is clicked.
+         - Sections: 
+            1. Mirror (Text Reveal)
+            2. Learned (Cards)
+            3. Working On (Radar Chart)
+            4. Future (Canvas Horizon)
+            5. Outro (Simple Text)
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
-<body class="antialiased selection:bg-stone-200 selection:text-stone-800">
+<body>
 
-    <!-- Opening Screen -->
-    <div id="intro-screen" class="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center text-center px-4 transition-opacity duration-1000">
-        <p id="intro-text-1" class="serif-font text-2xl md:text-4xl text-stone-300 opacity-0 transition-opacity duration-1000 font-light tracking-wide">
-            Before you scroll... breathe.
+    <!-- INTRO SCREEN -->
+    <div id="intro-screen">
+        <p id="intro-1" class="serif-font text-3xl md:text-5xl font-light tracking-wide intro-text opacity-0">
+            Before you scroll… breathe.
         </p>
-        <p id="intro-text-2" class="serif-font text-xl md:text-3xl text-stone-400 mt-6 opacity-0 transition-opacity duration-1000 font-light hidden">
+        <p id="intro-2" class="serif-font text-2xl md:text-4xl font-light tracking-wide intro-text absolute opacity-0">
             Now remember why we chose each other.
         </p>
-        <button id="start-btn" class="mt-12 px-8 py-3 border border-stone-600 text-stone-300 rounded-full font-light text-sm tracking-widest uppercase hover:bg-stone-900 hover:text-white transition-all duration-500 opacity-0 btn-glow hidden">
+        <button id="start-btn" class="mt-12 px-10 py-3 border border-stone-600 text-stone-300 rounded-full font-light text-sm tracking-widest uppercase hover:bg-stone-900 hover:text-white transition-all duration-500 opacity-0 hidden btn-glow">
             Start
         </button>
     </div>
 
-    <!-- Main Content (Hidden Initially) -->
-    <main id="main-content" class="opacity-0 transition-opacity duration-2000 hidden">
+    <!-- MAIN CONTENT -->
+    <main id="main-content" class="opacity-0 transition-opacity duration-1000 hidden">
         
-        <!-- Section 1: The Honest Mirror -->
-        <section id="section-1" class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-[#FDFBF7]">
+        <!-- SECTION 1: THE HONEST MIRROR -->
+        <section class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-[#FDFBF7]">
             <div class="max-w-2xl text-center space-y-8">
-                <h2 class="serif-font text-4xl md:text-5xl text-stone-800 mb-12 opacity-0 hidden-el js-scroll">The Honest Mirror</h2>
+                <h2 class="serif-font text-4xl md:text-5xl text-stone-800 mb-12 fade-enter js-scroll">The Honest Mirror</h2>
                 
-                <div class="space-y-6 text-lg md:text-2xl text-stone-600 font-light leading-relaxed">
-                    <p class="opacity-0 hidden-el js-timed-reveal" data-delay="500">“We are not perfect.”</p>
-                    <p class="opacity-0 hidden-el js-timed-reveal" data-delay="1500">“We overthink.”</p>
-                    <p class="opacity-0 hidden-el js-timed-reveal" data-delay="2500">“We get scared.”</p>
-                    <p class="opacity-0 hidden-el js-timed-reveal" data-delay="3500">“We fight.”</p>
-                    <p class="serif-font text-2xl md:text-3xl text-stone-800 pt-4 opacity-0 hidden-el js-timed-reveal" data-delay="4500">“But we come back.”</p>
+                <div class="space-y-6 text-lg md:text-2xl text-stone-600 font-light leading-relaxed" id="mirror-text-container">
+                    <p class="fade-enter">“We are not perfect.”</p>
+                    <p class="fade-enter delay-200">“We overthink.”</p>
+                    <p class="fade-enter delay-400">“We get scared.”</p>
+                    <p class="fade-enter delay-600">“We fight.”</p>
+                    <p class="serif-font text-2xl md:text-3xl text-stone-800 pt-4 fade-enter delay-1000">“But we come back.”</p>
                 </div>
             </div>
+            <!-- Scroll Hint -->
             <div class="absolute bottom-10 animate-bounce text-stone-400 text-xl opacity-0 transition-opacity duration-1000" id="scroll-hint">
                 ↓
             </div>
         </section>
 
-        <!-- Section 2: What I've Learned About You -->
-        <section id="section-2" class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-stone-100/50">
+        <!-- SECTION 2: WHAT I'VE LEARNED -->
+        <section class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-stone-50">
             <div class="max-w-4xl w-full">
                 <div class="mb-16 text-center">
-                    <h2 class="serif-font text-3xl md:text-4xl text-stone-800 opacity-0 hidden-el js-scroll">What I’ve Learned About You</h2>
-                    <p class="mt-4 text-stone-500 font-light opacity-0 hidden-el js-scroll">The quiet things I notice when you think I'm not looking.</p>
+                    <h2 class="serif-font text-3xl md:text-4xl text-stone-800 fade-enter js-scroll">What I’ve Learned About You</h2>
+                    <p class="mt-4 text-stone-500 font-light fade-enter js-scroll delay-200">The quiet things I notice when you think I'm not looking.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Card 1 -->
-                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 opacity-0 hidden-el js-scroll border-l-2 border-stone-200 hover:border-[#E6D5CC]">
+                    <!-- Cards -->
+                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] fade-enter js-scroll">
                         <h3 class="serif-font text-xl text-stone-800 mb-3">Control vs. Safety</h3>
                         <p class="text-stone-600 font-light leading-relaxed">
                             “You don’t need control. You need emotional safety. When you feel held, you soften.”
                         </p>
                     </div>
 
-                    <!-- Card 2 -->
-                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 opacity-0 hidden-el js-scroll border-l-2 border-stone-200 hover:border-[#E6D5CC]" style="transition-delay: 200ms;">
+                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] fade-enter js-scroll delay-200">
                         <h3 class="serif-font text-xl text-stone-800 mb-3">Your Silence</h3>
                         <p class="text-stone-600 font-light leading-relaxed">
                             “When you’re quiet, you’re overwhelmed — not distant. I'm learning to wait in the doorway.”
                         </p>
                     </div>
 
-                    <!-- Card 3 -->
-                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 opacity-0 hidden-el js-scroll border-l-2 border-stone-200 hover:border-[#E6D5CC]">
+                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] fade-enter js-scroll">
                         <h3 class="serif-font text-xl text-stone-800 mb-3">Your Love Language</h3>
                         <p class="text-stone-600 font-light leading-relaxed">
                             “You love deeply, even when you struggle to show it. It's in the way you check if I've eaten.”
                         </p>
                     </div>
 
-                    <!-- Card 4 -->
-                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 opacity-0 hidden-el js-scroll border-l-2 border-stone-200 hover:border-[#E6D5CC]" style="transition-delay: 200ms;">
+                    <div class="bg-white p-8 md:p-10 rounded-sm shadow-sm hover:shadow-md transition-all duration-500 border-l-2 border-stone-200 hover:border-[#E6D5CC] fade-enter js-scroll delay-200">
                         <h3 class="serif-font text-xl text-stone-800 mb-3">Meaning of Gestures</h3>
                         <p class="text-stone-600 font-light leading-relaxed">
                             “Gestures matter to you because they mean security. Consistency is your true romance.”
@@ -183,41 +185,37 @@
             </div>
         </section>
 
-        <!-- Section 3: What I'm Working On (Data Viz) -->
-        <section id="section-3" class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-[#FDFBF7]">
+        <!-- SECTION 3: WHAT I'M WORKING ON -->
+        <section class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-[#FDFBF7]">
             <div class="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 
-                <!-- Text Content -->
+                <!-- Text -->
                 <div class="order-2 lg:order-1 space-y-8">
-                    <h2 class="serif-font text-3xl md:text-4xl text-stone-800 opacity-0 hidden-el js-scroll">What I’m Working On</h2>
-                    <p class="text-stone-500 font-light italic mb-6 opacity-0 hidden-el js-scroll">My promise to build a better us.</p>
+                    <h2 class="serif-font text-3xl md:text-4xl text-stone-800 fade-enter js-scroll">What I’m Working On</h2>
+                    <p class="text-stone-500 font-light italic mb-6 fade-enter js-scroll delay-200">My promise to build a better us.</p>
                     
                     <ul class="space-y-6">
-                        <li class="flex items-start opacity-0 hidden-el js-scroll">
+                        <li class="flex items-start fade-enter js-scroll delay-200">
                             <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
                             <span class="text-stone-700 font-light text-lg">Responding, not reacting. Taking that 3-second pause.</span>
                         </li>
-                        <li class="flex items-start opacity-0 hidden-el js-scroll" style="transition-delay: 100ms;">
+                        <li class="flex items-start fade-enter js-scroll delay-400">
                             <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
                             <span class="text-stone-700 font-light text-lg">Listening fully, without planning my defense.</span>
                         </li>
-                        <li class="flex items-start opacity-0 hidden-el js-scroll" style="transition-delay: 200ms;">
+                        <li class="flex items-start fade-enter js-scroll delay-600">
                             <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
                             <span class="text-stone-700 font-light text-lg">Not competing with your space. Letting you be.</span>
                         </li>
-                        <li class="flex items-start opacity-0 hidden-el js-scroll" style="transition-delay: 300ms;">
+                        <li class="flex items-start fade-enter js-scroll delay-800">
                             <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
                             <span class="text-stone-700 font-light text-lg">Choosing calm over ego.</span>
-                        </li>
-                        <li class="flex items-start opacity-0 hidden-el js-scroll" style="transition-delay: 400ms;">
-                            <span class="text-[#E6D5CC] mr-4 text-xl">✦</span>
-                            <span class="text-stone-700 font-light text-lg">Protecting what we build above all else.</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Visualization -->
-                <div class="order-1 lg:order-2 opacity-0 hidden-el js-scroll flex justify-center">
+                <!-- Chart -->
+                <div class="order-1 lg:order-2 fade-enter js-scroll flex justify-center items-center">
                     <div class="chart-container">
                         <canvas id="growthChart"></canvas>
                     </div>
@@ -226,217 +224,135 @@
             </div>
         </section>
 
-        <!-- Section 4: Our Future (Canvas Animation) -->
-        <section id="section-4" class="relative min-h-screen flex flex-col justify-center items-center px-6 overflow-hidden">
-            <!-- Canvas Background -->
+        <!-- SECTION 4: OUR FUTURE -->
+        <section class="relative min-h-screen flex flex-col justify-center items-center px-6 overflow-hidden">
             <canvas id="horizon-canvas"></canvas>
-
-            <!-- Content Overlay -->
+            
             <div class="relative z-10 text-center max-w-3xl space-y-12">
-                <h2 class="serif-font text-4xl md:text-5xl text-stone-100 opacity-0 hidden-el js-scroll drop-shadow-md">Our Horizon</h2>
+                <h2 class="serif-font text-4xl md:text-5xl text-stone-100 fade-enter js-scroll drop-shadow-lg">Our Horizon</h2>
                 
                 <div class="space-y-8">
-                    <p class="text-xl md:text-2xl text-stone-200 font-light opacity-0 hidden-el js-scroll leading-relaxed drop-shadow-sm">
+                    <p class="text-xl md:text-2xl text-stone-200 font-light fade-enter js-scroll delay-200 drop-shadow-md">
                         “One day, we’ll laugh about how dramatic we were.”
                     </p>
-                    <p class="text-xl md:text-2xl text-stone-200 font-light opacity-0 hidden-el js-scroll leading-relaxed drop-shadow-sm" style="transition-delay: 200ms;">
+                    <p class="text-xl md:text-2xl text-stone-200 font-light fade-enter js-scroll delay-400 drop-shadow-md">
                         “One day, this will feel small.”
                     </p>
-                    <p class="text-xl md:text-2xl text-stone-100 font-medium opacity-0 hidden-el js-scroll leading-relaxed drop-shadow-sm" style="transition-delay: 400ms;">
+                    <p class="text-xl md:text-2xl text-stone-100 font-medium fade-enter js-scroll delay-600 drop-shadow-md">
                         “One day, we’ll be proud we didn’t give up.”
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Final Screen -->
-        <section id="outro" class="min-h-[80vh] flex flex-col justify-center items-center px-6 py-20 bg-[#FDFBF7] text-center">
+        <!-- OUTRO -->
+        <section class="min-h-[80vh] flex flex-col justify-center items-center px-6 py-20 bg-[#FDFBF7] text-center">
             <div class="space-y-6 mb-12">
-                <p class="serif-font text-2xl text-stone-600 opacity-0 hidden-el js-scroll">No grand promises.</p>
-                <p class="serif-font text-2xl text-stone-600 opacity-0 hidden-el js-scroll" style="transition-delay: 200ms;">No fear.</p>
-                <p class="serif-font text-2xl text-stone-600 opacity-0 hidden-el js-scroll" style="transition-delay: 400ms;">No pressure.</p>
-                <p class="serif-font text-3xl md:text-4xl text-stone-800 mt-8 opacity-0 hidden-el js-scroll font-medium" style="transition-delay: 600ms;">
+                <p class="serif-font text-2xl text-stone-600 fade-enter js-scroll">No grand promises.</p>
+                <p class="serif-font text-2xl text-stone-600 fade-enter js-scroll delay-200">No fear.</p>
+                <p class="serif-font text-2xl text-stone-600 fade-enter js-scroll delay-400">No pressure.</p>
+                <p class="serif-font text-3xl md:text-4xl text-stone-800 mt-8 fade-enter js-scroll delay-600 font-medium">
                     Just choosing you — calmly.
                 </p>
             </div>
 
-            <button onclick="window.location.reload()" class="opacity-0 hidden-el js-scroll px-10 py-4 bg-stone-800 text-stone-200 rounded-full font-light tracking-wide hover:bg-stone-700 transition-all duration-300 shadow-lg transform hover:scale-105" style="transition-delay: 1000ms;">
+            <button onclick="window.location.reload()" class="fade-enter js-scroll delay-800 px-10 py-4 bg-stone-800 text-stone-200 rounded-full font-light tracking-wide hover:bg-stone-700 transition-all duration-300 shadow-lg transform hover:scale-105">
                 Close this. Come hug me.
             </button>
         </section>
 
-        <footer class="py-8 text-center text-stone-400 text-xs font-light tracking-widest uppercase">
+        <footer class="py-8 text-center text-stone-400 text-xs font-light tracking-widest uppercase bg-[#FDFBF7]">
             Built with awareness, not impulse.
         </footer>
 
     </main>
 
     <script>
-        // Data for Chart.js
-        const chartData = {
-            labels: ['Listening', 'Calmness', 'Patience', 'Vulnerability', 'Space'],
-            datasets: [{
-                label: 'Current Focus Level',
-                data: [85, 70, 90, 75, 80],
-                fill: true,
-                backgroundColor: 'rgba(230, 213, 204, 0.5)', // Warm Blush transparent
-                borderColor: '#8C7B70', // Muted Brown
-                pointBackgroundColor: '#8C7B70',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: '#8C7B70',
-                borderWidth: 1.5,
-                tension: 0.4
-            }]
-        };
-
-        const chartConfig = {
-            type: 'radar',
-            data: chartData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    r: {
-                        angleLines: {
-                            color: 'rgba(140, 123, 112, 0.1)'
-                        },
-                        grid: {
-                            color: 'rgba(140, 123, 112, 0.1)'
-                        },
-                        pointLabels: {
-                            font: {
-                                family: "'Montserrat', sans-serif",
-                                size: 12
-                            },
-                            color: '#57534e' // stone-600
-                        },
-                        ticks: {
-                            display: false,
-                            maxTicksLimit: 5
-                        },
-                        suggestedMin: 0,
-                        suggestedMax: 100
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(253, 251, 247, 0.9)',
-                        titleColor: '#2D2D2D',
-                        bodyColor: '#57534e',
-                        borderColor: '#E6D5CC',
-                        borderWidth: 1,
-                        padding: 10,
-                        bodyFont: {
-                            family: "'Montserrat', sans-serif"
-                        },
-                        callbacks: {
-                            label: function(context) {
-                                return ` Effort: ${context.raw}%`;
-                            }
-                        }
-                    }
-                },
-                animation: {
-                    duration: 2000,
-                    easing: 'easeOutQuart'
-                }
-            }
-        };
-
-        // Initialize Chart when in view
-        let chartInstance = null;
-
-        // Intro Sequence Logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const intro1 = document.getElementById('intro-text-1');
-            const intro2 = document.getElementById('intro-text-2');
-            const startBtn = document.getElementById('start-btn');
+        window.addEventListener('load', function() {
+            // --- VARIABLES ---
             const introScreen = document.getElementById('intro-screen');
+            const intro1 = document.getElementById('intro-1');
+            const intro2 = document.getElementById('intro-2');
+            const startBtn = document.getElementById('start-btn');
             const mainContent = document.getElementById('main-content');
             const scrollHint = document.getElementById('scroll-hint');
-
-            // Intro Animation Sequence
+            
+            // --- INTRO SEQUENCE ---
+            // 1. Fade in first text
             setTimeout(() => {
                 intro1.style.opacity = '1';
-                
-                setTimeout(() => {
-                    intro1.style.opacity = '0'; // Fade out first text
-                    setTimeout(() => {
-                        intro1.classList.add('hidden');
-                        intro2.classList.remove('hidden');
-                        setTimeout(() => {
-                            intro2.style.opacity = '1'; // Fade in second text
-                            
-                            setTimeout(() => {
-                                startBtn.classList.remove('hidden');
-                                setTimeout(() => {
-                                    startBtn.style.opacity = '1';
-                                }, 100);
-                            }, 2000);
-                        }, 100);
-                    }, 1000);
-                }, 3000);
             }, 500);
 
-            // Start Button Logic
-            startBtn.addEventListener('click', () => {
-                introScreen.style.opacity = '0';
+            // 2. Switch texts
+            setTimeout(() => {
+                intro1.style.opacity = '0';
+                
                 setTimeout(() => {
-                    introScreen.classList.add('hidden');
+                    intro1.style.display = 'none'; // Clear space
+                    intro2.style.opacity = '1';
+                }, 1500); // Wait for fade out
+            }, 3500);
+
+            // 3. Show Button
+            setTimeout(() => {
+                startBtn.classList.remove('hidden');
+                // Small delay to allow display change to register before opacity transition
+                setTimeout(() => {
+                    startBtn.style.opacity = '1';
+                }, 50);
+            }, 6000);
+
+            // --- START BUTTON ACTION ---
+            startBtn.addEventListener('click', () => {
+                // Fade out intro screen
+                introScreen.style.opacity = '0';
+                
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                    
+                    // Reveal Main Content
                     mainContent.classList.remove('hidden');
-                    
-                    // Trigger reflow
-                    void mainContent.offsetWidth;
-                    
+                    // Force reflow
+                    void mainContent.offsetWidth; 
                     mainContent.style.opacity = '1';
-                    
-                    // Start Section 1 timed reveal
-                    revealSection1();
-                }, 1000);
+
+                    // Trigger Section 1 Animations immediately
+                    triggerSection1();
+                }, 1500);
             });
 
-            // Section 1 Timed Reveal
-            function revealSection1() {
-                const reveals = document.querySelectorAll('.js-timed-reveal');
-                reveals.forEach(el => {
-                    const delay = el.getAttribute('data-delay') || 0;
+            // --- SECTION 1 MANUAL TRIGGER ---
+            function triggerSection1() {
+                const mirrorTexts = document.querySelectorAll('#mirror-text-container p');
+                mirrorTexts.forEach((el, index) => {
                     setTimeout(() => {
-                        el.classList.remove('hidden-el');
-                        el.classList.add('visible');
-                        el.classList.add('fade-in-slow');
-                    }, delay);
+                        el.classList.add('fade-enter-active');
+                    }, index * 1000); // Staggered reveal
                 });
                 
-                // Show scroll hint after last text
+                // Show scroll hint
                 setTimeout(() => {
                     scrollHint.style.opacity = '1';
                 }, 6000);
             }
 
-            // Scroll Observer for Sections 2, 3, 4
+            // --- SCROLL OBSERVER ---
             const observerOptions = {
                 threshold: 0.15,
-                rootMargin: "0px 0px -50px 0px"
+                rootMargin: "0px"
             };
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.remove('hidden-el');
-                        entry.target.classList.add('visible');
-                        entry.target.classList.add('fade-in-slow');
+                        entry.target.classList.add('fade-enter-active');
                         
-                        // If it's the chart section, init chart
-                        const chartCanvas = entry.target.querySelector('#growthChart');
-                        if (chartCanvas && !chartInstance) {
-                            const ctx = chartCanvas.getContext('2d');
-                            chartInstance = new Chart(ctx, chartConfig);
+                        // Check if we need to init the chart
+                        const canvas = entry.target.querySelector('#growthChart');
+                        if (canvas) {
+                            initChart(canvas);
                         }
-                        
+
                         observer.unobserve(entry.target);
                     }
                 });
@@ -446,63 +362,126 @@
                 observer.observe(el);
             });
 
-            // Canvas Horizon Animation
-            initCanvas();
-        });
+            // --- CHART.JS INITIALIZATION ---
+            let chartInstance = null;
 
-        // Canvas Horizon Animation Logic
-        function initCanvas() {
-            const canvas = document.getElementById('horizon-canvas');
-            const ctx = canvas.getContext('2d');
-            let width, height;
+            function initChart(canvasElement) {
+                if (chartInstance) return; // Prevent double init
+                if (typeof Chart === 'undefined') return; // Safety check
 
-            function resize() {
-                width = window.innerWidth;
-                height = window.innerHeight;
-                canvas.width = width;
-                canvas.height = height;
+                const ctx = canvasElement.getContext('2d');
+                
+                chartInstance = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Listening', 'Calmness', 'Patience', 'Vulnerability', 'Space'],
+                        datasets: [{
+                            label: 'Focus Level',
+                            data: [85, 75, 90, 80, 85],
+                            fill: true,
+                            backgroundColor: 'rgba(230, 213, 204, 0.6)', // Warm Blush
+                            borderColor: '#8C7B70', // Muted Brown
+                            pointBackgroundColor: '#8C7B70',
+                            pointBorderColor: '#fff',
+                            borderWidth: 1.5,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(140, 123, 112, 0.1)' },
+                                grid: { color: 'rgba(140, 123, 112, 0.1)' },
+                                pointLabels: {
+                                    font: { family: "'Montserrat', sans-serif", size: 12 },
+                                    color: '#57534e'
+                                },
+                                ticks: { display: false, maxTicksLimit: 5 },
+                                suggestedMin: 0,
+                                suggestedMax: 100
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#FDFBF7',
+                                titleColor: '#2D2D2D',
+                                bodyColor: '#57534e',
+                                borderColor: '#E6D5CC',
+                                borderWidth: 1,
+                                padding: 10,
+                                displayColors: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        return `Current Effort: ${context.raw}%`;
+                                    }
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 2000,
+                            easing: 'easeOutQuart'
+                        }
+                    }
+                });
             }
-            window.addEventListener('resize', resize);
-            resize();
 
-            let time = 0;
+            // --- CANVAS HORIZON ANIMATION ---
+            function initHorizon() {
+                const canvas = document.getElementById('horizon-canvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                let width, height;
 
-            function draw() {
-                // Create a gradient that shifts slowly
-                // Colors: Deep Brown (#4A3F35) to Soft Blush (#E6D5CC) to Night (#1a1a1a)
-                
-                const gradient = ctx.createLinearGradient(0, 0, 0, height);
-                
-                // Animate color stops slightly
-                const shift = Math.sin(time * 0.0005) * 0.1;
-                
-                gradient.addColorStop(0, '#1c1917'); // top (dark)
-                gradient.addColorStop(0.4 + shift, '#44403c'); // middle dark
-                gradient.addColorStop(0.6 + shift, '#78716c'); // horizon line
-                gradient.addColorStop(0.8, '#a8a29e'); // soft light
-                gradient.addColorStop(1, '#d6d3d1'); // bottom light
-                
-                ctx.fillStyle = gradient;
-                ctx.fillRect(0, 0, width, height);
-
-                // Add subtle stars/dust
-                for (let i = 0; i < 50; i++) {
-                    const x = (Math.sin(i * 123.45 + time * 0.0002) * 0.5 + 0.5) * width;
-                    const y = (Math.cos(i * 67.89 + time * 0.0003) * 0.5 + 0.5) * (height * 0.6); // Keep in upper part
-                    
-                    const opacity = (Math.sin(time * 0.001 + i) * 0.5 + 0.5) * 0.5;
-                    ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-                    ctx.beginPath();
-                    ctx.arc(x, y, Math.random() * 1.5, 0, Math.PI * 2);
-                    ctx.fill();
+                function resize() {
+                    width = window.innerWidth;
+                    height = window.innerHeight;
+                    canvas.width = width;
+                    canvas.height = height;
                 }
+                window.addEventListener('resize', resize);
+                resize();
 
-                time++;
-                requestAnimationFrame(draw);
+                let time = 0;
+
+                function draw() {
+                    if (!ctx) return;
+                    
+                    // Animated Gradient
+                    const gradient = ctx.createLinearGradient(0, 0, 0, height);
+                    const shift = Math.sin(time * 0.0005) * 0.1;
+                    
+                    // Colors: Dark Brown/Charcoal -> Muted Stone -> Light Beige
+                    gradient.addColorStop(0, '#1c1917'); 
+                    gradient.addColorStop(0.4 + shift, '#44403c'); 
+                    gradient.addColorStop(0.6 + shift, '#78716c'); 
+                    gradient.addColorStop(1, '#a8a29e'); 
+
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, width, height);
+
+                    // Dust Motes / Stars
+                    for (let i = 0; i < 40; i++) {
+                        const x = (Math.sin(i * 123.45 + time * 0.0002) * 0.5 + 0.5) * width;
+                        const y = (Math.cos(i * 67.89 + time * 0.0003) * 0.5 + 0.5) * (height * 0.7); 
+                        
+                        const alpha = (Math.sin(time * 0.001 + i) * 0.5 + 0.5) * 0.4;
+                        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                        ctx.beginPath();
+                        ctx.arc(x, y, Math.random() * 1.5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    time++;
+                    requestAnimationFrame(draw);
+                }
+                draw();
             }
 
-            draw();
-        }
+            initHorizon();
+        });
     </script>
 </body>
 </html>
