@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reflection</title>
+    <meta name="description" content="A digital sanctuary for us.">
+    <meta name="theme-color" content="#FAF5EF">
+    <title>If You Ever Doubt Us Again</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET & VARIABLES --- */
+        /* --- CSS RESET & VARIABLES --- */
         :root {
-            --bg-color: #FDFBF7; /* Cream/Beige */
-            --bg-gradient-start: #FDFBF7;
-            --bg-gradient-end: #F2EBE5; /* Soft Rose-Beige */
-            --text-main: #5D4037; /* Warm Brown */
-            --text-light: #8D6E63; /* Lighter Brown */
-            --card-bg: #ffffff;
-            --accent: #D7CCC8;
-            --shadow: 0 10px 30px rgba(93, 64, 55, 0.05);
-            --transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            /* Palette based on [1, 7, 8] */
+            --bg-color: #FAF5EF;       /* Soft Beige */
+            --card-bg: #FFFFFF;        /* Pure White */
+            --text-main: #5D4037;      /* Dark Wood */
+            --text-light: #8D7B68;     /* Sand */
+            --accent: #D4A59A;         /* Dusty Rose */
+            --accent-hover: #C28E84;   /* Deep Blush */
+            
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Lato', sans-serif;
+            
+            --transition-slow: 1.2s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         * {
@@ -29,335 +34,418 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: 'Lato', sans-serif;
-            background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            background-color: var(--bg-color);
             color: var(--text-main);
+            font-family: var(--font-sans);
+            font-weight: 300;
             line-height: 1.8;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased; /*  Smooth font rendering */
         }
 
         h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
+            font-family: var(--font-serif);
+            font-weight: 400;
+            line-height: 1.3;
         }
 
         /* --- UTILITIES --- */
-        .container {
+       .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 20px;
         }
 
-        .fade-in {
+        /* [27] Intersection Observer Animation Class */
+       .fade-in-up {
             opacity: 0;
             transform: translateY(30px);
-            transition: var(--transition);
+            transition: opacity 1s ease, transform 1s ease;
+            will-change: opacity, transform; /* Hardware acceleration hint */
         }
 
-        .fade-in.visible {
+       .fade-in-up.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- HERO SECTION --- */
-        .hero {
+        /* --- OPENING SCREEN (The Black Screen) --- */
+        #opening-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100vh;
+            background-color: #000000;
+            z-index: 1000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            color: #fff;
             text-align: center;
-            position: relative;
+            transition: opacity 1.5s ease, visibility 1.5s;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            color: var(--text-main);
-            letter-spacing: -0.02em;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            font-style: italic;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .scroll-indicator {
+       .intro-text {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            opacity: 0;
+            transition: opacity 2s ease;
             position: absolute;
-            bottom: 40px;
-            width: 1px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        /* Biofeedback Breathing Visual [5] */
+       .breathing-circle {
+            width: 60px;
             height: 60px;
-            background: linear-gradient(to bottom, var(--text-light), transparent);
-            animation: scrollDown 2s infinite;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            animation: breathe 8s infinite ease-in-out;
+            opacity: 0; 
+            transition: opacity 1s;
         }
 
-        @keyframes scrollDown {
-            0% { transform: scaleY(0); transform-origin: top; }
-            50% { transform: scaleY(1); transform-origin: top; }
-            51% { transform: scaleY(1); transform-origin: bottom; }
-            100% { transform: scaleY(0); transform-origin: bottom; }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); border-color: rgba(255,255,255,0.3); }
+            50% { transform: scale(2.5); border-color: rgba(255,255,255,0.8); }
         }
 
-        /* --- APOLOGY SECTION --- */
-        .section {
-            padding: 8rem 0;
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 4rem;
-            border-radius: 4px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--accent);
-        }
-
-        .apology-text p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-main);
-        }
-
-        .apology-text p:last-child {
-            margin-bottom: 0;
-            font-weight: 600;
-            color: var(--text-light);
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+       .start-btn {
             margin-top: 2rem;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 12px 30px;
+            font-family: var(--font-sans);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.5s ease;
+            pointer-events: none;
         }
 
-        /* --- GROWTH SECTION --- */
-        .growth-list {
-            list-style: none;
-            margin-top: 3rem;
+       .start-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 100px 0;
+            min-height: 80vh; /* Cinematic spacing */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* SECTION 1: HONEST MIRROR */
+       .mirror-text {
+            font-family: var(--font-serif);
+            font-size: 2rem;
             text-align: center;
-        }
-
-        .growth-list li {
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-main);
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .growth-list li::after {
-            content: "";
-            display: block;
-            width: 40px;
-            height: 1px;
-            background: var(--accent);
-            margin: 1.5rem auto 0;
-            opacity: 0.5;
-        }
-
-        .growth-list li:last-child::after {
-            display: none;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 2.5rem;
             color: var(--text-main);
         }
+        @media (max-width: 600px) {.mirror-text { font-size: 1.5rem; } }
 
-        /* --- MEMORY SECTION --- */
-        .gallery {
+        /* SECTION 2: CARDS (CSS Grid) [14] */
+       .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
-        .gallery-item {
+       .card {
+            background: var(--card-bg);
+            padding: 2.5rem 2rem;
+            border-radius: 4px;
+            box-shadow: 0 5px 20px rgba(141, 123, 104, 0.05); /* Soft shadow  */
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border-top: 3px solid var(--accent);
             text-align: center;
         }
 
-        .image-placeholder {
-            width: 100%;
-            height: 300px;
-            background: #EFEBE9; /* Very light grey-brown */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+       .card:hover {
+            transform: translateY(-8px); /* Lift effect [17] */
+            box-shadow: 0 20px 40px rgba(141, 123, 104, 0.15);
+        }
+
+       .card h3 {
+            font-size: 1.4rem;
             margin-bottom: 1rem;
-            border-radius: 2px;
-            transition: transform 0.6s ease;
-        }
-        
-        /* Subtle abstract gradients for placeholders */
-        .placeholder-1 { background: linear-gradient(135deg, #efebe9 0%, #e6dmd8 100%); }
-        .placeholder-2 { background: linear-gradient(135deg, #fdfbf7 0%, #d7ccc8 100%); }
-
-        .gallery-item:hover .image-placeholder {
-            transform: scale(1.02);
-        }
-
-        .caption {
-            font-family: 'Playfair Display', serif;
+            color: var(--text-light);
             font-style: italic;
-            color: var(--text-light);
-            font-size: 1rem;
         }
 
-        /* --- CLOSING SECTION --- */
-        .closing {
-            text-align: center;
-            padding-bottom: 6rem;
+        /* SECTION 3: WORKING ON (Styled List) */
+       .working-list {
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .closing p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: transparent;
-            border: 1px solid var(--text-light);
+       .list-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
             color: var(--text-main);
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-radius: 50px;
-            transition: all 0.5s ease;
-            cursor: default; /* Doesn't look clickable in a forceful way */
         }
 
-        .btn:hover {
-            box-shadow: 0 0 20px rgba(215, 204, 200, 0.6);
-            border-color: var(--text-main);
+        /* Custom Bullet Points [19] */
+       .list-item::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            margin-right: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 0 0 4px rgba(212, 165, 154, 0.2);
         }
 
-        /* --- FOOTER --- */
-        footer {
+        /* SECTION 4: FUTURE (Gradient Animation) [21] */
+        #future {
+            position: relative;
+            background: linear-gradient(-45deg, #2C1E1A, #8D7B68, #D4A59A, #FAF5EF);
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite; /* Slow, cinematic [22] */
+            color: white;
             text-align: center;
-            padding: 2rem;
-            font-size: 0.8rem;
-            color: var(--text-light);
-            opacity: 0.6;
-            border-top: 1px solid rgba(141, 110, 99, 0.1);
+            min-height: 100vh;
         }
 
-        /* --- MOBILE --- */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .card { padding: 2rem; }
-            .growth-list li { font-size: 1.1rem; }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #future h2 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        /* --- FINAL OVERLAY --- */
+        #final-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(250, 245, 239, 0.98);
+            z-index: 2000; /* Above everything */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease;
+        }
+
+        #final-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Pulse Button  */
+       .hug-btn {
+            margin-top: 2rem;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 0 0 0 rgba(212, 165, 154, 0.7);
+            animation: pulse-red 2s infinite;
+            transition: background-color 0.3s;
+        }
+
+       .hug-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(212, 165, 154, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(212, 165, 154, 0); }
+            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(212, 165, 154, 0); }
+        }
+
+       .close-trigger {
+            margin-top: 3rem;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            padding-bottom: 5px;
+            display: inline-block;
         }
     </style>
 </head>
 <body>
 
-    <header class="hero fade-in">
-        <div class="container">
-            <h1>Anushka</h1>
-            <p>This isn’t a plea. It’s an apology.</p>
-        </div>
-        <div class="scroll-indicator"></div>
-    </header>
+    <div id="opening-screen" aria-live="polite">
+        <div class="breathing-circle" id="breath-guide"></div>
+        <div class="intro-text" id="text-1">Before you scroll... breathe.</div>
+        <div class="intro-text" id="text-2">Inhale... Exhale...</div>
+        <div class="intro-text" id="text-3">Now remember why we chose each other.</div>
+        <button class="start-btn" id="start-btn">Begin</button>
+    </div>
 
-    <section class="section">
-        <div class="container">
-            <div class="card fade-in">
-                <div class="apology-text">
-                    <p>I’ve spent time looking inward, and I need to own my part without making excuses.</p>
-                    <p>I hurt you. I understand where I failed, and I see the cracks I caused.</p>
-                    <p>I am working on myself—not to win you back, but because it is necessary.</p>
-                    <p>You don’t owe me anything.</p>
+    <main id="main-content">
+        
+        <section id="honest-mirror">
+            <div class="container">
+                <div class="mirror-text fade-in-up">If you are reading this,</div>
+                <div class="mirror-text fade-in-up">it means the world feels heavy right now.</div>
+                <div class="mirror-text fade-in-up">Maybe I caused it. Maybe life did.</div>
+                <div class="mirror-text fade-in-up">But the noise outside?</div>
+                <div class="mirror-text fade-in-up" style="font-style: italic; color: var(--accent);">It doesn't get to break us inside.</div>
+            </div>
+        </section>
+
+        <section id="learned">
+            <div class="container">
+                <h2 class="fade-in-up" style="text-align: center; margin-bottom: 40px; color: var(--text-light);">What I’ve Learned About You</h2>
+                <div class="grid">
+                    <div class="card fade-in-up">
+                        <h3>Your Resilience</h3>
+                        <p>I've watched you handle storms that would drown others. You don't just survive; you build shelter for others.</p>
+                    </div>
+                    <div class="card fade-in-up">
+                        <h3>Your Laugh</h3>
+                        <p>It’s the specific sound you make when you're genuinely surprised. It anchors me.</p>
+                    </div>
+                    <div class="card fade-in-up">
+                        <h3>Your Gentle Heart</h3>
+                        <p>Even when you're angry, you're careful. That is a rare, precious thing.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title fade-in">What I’ve Understood</h2>
-            <ul class="growth-list">
-                <li class="fade-in">Love is not control.</li>
-                <li class="fade-in">Gestures carry emotional meaning.</li>
-                <li class="fade-in">Silence hurts just as much as words.</li>
-                <li class="fade-in">Healing takes space.</li>
-                <li class="fade-in">Growth is internal.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <div class="gallery">
-                <div class="gallery-item fade-in">
-                    <div class="image-placeholder placeholder-1"></div>
-                    <p class="caption">Sunsets mattered.</p>
-                </div>
-                <div class="gallery-item fade-in">
-                    <div class="image-placeholder placeholder-2"></div>
-                    <p class="caption">Small things meant big things.</p>
+        <section id="working-on">
+            <div class="container">
+                <h2 class="fade-in-up" style="text-align: center; margin-bottom: 50px;">What I’m Working On</h2>
+                <div class="working-list">
+                    <div class="list-item fade-in-up">Listening to understand, not just to reply.</div>
+                    <div class="list-item fade-in-up">Putting my phone away when we speak.</div>
+                    <div class="list-item fade-in-up">Remembering that it's us vs. the problem, not me vs. you.</div>
+                    <div class="list-item fade-in-up">Being the safe harbor you deserve.</div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="section closing fade-in">
-        <div class="container">
-            <p>If someday we find our way back, it will be healthier.<br>
-            If not, I still wish you peace.</p>
-            
-            <a href="#" class="btn" onclick="return false;">Take Your Time</a>
-        </div>
-    </section>
+        <section id="future">
+            <div class="container fade-in-up">
+                <h2>Our Horizon</h2>
+                <p style="font-size: 1.4rem; max-width: 600px; margin: 0 auto; line-height: 2;">
+                    We are not a finished product. We are a landscape, constantly changing, but always under the same sky.
+                    <br><br>
+                    The storm will pass. We remain.
+                </p>
+                <div class="close-trigger" id="end-trigger">No grand promises... just this.</div>
+            </div>
+        </section>
 
-    <footer>
-        Built with reflection, not pressure.
-    </footer>
+    </main>
+
+    <div id="final-overlay">
+        <h2 style="font-family: var(--font-serif); font-size: 3rem; margin-bottom: 2rem; color: var(--text-main);">I love you.</h2>
+        <button class="hug-btn" onclick="window.close(); alert('Close this tab and come find me.')">Close this. Come hug me.</button>
+    </div>
 
     <script>
-        // Intersection Observer for fade-in animations
         document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
+            
+            // --- OPENING SEQUENCE LOGIC [29] ---
+            const t1 = document.getElementById('text-1');
+            const t2 = document.getElementById('text-2');
+            const t3 = document.getElementById('text-3');
+            const btn = document.getElementById('start-btn');
+            const breath = document.getElementById('breath-guide');
+            const opening = document.getElementById('opening-screen');
+
+            // We use nested timeouts for precise cinematic control
+            setTimeout(() => { t1.style.opacity = 1; }, 500); // 0.5s: "Before you scroll"
+            
+            setTimeout(() => { 
+                t1.style.opacity = 0; 
+            }, 3500); // 3.5s: Fade out
+
+            setTimeout(() => { 
+                t2.style.opacity = 1; 
+                breath.style.opacity = 1; 
+            }, 4500); // 4.5s: Start Breathing
+
+            setTimeout(() => { 
+                t2.style.opacity = 0; 
+                breath.style.opacity = 0; 
+            }, 9500); // 9.5s: End Breathing
+
+            setTimeout(() => { t3.style.opacity = 1; }, 10500); // 10.5s: "Remember why"
+            
+            setTimeout(() => { 
+                btn.style.opacity = 1; 
+                btn.style.pointerEvents = 'auto'; 
+            }, 12500); // 12.5s: Start Button
+
+            // Start Button Click Handler
+            btn.addEventListener('click', () => {
+                opening.style.opacity = 0;
+                setTimeout(() => {
+                    opening.style.visibility = 'hidden'; // Ensure it's removed from accessibility tree
+                    initObserver(); // Start detecting scrolls only after intro
+                }, 1500);
+            });
+
+            // --- INTERSECTION OBSERVER FOR SCROLL FADE INS [27] ---
+            const initObserver = () => {
+                // Setup observer options
+                const observerOptions = {
+                    root: null,      // viewport
+                    rootMargin: '0px',
+                    threshold: 0.15  // Trigger when 15% visible
+                };
+
+                // Define callback
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target); // Performance optimization: only animate once
+                        }
+                    });
+                }, observerOptions);
+
+                // Attach to all elements with.fade-in-up class
+                const elements = document.querySelectorAll('.fade-in-up');
+                elements.forEach(el => observer.observe(el));
             };
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target); // Only animate once
-                    }
-                });
-            }, observerOptions);
+            // --- FINAL SCREEN LOGIC ---
+            const endTrigger = document.getElementById('end-trigger');
+            const finalOverlay = document.getElementById('final-overlay');
 
-            const fadeElements = document.querySelectorAll('.fade-in');
-            fadeElements.forEach(el => observer.observe(el));
+            endTrigger.addEventListener('click', () => {
+                finalOverlay.classList.add('active');
+            });
         });
     </script>
-
 </body>
 </html>
