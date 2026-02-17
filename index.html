@@ -1,550 +1,363 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>For Anushka — A Calm Corner</title>
-<meta name="color-scheme" content="light dark">
-<style>
-:root{
-  --bg:#fffbf8;
-  --card:#ffffff;
-  --accent:#7c2d12;
-  --muted:#475569;
-  --green:#114d2b;
-  --soft:#fff7ed;
-  --radius:12px;
-  --maxw:1100px;
-  --glass: rgba(255,255,255,0.8);
-  --shadow: 0 10px 30px rgba(2,6,23,0.08);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: linear-gradient(180deg, #fffdf8 0%, #fbf7f2 100%);
-  color:#0f172a;
-  -webkit-font-smoothing:antialiased;
-  padding:18px;
-}
-.container{
-  max-width:var(--maxw);
-  margin:0 auto;
-}
-.header{
-  background: linear-gradient(90deg,var(--accent), #b45309);
-  color:#fff;
-  padding:22px;
-  border-radius:14px;
-  box-shadow:var(--shadow);
-  display:flex;
-  gap:16px;
-  align-items:center;
-}
-.header svg{flex:0 0 56px}
-.header h1{margin:0;font-size:20px}
-.header p{margin:4px 0 0 0;opacity:0.95;font-size:13px}
-.topnav{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.chip{
-  background:rgba(255,255,255,0.12); color:#fff; padding:8px 12px;border-radius:999px;font-weight:600;font-size:13px;text-decoration:none;
-}
-.grid{
-  display:grid;
-  grid-template-columns: 1fr 380px;
-  gap:18px;
-  margin-top:18px;
-}
-@media(max-width:980px){ .grid{grid-template-columns:1fr} }
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:16px;
-  box-shadow:0 8px 20px rgba(2,6,23,0.04);
-  border:1px solid rgba(2,6,23,0.03);
-}
-.section-title{color:var(--accent);margin:0 0 8px 0}
-.small{font-size:13px;color:var(--muted)}
-.quote{font-style:italic;color:var(--green);text-align:center;padding:8px 0}
-.calendar{
-  display:grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap:6px;
-}
-.cal-day{
-  border-radius:10px;padding:8px;background:linear-gradient(180deg,#fff,#fffaf2);text-align:center;border:1px solid rgba(0,0,0,0.03);
-  cursor:pointer; user-select:none;
-}
-.cal-day.today{box-shadow:0 4px 14px rgba(124,45,18,0.12); border:1px solid rgba(124,45,18,0.12)}
-textarea,input[type="text"]{width:100%;padding:8px;border-radius:8px;border:1px solid #e6e9ef;font-size:14px}
-button{padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
-.btn-ghost{background:transparent;border:1px solid rgba(15,23,42,0.06);color:var(--muted)}
-.row{display:flex;gap:8px;align-items:center}
-.list{margin-top:10px;display:flex;flex-direction:column;gap:8px}
-.item{padding:10px;border-radius:8px;background:linear-gradient(180deg,#fff,#fffef7);border:1px solid rgba(0,0,0,0.03)}
-.item .meta{font-size:12px;color:var(--muted);margin-bottom:6px}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.thumb{width:100%;max-height:160px;object-fit:cover;border-radius:8px;border:1px solid rgba(0,0,0,0.04)}
-.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-@media(max-width:520px){ .gallery-grid{grid-template-columns:repeat(1,1fr)} }
-.footer-note{font-size:13px;color:var(--muted);text-align:center;padding:12px 0}
-.badge{display:inline-block;padding:6px 8px;border-radius:999px;background:var(--soft);color:var(--accent);font-weight:600;font-size:13px}
-.export-area{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflection</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
-/* subtle hint */
-.hint{font-size:13px;color:#6b7280;background:#fbfbff;padding:8px;border-radius:8px;border:1px dashed rgba(99,102,241,0.06)}
-</style>
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --bg-color: #FDFBF7; /* Cream/Beige */
+            --bg-gradient-start: #FDFBF7;
+            --bg-gradient-end: #F2EBE5; /* Soft Rose-Beige */
+            --text-main: #5D4037; /* Warm Brown */
+            --text-light: #8D6E63; /* Lighter Brown */
+            --card-bg: #ffffff;
+            --accent: #D7CCC8;
+            --shadow: 0 10px 30px rgba(93, 64, 55, 0.05);
+            --transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-style: italic;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--text-light), transparent);
+            animation: scrollDown 2s infinite;
+        }
+
+        @keyframes scrollDown {
+            0% { transform: scaleY(0); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            51% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        /* --- APOLOGY SECTION --- */
+        .section {
+            padding: 8rem 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 4rem;
+            border-radius: 4px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+        }
+
+        .apology-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .apology-text p:last-child {
+            margin-bottom: 0;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2rem;
+        }
+
+        /* --- GROWTH SECTION --- */
+        .growth-list {
+            list-style: none;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .growth-list li {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .growth-list li::after {
+            content: "";
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+            margin: 1.5rem auto 0;
+            opacity: 0.5;
+        }
+
+        .growth-list li:last-child::after {
+            display: none;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        /* --- MEMORY SECTION --- */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            text-align: center;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #EFEBE9; /* Very light grey-brown */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            border-radius: 2px;
+            transition: transform 0.6s ease;
+        }
+        
+        /* Subtle abstract gradients for placeholders */
+        .placeholder-1 { background: linear-gradient(135deg, #efebe9 0%, #e6dmd8 100%); }
+        .placeholder-2 { background: linear-gradient(135deg, #fdfbf7 0%, #d7ccc8 100%); }
+
+        .gallery-item:hover .image-placeholder {
+            transform: scale(1.02);
+        }
+
+        .caption {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* --- CLOSING SECTION --- */
+        .closing {
+            text-align: center;
+            padding-bottom: 6rem;
+        }
+
+        .closing p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 1px solid var(--text-light);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: all 0.5s ease;
+            cursor: default; /* Doesn't look clickable in a forceful way */
+        }
+
+        .btn:hover {
+            box-shadow: 0 0 20px rgba(215, 204, 200, 0.6);
+            border-color: var(--text-main);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            opacity: 0.6;
+            border-top: 1px solid rgba(141, 110, 99, 0.1);
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .card { padding: 2rem; }
+            .growth-list li { font-size: 1.1rem; }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
 
-  <!-- Header -->
-  <div class="header" role="banner" aria-label="Header">
-    <!-- small holly SVG -->
-    <svg width="56" height="56" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-      <g>
-        <circle cx="20" cy="34" r="9" fill="#0f5132"/>
-        <circle cx="36" cy="28" r="9" fill="#0f5132"/>
-        <path d="M32 16c6 0 12 4 14 10 0 0 0 6-6 6-3 0-6-3-8-5-3 3-6 5-10 5-5 0-6-7-6-7C18 20 24 16 32 16z" fill="#c33"/>
-      </g>
-    </svg>
-
-    <div>
-      <h1 style="margin:0">For Anushka — a calm corner</h1>
-      <p style="margin:6px 0 0 0" class="small">A place to leave daily wishes, memories and quiet apologies — private and only for you two.</p>
-    </div>
-
-  </div>
-
-  <div class="topnav" role="navigation" aria-label="Quick links">
-    <a class="chip" href="#wishes">Daily Wishes</a>
-    <a class="chip" href="#calendar">Birthday Calendar</a>
-    <a class="chip" href="#timeline">Memory Timeline</a>
-    <a class="chip" href="#gallery">Gallery</a>
-    <a class="chip" href="#audio">Audio</a>
-    <a class="chip" href="#apology">Apology Letter</a>
-  </div>
-
-  <div class="grid" role="main">
-    <!-- Left column -->
-    <div>
-
-      <!-- Daily Wishes -->
-      <section id="wishes" class="card" aria-labelledby="wishes-title">
-        <h2 id="wishes-title" class="section-title">Daily Wishes</h2>
-        <p class="small">Add a short note/wish for today — you can add new notes every day. They are saved locally.</p>
-
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <input id="wish-input" type="text" placeholder="Write a short wish or message (e.g., 'Happy Christmas — love you')" />
-          <button id="wish-add">Add</button>
+    <header class="hero fade-in">
+        <div class="container">
+            <h1>Anushka</h1>
+            <p>This isn’t a plea. It’s an apology.</p>
         </div>
+        <div class="scroll-indicator"></div>
+    </header>
 
-        <div class="hint" style="margin-top:10px">Pro tip: Keep wishes tiny (1–2 lines). Small consistent gestures feel steady and mature.</div>
-
-        <div id="wishes-list" class="list" aria-live="polite" style="margin-top:12px"></div>
-      </section>
-
-      <!-- Memory Timeline -->
-      <section id="timeline" class="card" aria-labelledby="timeline-title">
-        <h2 id="timeline-title" class="section-title">Memory Timeline</h2>
-        <p class="small">Add milestones, sweet moments, or notes about days that matter. These appear in order (newest first).</p>
-
-        <textarea id="timeline-input" placeholder="Add a memory (where, when, one sentence about why it mattered)" rows="3"></textarea>
-        <div class="row" style="margin-top:8px">
-          <button id="timeline-add">Add Memory</button>
-          <button id="timeline-clear" class="btn-ghost">Clear All</button>
+    <section class="section">
+        <div class="container">
+            <div class="card fade-in">
+                <div class="apology-text">
+                    <p>I’ve spent time looking inward, and I need to own my part without making excuses.</p>
+                    <p>I hurt you. I understand where I failed, and I see the cracks I caused.</p>
+                    <p>I am working on myself—not to win you back, but because it is necessary.</p>
+                    <p>You don’t owe me anything.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div id="timeline-list" class="list" style="margin-top:12px"></div>
-      </section>
-
-      <!-- Apology Letter (editable + download) -->
-      <section id="apology" class="card" aria-labelledby="apology-title">
-        <h2 id="apology-title" class="section-title">Apology letter — editable</h2>
-        <p class="small">A simple, honest script. Edit freely to make it sound like you — then download or copy to send.</p>
-
-        <textarea id="apology-text" rows="8" style="font-family:inherit;">
-Hi Anushka,
-
-I’m sorry for the way things have been. I’ve been thinking about what went wrong and how I can do better. I love you, and I want to be the calm, steady person you can rely on. I'm ready to listen, to learn, and to make changes — not because I want to fix things quickly, but because I truly respect you.
-
-If you're open to it, I'd like to talk when you feel ready. Until then, I hope this small corner helps you study and feel a little less alone.
-
-— [Your name]
-        </textarea>
-
-        <div class="row" style="margin-top:10px">
-          <button id="download-apology">Download Letter</button>
-          <button id="reset-apology" class="btn-ghost">Reset Template</button>
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">What I’ve Understood</h2>
+            <ul class="growth-list">
+                <li class="fade-in">Love is not control.</li>
+                <li class="fade-in">Gestures carry emotional meaning.</li>
+                <li class="fade-in">Silence hurts just as much as words.</li>
+                <li class="fade-in">Healing takes space.</li>
+                <li class="fade-in">Growth is internal.</li>
+            </ul>
         </div>
+    </section>
 
-        <p class="small" style="margin-top:12px">Tip: Keep sentences short, honest and focused on your actions and learning (not on blaming). Mention a plan to change — small, concrete steps.</p>
-      </section>
-
-      <!-- Growth Plan -->
-      <section id="growth" class="card" aria-labelledby="growth-title">
-        <h2 id="growth-title" class="section-title">Growth Plan — Small daily actions</h2>
-        <p class="small">Maturity is practiced, not declared. Pick 1–2 tasks each day. Check them off; they persist locally.</p>
-
-        <div id="growth-list" class="list">
-          <!-- items populated by JS -->
+    <section class="section">
+        <div class="container">
+            <div class="gallery">
+                <div class="gallery-item fade-in">
+                    <div class="image-placeholder placeholder-1"></div>
+                    <p class="caption">Sunsets mattered.</p>
+                </div>
+                <div class="gallery-item fade-in">
+                    <div class="image-placeholder placeholder-2"></div>
+                    <p class="caption">Small things meant big things.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div style="margin-top:10px" class="row">
-          <input id="growth-new" type="text" placeholder="Add a small growth action (e.g., 'Listen fully for 3 minutes')" />
-          <button id="growth-add">Add</button>
+    <section class="section closing fade-in">
+        <div class="container">
+            <p>If someday we find our way back, it will be healthier.<br>
+            If not, I still wish you peace.</p>
+            
+            <a href="#" class="btn" onclick="return false;">Take Your Time</a>
         </div>
+    </section>
 
-        <p class="small" style="margin-top:10px">Examples: Active listening for 5 minutes, send one reassuring message, own one mistake and say how you'll change it, plan a small shared activity.</p>
-      </section>
+    <footer>
+        Built with reflection, not pressure.
+    </footer>
 
-      <!-- Psychology Tips -->
-      <section id="psych" class="card" aria-labelledby="psych-title">
-        <h2 id="psych-title" class="section-title">Psychology-backed tips — be steady and kind</h2>
-        <ol>
-          <li><strong>Listen with attention.</strong> Put your phone away for 3–5 minutes. Reflect back what she says: “I hear that you felt…”</li>
-          <li><strong>Own small actions.</strong> Apologise concisely for your action: “I’m sorry I did X. I will do Y instead.” This increases trust.</li>
-          <li><strong>Consistency beats drama.</strong> Small predictable kindnesses (a message, a note) are more healing than grand gestures.</li>
-          <li><strong>Ask, don’t fix.</strong> If she’s upset, ask “Do you want solutions or just to be heard?” Respect the answer.</li>
-          <li><strong>Self-regulate.</strong> Practice a calm breathing pause before responding — names: box breathing or 4-4-4 helps.</li>
-        </ol>
-        <p class="small">These are simple, practical steps — used over time they rebuild safety and connection.</p>
-      </section>
+    <script>
+        // Intersection Observer for fade-in animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
 
-    </div>
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
 
-    <!-- Right Column -->
-    <aside>
-
-      <!-- Birthday calendar -->
-      <section id="calendar" class="card" aria-labelledby="calendar-title">
-        <h2 id="calendar-title" class="section-title">Birthday month — add a wish per day</h2>
-        <p class="small">Click any date to add a short wish or plan for that day. Use this to schedule small surprises.</p>
-        <div id="calendar-grid" class="calendar" style="margin-top:10px"></div>
-
-        <div style="margin-top:10px" class="small">Selected date: <span id="cal-selected">none</span></div>
-
-        <div style="margin-top:8px">
-          <input id="cal-wish" type="text" placeholder="Wish / plan for selected day" />
-          <div style="margin-top:8px" class="row">
-            <button id="cal-save">Save for day</button>
-            <button id="cal-clear" class="btn-ghost">Clear day</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Gallery -->
-      <section id="gallery" class="card" aria-labelledby="gallery-title">
-        <h2 id="gallery-title" class="section-title">Gallery</h2>
-        <p class="small">Upload a few photos (keeps locally). Best to keep small files (under 1MB each).</p>
-        <input id="gallery-file" type="file" accept="image/*" />
-        <div id="gallery-grid" class="gallery-grid" style="margin-top:10px"></div>
-        <div style="margin-top:8px" class="small">Tip: Add a caption by clicking Edit on the image card.</div>
-      </section>
-
-      <!-- Audio -->
-      <section id="audio" class="card" aria-labelledby="audio-title">
-        <h2 id="audio-title" class="section-title">Audio Messages</h2>
-        <p class="small">Upload voice notes (messsage.m4a) or record elsewhere and upload here. Play inside the page.</p>
-        <input id="audio-file" type="file" accept="audio/*" />
-        <div id="audio-list" class="list" style="margin-top:10px"></div>
-        <div class="small" style="margin-top:8px">Tip: Keep voice notes short (20–45 seconds); speak calmly and honestly.</div>
-      </section>
-
-      <!-- Export / Import -->
-      <section class="card" aria-labelledby="backup">
-        <h2 id="backup" class="section-title">Backup & Settings</h2>
-        <p class="small">Export your whole site content as JSON (save it somewhere safe). Import to restore.</p>
-
-        <div class="export-area">
-          <button id="export-data">Export All</button>
-          <input id="import-file" type="file" accept=".json" class="btn-ghost" />
-        </div>
-
-        <div style="margin-top:10px" class="small">Privacy: Everything is saved in your browser (no server). Export if you want to move devices.</div>
-      </section>
-
-    </aside>
-  </div>
-
-  <div style="margin-top:18px" class="footer-note card">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-      <div>
-        <div style="font-weight:700">A small note</div>
-        <div class="small">This place is for steady, honest gestures. Add one small thing every day — a line, a memory, a photo. Consistency matters more than perfection.</div>
-      </div>
-      <div style="text-align:right">
-        <div class="badge">Private • Local</div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<script>
-/*
-  For Anushka — single-file app
-  Storage keys:
-    - wishes: array of {id, text, date, pinned}
-    - timeline: array of {id, text, date}
-    - growth: array of {id, text, done}
-    - calendar: object {dayString: text}
-    - gallery: array of {id, dataURL, caption, date}
-    - audio: array of {id, dataURL, name, date}
-    - apologyText: string
-*/
-
-// utilities
-const uid = ()=>Date.now().toString(36) + Math.random().toString(36).slice(2,7)
-const load = (k, def)=> JSON.parse(localStorage.getItem(k) || JSON.stringify(def))
-const save = (k,v)=> localStorage.setItem(k, JSON.stringify(v))
-
-/* --- WISHES --- */
-const wishesKey = 'anushka_wishes_v1'
-let wishes = load(wishesKey, [])
-const wishesListEl = document.getElementById('wishes-list')
-const wishInput = document.getElementById('wish-input')
-const wishAddBtn = document.getElementById('wish-add')
-
-function renderWishes(){
-  wishesListEl.innerHTML = ''
-  if(wishes.length===0){ wishesListEl.innerHTML = '<div class="small">No wishes yet — add the first one above.</div>'; return }
-  // newest first
-  [...wishes].reverse().forEach(w=>{
-    const el = document.createElement('div'); el.className='item'
-    const meta = document.createElement('div'); meta.className='meta'; meta.textContent = new Date(w.date).toLocaleString()
-    const txt = document.createElement('div'); txt.textContent = w.text
-    const ctrl = document.createElement('div'); ctrl.className='controls'
-    const pin = document.createElement('button'); pin.textContent = w.pinned ? 'Pinned' : 'Pin'; pin.className='btn-ghost'
-    pin.onclick = ()=>{ w.pinned = !w.pinned; save(wishesKey,wishes); renderWishes() }
-    const edit = document.createElement('button'); edit.textContent='Edit'; edit.className='btn-ghost'
-    edit.onclick = ()=>{
-      const newt = prompt('Edit wish', w.text); if(newt!=null){ w.text = newt; save(wishesKey,wishes); renderWishes() }
-    }
-    const del = document.createElement('button'); del.textContent='Delete'; del.className='btn-ghost'
-    del.onclick = ()=>{ if(confirm('Delete this wish?')){ wishes = wishes.filter(x=>x.id!==w.id); save(wishesKey,wishes); renderWishes() } }
-    ctrl.append(pin, edit, del)
-    el.appendChild(meta); el.appendChild(txt); el.appendChild(ctrl)
-    if(w.pinned){ el.style.borderLeft = '4px solid var(--accent)'; }
-    wishesListEl.appendChild(el)
-  })
-}
-
-wishAddBtn.addEventListener('click', ()=>{
-  const t = wishInput.value.trim(); if(!t) return alert('Write something small.')
-  const item = {id:uid(), text: t, date: new Date().toISOString(), pinned:false}
-  wishes.push(item); save(wishesKey,wishes); wishInput.value=''; renderWishes()
-})
-renderWishes()
-
-/* --- TIMELINE --- */
-const timelineKey = 'anushka_timeline_v1'
-let timeline = load(timelineKey, [])
-const timelineList = document.getElementById('timeline-list')
-const timelineInput = document.getElementById('timeline-input')
-document.getElementById('timeline-add').onclick = ()=>{
-  const t = timelineInput.value.trim(); if(!t) return alert('Write a short memory.')
-  const item = {id:uid(), text:t, date:new Date().toISOString()}
-  timeline.push(item); save(timelineKey,timeline); timelineInput.value=''; renderTimeline()
-}
-document.getElementById('timeline-clear').onclick = ()=>{
-  if(confirm('Clear all memories?')){ timeline = []; save(timelineKey,timeline); renderTimeline() }
-}
-function renderTimeline(){
-  timelineList.innerHTML = ''
-  if(timeline.length===0){ timelineList.innerHTML = '<div class="small">No memories yet — add one above.</div>'; return }
-  [...timeline].reverse().forEach(m=>{
-    const el = document.createElement('div'); el.className='item'
-    const meta = document.createElement('div'); meta.className='meta'; meta.textContent = new Date(m.date).toLocaleString()
-    const txt = document.createElement('div'); txt.textContent = m.text
-    const del = document.createElement('button'); del.textContent='Delete'; del.className='btn-ghost'
-    del.onclick = ()=>{ if(confirm('Delete memory?')){ timeline = timeline.filter(x=>x.id!==m.id); save(timelineKey,timeline); renderTimeline() } }
-    el.append(meta, txt, del)
-    timelineList.appendChild(el)
-  })
-}
-renderTimeline()
-
-/* --- APOLOGY TEXT --- */
-const apologyKey = 'anushka_apology_v1'
-const apologyEl = document.getElementById('apology-text')
-const resetApologyBtn = document.getElementById('reset-apology')
-const downloadApologyBtn = document.getElementById('download-apology')
-const defaultApology = apologyEl.value.trim()
-const savedApology = localStorage.getItem(apologyKey)
-if(savedApology) apologyEl.value = savedApology
-apologyEl.addEventListener('input', ()=> save(apologyKey, apologyEl.value))
-resetApologyBtn.onclick = ()=>{ if(confirm('Reset template?')){ apologyEl.value = defaultApology; save(apologyKey, apologyEl.value)} }
-downloadApologyBtn.onclick = ()=> {
-  const blob = new Blob([apologyEl.value], {type:'text/plain'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='apology_for_anushka.txt'; a.click(); URL.revokeObjectURL(url);
-}
-
-/* --- GROWTH PLAN --- */
-const growthKey = 'anushka_growth_v1'
-let growth = load(growthKey, [
-  {id:uid(), text:'Listen without interrupting for 3 minutes', done:false},
-  {id:uid(), text:'Send one thoughtful text (no defense)', done:false},
-  {id:uid(), text:'Plan a small shared activity', done:false}
-])
-const growthList = document.getElementById('growth-list')
-const growthNew = document.getElementById('growth-new')
-document.getElementById('growth-add').onclick = ()=>{
-  const t = growthNew.value.trim(); if(!t) return alert('Write an action.')
-  growth.push({id:uid(), text:t, done:false}); save(growthKey,growth); growthNew.value=''; renderGrowth()
-}
-function renderGrowth(){
-  growthList.innerHTML = ''
-  if(growth.length===0){ growthList.innerHTML = '<div class="small">No actions yet.</div>'; return }
-  growth.forEach(g=>{
-    const el = document.createElement('div'); el.className='item'
-    const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = !!g.done
-    cb.onchange = ()=>{ g.done = cb.checked; save(growthKey,growth); renderGrowth() }
-    const label = document.createElement('span'); label.style.marginLeft='8px'; label.textContent=g.text
-    const del = document.createElement('button'); del.textContent='Delete'; del.className='btn-ghost'
-    del.onclick = ()=>{ if(confirm('Delete this action?')){ growth = growth.filter(x=>x.id!==g.id); save(growthKey,growth); renderGrowth() } }
-    el.append(cb,label, del)
-    growthList.appendChild(el)
-  })
-}
-renderGrowth()
-
-/* --- CALENDAR (Birthday month) --- */
-const calendarKey = 'anushka_calendar_v1'
-let calendar = load(calendarKey, {})
-const calGrid = document.getElementById('calendar-grid')
-const calSelected = document.getElementById('cal-selected')
-const calWishInput = document.getElementById('cal-wish')
-document.getElementById('cal-save').onclick = ()=>{
-  const sel = calSelected.dataset.day
-  if(!sel) return alert('Select a day first.')
-  const t = calWishInput.value.trim()
-  if(!t){ delete calendar[sel]; } else { calendar[sel]=t }
-  save(calendarKey, calendar); renderCalendar(); calWishInput.value=''
-}
-document.getElementById('cal-clear').onclick = ()=>{
-  const sel = calSelected.dataset.day
-  if(!sel) return alert('Select a day first.')
-  if(confirm('Clear wish for this day?')){ delete calendar[sel]; save(calendarKey,calendar); renderCalendar(); calWishInput.value='' }
-}
-
-function renderCalendar(){
-  calGrid.innerHTML = ''
-  const days = Array.from({length:31}, (_,i)=>i+1)
-  const today = new Date().getDate()
-  days.forEach(d=>{
-    const el = document.createElement('div'); el.className='cal-day'; el.textContent=d
-    el.dataset.day = d
-    if(d===today) el.classList.add('today')
-    if(calendar[d]) {
-      const note = document.createElement('div'); note.style.fontSize='12px'; note.style.marginTop='6px'; note.style.color='var(--muted)'
-      note.textContent = calendar[d].slice(0,40) + (calendar[d].length>40 ? '…' : '')
-      el.appendChild(note)
-    }
-    el.onclick = ()=>{ calSelected.textContent = d; calSelected.dataset.day = d; calWishInput.value = calendar[d] || '' }
-    calGrid.appendChild(el)
-  })
-}
-renderCalendar()
-
-/* --- GALLERY --- */
-const galleryKey = 'anushka_gallery_v1'
-let gallery = load(galleryKey, [])
-const galleryInput = document.getElementById('gallery-file')
-const galleryGrid = document.getElementById('gallery-grid')
-galleryInput.addEventListener('change', async (e)=>{
-  const f = e.target.files[0]; if(!f) return
-  if(f.size > 1024*1024*1.6){ if(!confirm('Image is large; saving may hit storage limits. Continue?')) return }
-  const data = await fileToDataURL(f)
-  gallery.push({id:uid(), dataURL:data, caption:'', date:new Date().toISOString()})
-  save(galleryKey,gallery); renderGallery(); galleryInput.value=''
-})
-function renderGallery(){
-  galleryGrid.innerHTML = ''
-  if(!gallery || gallery.length===0){ galleryGrid.innerHTML = '<div class="small">No images yet.</div>'; return }
-  gallery.slice().reverse().forEach(img=>{
-    const card = document.createElement('div'); card.className='item'
-    const image = document.createElement('img'); image.src = img.dataURL; image.className='thumb'
-    const cap = document.createElement('div'); cap.className='small'; cap.textContent = img.caption || ''
-    const edit = document.createElement('button'); edit.textContent='Edit'; edit.className='btn-ghost'
-    edit.onclick = ()=>{
-      const newc = prompt('Caption', img.caption||'')
-      if(newc!=null){ img.caption=newc; save(galleryKey,gallery); renderGallery() }
-    }
-    const del = document.createElement('button'); del.textContent='Delete'; del.className='btn-ghost'
-    del.onclick = ()=>{ if(confirm('Delete image?')){ gallery = gallery.filter(x=>x.id!==img.id); save(galleryKey,gallery); renderGallery() } }
-    card.append(image, cap, edit, del)
-    galleryGrid.appendChild(card)
-  })
-}
-renderGallery()
-
-/* --- AUDIO --- */
-const audioKey = 'anushka_audio_v1'
-let audios = load(audioKey, [])
-const audioInput = document.getElementById('audio-file')
-const audioList = document.getElementById('audio-list')
-audioInput.addEventListener('change', async (e)=>{
-  const f = e.target.files[0]; if(!f) return
-  if(f.size > 1024*1024*4){ if(!confirm('Audio is large; saving may hit storage limits. Continue?')) return }
-  const data = await fileToDataURL(f)
-  audios.push({id:uid(), dataURL:data, name:f.name, date:new Date().toISOString()})
-  save(audioKey,audios); renderAudio(); audioInput.value=''
-})
-function renderAudio(){
-  audioList.innerHTML = ''
-  if(!audios || audios.length===0) { audioList.innerHTML = '<div class="small">No audio yet.</div>'; return }
-  audios.slice().reverse().forEach(a=>{
-    const el = document.createElement('div'); el.className='item'
-    const meta = document.createElement('div'); meta.className='meta'; meta.textContent = a.name + ' — ' + new Date(a.date).toLocaleString()
-    const audio = document.createElement('audio'); audio.controls=true; audio.src=a.dataURL; audio.style.width='100%'
-    const del = document.createElement('button'); del.textContent='Delete'; del.className='btn-ghost'
-    del.onclick = ()=>{ if(confirm('Delete audio?')){ audios = audios.filter(x=>x.id!==a.id); save(audioKey,audios); renderAudio() } }
-    el.append(meta, audio, del)
-    audioList.appendChild(el)
-  })
-}
-renderAudio()
-
-/* --- Backup / Export / Import --- */
-const exportBtn = document.getElementById('export-data')
-const importFile = document.getElementById('import-file')
-exportBtn.onclick = ()=>{
-  const dump = {
-    wishes, timeline, growth, calendar, gallery, audios, apology: localStorage.getItem(apologyKey) || ''
-  }
-  const blob = new Blob([JSON.stringify(dump, null, 2)], {type:'application/json'})
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a'); a.href = url; a.download = 'anushka_backup_'+new Date().toISOString().slice(0,10)+'.json'; a.click(); URL.revokeObjectURL(url)
-}
-importFile.addEventListener('change', async (e)=>{
-  const f = e.target.files[0]; if(!f) return
-  if(!confirm('Importing will replace current data. Continue?')) { importFile.value=''; return }
-  const txt = await f.text()
-  try{
-    const obj = JSON.parse(txt)
-    wishes = obj.wishes || []; save(wishesKey,wishes)
-    timeline = obj.timeline || []; save(timelineKey,timeline)
-    growth = obj.growth || []; save(growthKey,growth)
-    calendar = obj.calendar || {}; save(calendarKey,calendar)
-    gallery = obj.gallery || []; save(galleryKey,gallery)
-    audios = obj.audios || []; save(audioKey,audios)
-    if(obj.apology) { apologyEl.value = obj.apology; save(apologyKey,obj.apology) }
-    renderAll()
-    alert('Import complete.')
-  }catch(err){ alert('Invalid file.') }
-  importFile.value=''
-})
-
-/* --- helpers --- */
-function fileToDataURL(file){ return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=()=>rej(); fr.readAsDataURL(file) }) }
-
-function renderAll(){ renderWishes(); renderTimeline(); renderGrowth(); renderCalendar(); renderGallery(); renderAudio() }
-
-/* initial render done above; keep functions available if needed */
-window.renderAll = renderAll
-
-</script>
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => observer.observe(el));
+        });
+    </script>
 
 </body>
 </html>
