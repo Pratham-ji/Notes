@@ -3,404 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>19th February</title>
+    <title>Happy Birthday, Anushka</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* THEME: Cosmic Gallery / Midnight in Japan & Greece
-           PALETTE: Deep Black, Starlight Yellow, Soft Pink (Sakura)
-        */
-        :root {
-            --bg-deep: #050505;
-            --text-cream: #eaeaea;
-            --accent-yellow: #fceea7; /* Moon */
-            --accent-pink: #ffc2d1;   /* Sakura Pink */
-            --glass-panel: rgba(20, 20, 20, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --font-serif: "Playfair Display", "Times New Roman", serif;
-            --font-mono: "Courier New", monospace;
-        }
-
-        * {
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            background: #050505; /* Deep midnight */
+            color: #fff6ec;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden; /* Lock scroll for cinematic feel */
         }
 
-        body {
-            background-color: var(--bg-deep);
-            color: var(--text-cream);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            cursor: default;
+        /* Soft sunrise gradient behind everything */
+        .ambient-glow {
+            position: absolute;
+            bottom: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150vw;
+            height: 80vh;
+            background: radial-gradient(ellipse at bottom, rgba(255, 194, 209, 0.25) 0%, rgba(20, 20, 20, 0) 70%);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulseGlow 8s infinite alternate ease-in-out;
         }
 
-        /* CANVAS BACKGROUND */
-        #starfield {
-            position: fixed;
+        @keyframes pulseGlow {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+        }
+
+        /* Sakura Canvas */
+        #sakura-canvas {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 1;
             pointer-events: none;
         }
 
-        /* TYPOGRAPHY */
-        h1, h2, h3 {
-            font-family: var(--font-serif);
-            font-weight: 400;
-            letter-spacing: -0.02em;
-        }
-
-        .pink-text { color: var(--accent-pink); }
-        .yellow-text { color: var(--accent-yellow); }
-        
-        .mono-sub {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            opacity: 0.6;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        /* LAYOUT */
-        .screen {
-            min-height: 100vh;
+        .content-layer {
+            position: relative;
+            z-index: 10;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 4rem 1rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        h1, h2, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem;
+            border-radius: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translateY(20px);
+            animation: floatUpFade 2s 0.5s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        .screen.visible {
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes floatUpFade {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .container {
-            max-width: 650px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-        }
-
-        /* CARDS (The Exhibits) */
-        .exhibit-card {
-            background: var(--glass-panel);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            padding: 4rem 2rem;
-            border-radius: 4px;
-            position: relative;
-            margin: 2rem 0;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transition: transform 0.5s ease;
+        /* Staggered Text Reveals */
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(10px);
         }
         
-        .exhibit-card:hover {
-            border-color: rgba(255,255,255,0.2);
-            transform: translateY(-5px);
-        }
+        .delay-1 { animation: floatUpFade 1.5s 1.5s forwards ease-out; }
+        .delay-2 { animation: floatUpFade 1.5s 3.0s forwards ease-out; }
+        .delay-3 { animation: floatUpFade 1.5s 4.5s forwards ease-out; }
+        .delay-4 { animation: floatUpFade 1.5s 6.5s forwards ease-out; }
 
-        /* DECORATIVE LINES */
-        .line-top {
-            position: absolute;
-            top: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, transparent, var(--accent-yellow));
-        }
-
-        /* COUNTDOWN */
-        .countdown-wrapper {
-            display: flex;
+        /* The Safe Place Button */
+        .safe-place-btn {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .time-box {
-            text-align: center;
-        }
-
-        .time-val {
-            font-family: var(--font-serif);
-            font-size: 3rem;
-            line-height: 1;
-            background: linear-gradient(to bottom, #fff, #aaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .time-label {
-            font-size: 0.7rem;
-            opacity: 0.5;
-            letter-spacing: 1px;
-            margin-top: 5px;
-            display: block;
-        }
-
-        /* TRAIT CONSTELLATION */
-        .star-list {
-            list-style: none;
-            text-align: left;
-            margin-top: 2rem;
-            padding-left: 1rem;
-        }
-        .star-list li {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: baseline;
-            opacity: 0.8;
-        }
-        .star-list li::before {
-            content: '✦';
-            color: var(--accent-yellow);
-            margin-right: 15px;
-            font-size: 0.8rem;
-        }
-
-        /* DOG TAGS */
-        .dog-grid {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 25px;
-        }
-        .dog-tag {
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 8px 16px;
+            padding: 1rem 2.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 194, 209, 0.4);
+            color: #ffc2d1;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-style: italic;
             border-radius: 50px;
-            font-size: 0.85rem;
-            color: var(--text-cream);
-            transition: 0.3s;
-        }
-        .dog-tag:hover {
-            border-color: var(--accent-yellow);
-            color: var(--accent-yellow);
-            background: rgba(252, 238, 167, 0.05);
+            text-decoration: none;
+            transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            margin-top: 2rem;
         }
 
-        /* LOCKED SECTION */
-        .locked-overlay {
-            filter: blur(12px);
-            user-select: none;
-            transition: filter 2s ease;
-        }
-        
-        .unlock-msg {
+        .safe-place-btn::before {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            width: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(255,194,209,0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
         }
 
-        .is-unlocked .locked-overlay {
-            filter: blur(0);
-        }
-        .is-unlocked .unlock-msg {
-            display: none;
+        .safe-place-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 194, 209, 0.1);
+            border-color: rgba(255, 194, 209, 0.8);
+            box-shadow: 0 10px 30px rgba(255, 194, 209, 0.2);
+            color: #fff;
         }
 
-        /* MOBILE TWEAKS */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .time-val { font-size: 2rem; }
-            .countdown-wrapper { gap: 1rem; }
-            .exhibit-card { padding: 2.5rem 1.5rem; }
+        .safe-place-btn:hover::before {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
-    <canvas id="starfield"></canvas>
+    <div class="ambient-glow"></div>
+    <canvas id="sakura-canvas"></canvas>
 
-    <!-- 1. OPENING: 19th -->
-    <section class="screen visible" id="intro">
-        <div class="container">
-            <span class="mono-sub pink-text">Current Date: 19th Feb</span>
-            <h1 style="font-size: 3.5rem; line-height: 1.2; margin-bottom: 1.5rem;">
-                One sleep away<br>from your day.
-            </h1>
-            <p style="font-weight: 300; opacity: 0.8; font-size: 1.1rem; max-width: 400px; margin: 0 auto;">
-                The universe is aligning just for you.<br>
-                Take a deep breath. We are almost there.
-            </p>
-            <div style="margin-top: 3rem; font-size: 1.5rem; color: var(--accent-yellow); animation: float 3s infinite;">↓</div>
-        </div>
-    </section>
-
-    <!-- 2. COUNTDOWN -->
-    <section class="screen">
-        <div class="container">
-            <div class="exhibit-card">
-                <div class="line-top"></div>
-                <span class="mono-sub">Coordinate: Feb 20th</span>
-                <h2 style="margin-bottom: 1rem;">The Final Countdown</h2>
-                
-                <div class="countdown-wrapper">
-                    <div class="time-box">
-                        <div class="time-val" id="h">00</div>
-                        <span class="time-label">HOURS</span>
-                    </div>
-                    <div class="time-box">
-                        <div class="time-val" id="m">00</div>
-                        <span class="time-label">MINS</span>
-                    </div>
-                    <div class="time-box">
-                        <div class="time-val" id="s">00</div>
-                        <span class="time-label">SECS</span>
-                    </div>
-                </div>
-                <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.6; font-style: italic;">"I'm not counting time. I'm appreciating it."</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. JAPAN (The Grand Plan) -->
-    <section class="screen">
-        <div class="container">
-            <!-- Styling this card with a subtle pink glow for Japan -->
-            <div class="exhibit-card" style="border-top: 2px solid var(--accent-pink);">
-                <span class="mono-sub pink-text">Exhibit A: The Grand Plan</span>
-                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Japan.</h2>
-                <h3 style="font-size: 1.2rem; margin-bottom: 2rem; font-style: italic; opacity: 0.8;">One whole month. Just us.</h3>
-                
-                <p style="line-height: 1.8; margin-bottom: 1.5rem;">
-                    We mapped it out. Not a vacation, but a life lived elsewhere.<br>
-                    Cherry blossoms in Kyoto. Late-night vending machines in Tokyo.<br>
-                    Walking until our feet hurt, holding hands under neon lights.
-                </p>
-                <p style="color: var(--accent-pink); font-size: 0.9rem;">
-                    It’s not just a trip. It’s our first big chapter.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. GREECE (Authenticity) -->
-    <section class="screen">
-        <div class="container">
-            <div class="exhibit-card">
-                <span class="mono-sub yellow-text">Exhibit B: The Dream</span>
-                <h2 style="font-size: 2rem; margin-bottom: 1rem;">Museums in Greece</h2>
-                <p style="line-height: 1.7; margin-bottom: 2rem;">
-                    Quiet halls. Ancient statues. The art of staying still.<br>
-                    We won't just visit history; we'll walk through it.
-                </p>
-                
-                <div style="border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 4px; background: rgba(0,0,0,0.3);">
-                    <p style="font-family: var(--font-serif); font-style: italic; font-size: 1.2rem; color: var(--accent-yellow);">
-                        "Not to change. Not to pretend.<br>
-                        Just to be real. Always."
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. CONSTELLATION OF YOU (Traits) -->
-    <section class="screen">
-        <div class="container">
-            <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">The Constellation of You</h2>
-            <div style="text-align: left; max-width: 500px; margin: 0 auto; line-height: 1.8;">
-                <ul class="star-list">
-                    <li>The way you argue with logic but love with soft emotion.</li>
-                    <li>How you overthink everything but still choose kindness.</li>
-                    <li>Your quiet strength that holds the room together.</li>
-                    <li>The way you remember the smallest details.</li>
-                    <li>How you protect your peace, and mine.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. LANDLORD JI (Guardian) -->
-    <section class="screen">
-        <div class="container">
-            <div class="exhibit-card" style="border-bottom: 2px solid var(--accent-yellow);">
-                <span class="mono-sub yellow-text">The Guardian</span>
-                <h3>For Landlord Ji</h3>
-                <p style="margin-top: 1.5rem; line-height: 1.8; opacity: 0.9;">
-                    I know I cannot replace him. No one can.<br>
-                    But I promise to honor him by taking care of you.<br>
-                    Checking the locks. Worrying about your meals.<br>
-                    Being the safety he always wanted for you.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. THE CHAOS (Dogs) -->
-    <section class="screen">
-        <div class="container">
-            <div class="exhibit-card">
-                <span class="mono-sub">The Future House</span>
-                <h2 style="margin-bottom: 1rem;">Chaos & Cuddles</h2>
-                <p style="margin-bottom: 1.5rem;">
-                    You said you like dogs. So naturally...<br>
-                    <span class="pink-text" style="font-style: italic;">"She'll eat the cats."</span>
-                </p>
-                
-                <div class="dog-grid">
-                    <span class="dog-tag">Husky (Drama)</span>
-                    <span class="dog-tag">Shih Tzu (Sass)</span>
-                    <span class="dog-tag">Corgi (Loaf)</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 8. LOCKED MESSAGE -->
-    <section class="screen">
-        <div class="container">
-            <div class="exhibit-card" id="lock-box" style="padding: 5rem 2rem;">
-                
-                <div class="unlock-msg">
-                    <h2 style="font-size: 3rem; margin-bottom: 1rem;">🔒</h2>
-                    <span class="mono-sub">Unlocks Feb 20th</span>
-                </div>
-
-                <div class="locked-overlay">
-                    <span class="mono-sub pink-text">Message Decrypted</span>
-                    <h2 style="font-size: 3rem; color: var(--accent-yellow); margin-bottom: 1.5rem;">
-                        Happy Birthday, Anushka.
-                    </h2>
-                    <p style="line-height: 1.8; font-size: 1.1rem;">
-                        I put the stars in this background,<br>
-                        but you are the one who lights up the room.<br><br>
-                        The world is upside down without you.<br>
-                        Thank you for existing.
-                    </p>
-                </div>
-
-            </div>
+    <div class="content-layer">
+        <div class="glass-card">
             
-            <footer style="margin-top: 3rem; opacity: 0.4; font-size: 0.7rem; letter-spacing: 1px;">
-                BUILT FOR THE 20TH. WITH LOVE.
-            </footer>
+            <h1 class="text-4xl md:text-5xl font-medium mb-2 text-[#ffc2d1] reveal-text delay-1">
+                Happy Birthday, Anushka.
+            </h1>
+            
+            <p class="text-sm tracking-[0.2em] uppercase text-gray-400 mb-8 reveal-text delay-1">
+                February 20th
+            </p>
+
+            <div class="space-y-6 text-lg md:text-xl font-light leading-relaxed text-gray-200">
+                <p class="reveal-text delay-2">
+                    The countdown is over. Welcome to your day.
+                </p>
+
+                <p class="reveal-text delay-3">
+                    And to celebrate... pack your bags.<br>
+                    <span class="text-[#ffc2d1] italic serif text-2xl mt-2 block">Japan. One whole month. Just us.</span>
+                </p>
+
+                <p class="reveal-text delay-4 text-base text-gray-400 max-w-sm mx-auto">
+                    But until we are under the real cherry blossoms, I built a sanctuary for us. For everything we are, and everything we will be.
+                </p>
+            </div>
+
+            <div class="reveal-text delay-4" style="animation-delay: 8s;">
+                <a href="https://pranushka.netlify.app" class="safe-place-btn">
+                    Enter Your Safe Place
+                </a>
+            </div>
+
         </div>
-    </section>
+    </div>
 
     <script>
-        // --- 1. STARFIELD BACKGROUND ---
-        const canvas = document.getElementById('starfield');
+        // --- SAKURA (CHERRY BLOSSOM) CANVAS ANIMATION ---
+        const canvas = document.getElementById('sakura-canvas');
         const ctx = canvas.getContext('2d');
         
         let width, height;
-        let stars = [];
-        let shootingStars = [];
-        const colors = ['#fceea7', '#ffc2d1', '#ffffff', '#d4e0ff']; 
+        let petals = [];
 
         function resize() {
             width = window.innerWidth;
@@ -409,157 +192,69 @@
             canvas.height = height;
         }
 
-        class Star {
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Petal {
             constructor() {
                 this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 1.5;
-                this.speedX = (Math.random() - 0.5) * 0.2;
-                this.speedY = (Math.random() - 0.5) * 0.2;
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.opacity = Math.random();
+                this.y = Math.random() * height - height;
+                this.size = Math.random() * 2 + 1.5;
+                this.speedY = Math.random() * 1 + 0.5;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 2 - 1;
+                this.opacity = Math.random() * 0.5 + 0.3;
             }
+
             update() {
-                this.x += this.speedX;
                 this.y += this.speedY;
-                if (this.x < 0) this.x = width; if (this.x > width) this.x = 0;
-                if (this.y < 0) this.y = height; if (this.y > height) this.y = 0;
-                this.opacity += (Math.random() - 0.5) * 0.05;
-                if (this.opacity < 0.1) this.opacity = 0.1;
-                if (this.opacity > 0.8) this.opacity = 0.8;
+                this.x += this.speedX + Math.sin(this.y * 0.01) * 0.5; // Flutter effect
+                this.rotation += this.rotationSpeed;
+
+                // Reset when out of bounds
+                if (this.y > height) {
+                    this.y = -20;
+                    this.x = Math.random() * width;
+                }
+                if (this.x > width + 20) this.x = -20;
+                if (this.x < -20) this.x = width + 20;
             }
+
             draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                
+                // Draw a petal shape
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.globalAlpha = this.opacity;
-                ctx.fillStyle = this.color;
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(this.size * 2, -this.size * 2, this.size * 4, this.size, 0, this.size * 3);
+                ctx.bezierCurveTo(-this.size * 4, this.size, -this.size * 2, -this.size * 2, 0, 0);
+                
+                ctx.fillStyle = `rgba(255, 194, 209, ${this.opacity})`;
                 ctx.fill();
+                ctx.restore();
             }
         }
 
-        class ShootingStar {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height / 2;
-                this.len = Math.random() * 80 + 10;
-                this.speed = Math.random() * 10 + 6;
-                this.size = Math.random() * 1 + 0.1;
-                this.angle = Math.PI / 4; 
-                this.life = 0;
-                this.maxLife = 100;
-            }
-            update() {
-                this.x += this.speed * Math.cos(this.angle);
-                this.y += this.speed * Math.sin(this.angle);
-                this.life++;
-                this.len *= 0.96; 
-            }
-            draw() {
-                ctx.strokeStyle = "rgba(255, 255, 255, " + (1 - this.life / this.maxLife) + ")";
-                ctx.lineWidth = this.size;
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(this.x - this.len * Math.cos(this.angle), this.y - this.len * Math.sin(this.angle));
-                ctx.stroke();
-            }
+        // Initialize petals
+        for (let i = 0; i < 40; i++) {
+            petals.push(new Petal());
         }
 
-        function initStars() {
-            stars = [];
-            for (let i = 0; i < 180; i++) stars.push(new Star());
-        }
-
-        function animateStars() {
+        function animate() {
             ctx.clearRect(0, 0, width, height);
             
-            // Constellation Lines
-            ctx.strokeStyle = 'rgba(252, 238, 167, 0.04)';
-            ctx.lineWidth = 0.5;
-            for (let i = 0; i < stars.length; i++) {
-                stars[i].update();
-                stars[i].draw();
-                for (let j = i + 1; j < stars.length; j++) {
-                    const dx = stars[i].x - stars[j].x;
-                    const dy = stars[i].y - stars[j].y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < 80) {
-                        ctx.beginPath();
-                        ctx.moveTo(stars[i].x, stars[i].y);
-                        ctx.lineTo(stars[j].x, stars[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            // Shooting Stars (Rare)
-            if (Math.random() < 0.02) shootingStars.push(new ShootingStar());
-            for (let i = 0; i < shootingStars.length; i++) {
-                shootingStars[i].update();
-                shootingStars[i].draw();
-                if (shootingStars[i].life > shootingStars[i].maxLife) {
-                    shootingStars.splice(i, 1);
-                    i--;
-                }
-            }
-            
-            requestAnimationFrame(animateStars);
-        }
-
-        window.addEventListener('resize', () => { resize(); initStars(); });
-        resize();
-        initStars();
-        animateStars();
-
-        // --- 2. COUNTDOWN LOGIC ---
-        function updateCountdown() {
-            const now = new Date();
-            const currentYear = now.getFullYear();
-            const target = new Date(`February 20, ${currentYear} 00:00:00`);
-            const diff = target - now;
-
-            if (diff <= 0) {
-                document.getElementById('lock-box').classList.add('is-unlocked');
-                document.getElementById('h').innerText = "00";
-                document.getElementById('m').innerText = "00";
-                document.getElementById('s').innerText = "00";
-                return;
-            }
-
-            const h = Math.floor((diff / (1000 * 60 * 60))); // Total hours left
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('h').innerText = h < 10 ? '0'+h : h;
-            document.getElementById('m').innerText = m < 10 ? '0'+m : m;
-            document.getElementById('s').innerText = s < 10 ? '0'+s : s;
-
-             // Auto unlock check if date is 20th
-             if (now.getDate() >= 20 && now.getMonth() === 1) { 
-                 document.getElementById('lock-box').classList.add('is-unlocked');
-            }
-        }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        // --- 3. SCROLL REVEAL ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+            petals.forEach(petal => {
+                petal.update();
+                petal.draw();
             });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.screen').forEach(el => observer.observe(el));
-        
-        // Custom float animation
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes float {
-                0% { transform: translateY(0px); opacity: 0.5; }
-                50% { transform: translateY(10px); opacity: 1; }
-                100% { transform: translateY(0px); opacity: 0.5; }
-            }
-        `;
-        document.head.appendChild(style);
+            
+            requestAnimationFrame(animate);
+        }
 
+        animate();
     </script>
 </body>
 </html>
