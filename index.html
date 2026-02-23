@@ -2,259 +2,310 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, Anushka</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>I'm Sorry.</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    
     <style>
+        /* * PALETTE & THEME 
+         * Starts dark/moody, transitions to her favorites (Yellow & Pink) upon forgiveness.
+         */
+        :root {
+            --bg-dark: #0a0a0a;
+            --text-dark: #e5e5e5;
+            --accent-yellow: #fceea7;
+            --accent-pink: #ffc2d1;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            background: #050505; /* Deep midnight */
-            color: #fff6ec;
-            font-family: 'Inter', sans-serif;
-            overflow: hidden; /* Lock scroll for cinematic feel */
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            transition: background-color 2s ease, color 2s ease;
         }
 
-        /* Soft sunrise gradient behind everything */
-        .ambient-glow {
+        /* Typography */
+        h1, h2, h3, .serif {
+            font-family: var(--font-serif);
+            font-weight: 400;
+        }
+
+        /* Narrative Sections */
+        .apology-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+
+        .apology-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-body {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            max-width: 600px;
+            color: #a3a3a3;
+            font-weight: 300;
+        }
+
+        .highlight {
+            color: var(--text-dark);
+            font-style: italic;
+        }
+
+        /* Scroll Down Indicator */
+        .scroll-down {
             position: absolute;
-            bottom: -20%;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            width: 150vw;
-            height: 80vh;
-            background: radial-gradient(ellipse at bottom, rgba(255, 194, 209, 0.25) 0%, rgba(20, 20, 20, 0) 70%);
-            z-index: 0;
-            pointer-events: none;
-            animation: pulseGlow 8s infinite alternate ease-in-out;
+            animation: bounce 2s infinite;
+            opacity: 0.5;
+            font-size: 1.5rem;
         }
 
-        @keyframes pulseGlow {
-            0% { opacity: 0.6; transform: translateX(-50%) scale(1); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+            40% { transform: translate(-50%, -10px); }
+            60% { transform: translate(-50%, -5px); }
         }
 
-        /* Sakura Canvas */
-        #sakura-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .content-layer {
+        /* Interactive Button Area */
+        .button-container {
             position: relative;
-            z-index: 10;
-            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 40px;
+            height: 100px; /* Give space for movement */
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--text-dark);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* The "Yes" Button */
+        .btn-yes:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--text-dark);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        /* The "No" Button - gets special inline styles via JS when running away */
+        .btn-no {
+            position: relative; /* Starts relative, becomes absolute via JS */
+            z-index: 50;
+        }
+
+        /* Forgiven State (Hidden initially) */
+        #forgiven-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--accent-yellow) 0%, var(--accent-pink) 100%);
+            color: #333; /* Dark text for light background */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 2rem;
             text-align: center;
-        }
-
-        h1, h2, .serif {
-            font-family: 'Playfair Display', serif;
-        }
-
-        /* Glassmorphism Card */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 3rem 2rem;
-            border-radius: 2rem;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
             opacity: 0;
-            transform: translateY(20px);
-            animation: floatUpFade 2s 0.5s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+            pointer-events: none;
+            z-index: 100;
+            transition: opacity 2s ease-in-out;
         }
 
-        @keyframes floatUpFade {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Staggered Text Reveals */
-        .reveal-text {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        
-        .delay-1 { animation: floatUpFade 1.5s 1.5s forwards ease-out; }
-        .delay-2 { animation: floatUpFade 1.5s 3.0s forwards ease-out; }
-        .delay-3 { animation: floatUpFade 1.5s 4.5s forwards ease-out; }
-        .delay-4 { animation: floatUpFade 1.5s 6.5s forwards ease-out; }
-
-        /* The Safe Place Button */
-        .safe-place-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem 2.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 194, 209, 0.4);
-            color: #ffc2d1;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            font-style: italic;
-            border-radius: 50px;
-            text-decoration: none;
-            transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            margin-top: 2rem;
-        }
-
-        .safe-place-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(255,194,209,0.2) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .safe-place-btn:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 194, 209, 0.1);
-            border-color: rgba(255, 194, 209, 0.8);
-            box-shadow: 0 10px 30px rgba(255, 194, 209, 0.2);
-            color: #fff;
-        }
-
-        .safe-place-btn:hover::before {
+        #forgiven-screen.active {
             opacity: 1;
+            pointer-events: all;
         }
+
+        /* Cute decorative elements */
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatUp 4s ease-in forwards;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="ambient-glow"></div>
-    <canvas id="sakura-canvas"></canvas>
+    <!-- Section 1: The Admittance -->
+    <section class="apology-section visible" id="sec-1">
+        <h1 class="text-4xl md:text-5xl mb-6">I messed up.</h1>
+        <p class="text-body">
+            Sometimes my mouth moves faster than my brain,<br>
+            and I say things I shouldn't.
+        </p>
+        <div class="scroll-down">↓</div>
+    </section>
 
-    <div class="content-layer">
-        <div class="glass-card">
-            
-            <h1 class="text-4xl md:text-5xl font-medium mb-2 text-[#ffc2d1] reveal-text delay-1">
-                Happy Birthday, Anushka.
-            </h1>
-            
-            <p class="text-sm tracking-[0.2em] uppercase text-gray-400 mb-8 reveal-text delay-1">
-                February 20th
-            </p>
+    <!-- Section 2: Emotional Intelligence / Safety -->
+    <section class="apology-section">
+        <h2 class="text-3xl md:text-4xl mb-6">You are my safe place.</h2>
+        <p class="text-body">
+            I never want to be the reason yours feels even a little bit shaky.<br>
+            My words were clumsy, and I hate knowing that I hurt you.
+        </p>
+    </section>
 
-            <div class="space-y-6 text-lg md:text-xl font-light leading-relaxed text-gray-200">
-                <p class="reveal-text delay-2">
-                    The countdown is over. Welcome to your day.
-                </p>
+    <!-- Section 3: The Cute Apology -->
+    <section class="apology-section">
+        <h2 class="text-3xl md:text-4xl mb-6 text-[#fceea7]">I am so incredibly sorry.</h2>
+        <p class="text-body">
+            Right now, I am feeling exactly like a dramatic <span class="highlight">Husky</span> who knows he ruined the pillows, combined with a sad <span class="highlight">Corgi</span> whose treats got taken away.
+        </p>
+        <p class="text-body mt-4" style="font-size: 0.9rem; opacity: 0.6;">
+            (And I know you'd rather eat cats than see a sad dog.)
+        </p>
+    </section>
 
-                <p class="reveal-text delay-3">
-                    And to celebrate... pack your bags.<br>
-                    <span class="text-[#ffc2d1] italic serif text-2xl mt-2 block">Japan. One whole month. Just us.</span>
-                </p>
-
-                <p class="reveal-text delay-4 text-base text-gray-400 max-w-sm mx-auto">
-                    But until we are under the real cherry blossoms, I built a sanctuary for us. For everything we are, and everything we will be.
-                </p>
-            </div>
-
-            <div class="reveal-text delay-4" style="animation-delay: 8s;">
-                <a href="https://pranushka.netlify.app" class="safe-place-btn">
-                    Enter Your Safe Place
-                </a>
-            </div>
-
+    <!-- Section 4: The Game -->
+    <section class="apology-section" id="game-section">
+        <h2 class="text-3xl md:text-4xl mb-2">Can we hit rewind?</h2>
+        <p class="text-body mb-8">Will you forgive me, Anushka?</p>
+        
+        <div class="button-container" id="btn-container">
+            <button class="btn btn-yes" id="btn-yes">Yes, I forgive you</button>
+            <button class="btn btn-no" id="btn-no">No, I'm still mad</button>
         </div>
+    </section>
+
+    <!-- FINAL SCREEN: The Forgiven State -->
+    <div id="forgiven-screen">
+        <h1 class="text-5xl md:text-6xl serif mb-6" style="color: #4b3f3f;">Thank you.</h1>
+        <p class="text-xl md:text-2xl font-light max-w-lg mx-auto" style="color: #5c4d4d; line-height: 1.6;">
+            I love you so much.<br>
+            I promise to be better, to think before I speak, and to always protect what we have.
+        </p>
+        <p class="mt-8 text-md font-serif italic" style="color: #8c7b7b;">
+            (Now come here so I can hug you.)
+        </p>
     </div>
 
     <script>
-        // --- SAKURA (CHERRY BLOSSOM) CANVAS ANIMATION ---
-        const canvas = document.getElementById('sakura-canvas');
-        const ctx = canvas.getContext('2d');
-        
-        let width, height;
-        let petals = [];
-
-        function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-        }
-
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Petal {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height - height;
-                this.size = Math.random() * 2 + 1.5;
-                this.speedY = Math.random() * 1 + 0.5;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.rotation = Math.random() * 360;
-                this.rotationSpeed = Math.random() * 2 - 1;
-                this.opacity = Math.random() * 0.5 + 0.3;
-            }
-
-            update() {
-                this.y += this.speedY;
-                this.x += this.speedX + Math.sin(this.y * 0.01) * 0.5; // Flutter effect
-                this.rotation += this.rotationSpeed;
-
-                // Reset when out of bounds
-                if (this.y > height) {
-                    this.y = -20;
-                    this.x = Math.random() * width;
+        // 1. SCROLL REVEAL LOGIC
+        const sections = document.querySelectorAll('.apology-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
-                if (this.x > width + 20) this.x = -20;
-                if (this.x < -20) this.x = width + 20;
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation * Math.PI / 180);
-                
-                // Draw a petal shape
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.bezierCurveTo(this.size * 2, -this.size * 2, this.size * 4, this.size, 0, this.size * 3);
-                ctx.bezierCurveTo(-this.size * 4, this.size, -this.size * 2, -this.size * 2, 0, 0);
-                
-                ctx.fillStyle = `rgba(255, 194, 209, ${this.opacity})`;
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        // Initialize petals
-        for (let i = 0; i < 40; i++) {
-            petals.push(new Petal());
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            
-            petals.forEach(petal => {
-                petal.update();
-                petal.draw();
             });
+        }, { threshold: 0.4 });
+
+        sections.forEach(sec => observer.observe(sec));
+
+        // 2. RUNAWAY BUTTON LOGIC (The "No" Button)
+        const btnNo = document.getElementById('btn-no');
+        const btnYes = document.getElementById('btn-yes');
+        const container = document.getElementById('btn-container');
+        
+        // Track if button has been made absolute
+        let isAbsolute = false;
+
+        function runAway() {
+            if (!isAbsolute) {
+                // First time moving: change to absolute positioning relative to viewport
+                btnNo.style.position = 'fixed';
+                isAbsolute = true;
+            }
+
+            // Get viewport dimensions
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
             
-            requestAnimationFrame(animate);
+            // Button dimensions
+            const btnWidth = btnNo.offsetWidth;
+            const btnHeight = btnNo.offsetHeight;
+
+            // Calculate safe boundaries (keep button on screen)
+            const maxX = viewportWidth - btnWidth - 20;
+            const maxY = viewportHeight - btnHeight - 20;
+
+            // Generate random positions
+            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+
+            // Apply smooth movement
+            btnNo.style.transition = 'left 0.3s ease, top 0.3s ease';
+            btnNo.style.left = `${randomX}px`;
+            btnNo.style.top = `${randomY}px`;
         }
 
-        animate();
+        // Trigger runaway on hover (desktop) AND touch (mobile)
+        btnNo.addEventListener('mouseover', runAway);
+        btnNo.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevent accidental clicking
+            runAway();
+        });
+
+        // 3. FORGIVEN LOGIC (The "Yes" Button)
+        const forgivenScreen = document.getElementById('forgiven-screen');
+
+        btnYes.addEventListener('click', () => {
+            // Show the happy screen
+            forgivenScreen.classList.add('active');
+            
+            // Create little floating hearts
+            createHearts();
+        });
+
+        function createHearts() {
+            const colors = ['💛', '🤍', '💖', '✨'];
+            for(let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.innerText = colors[Math.floor(Math.random() * colors.length)];
+                    heart.style.left = `${Math.random() * 100}vw`;
+                    heart.style.bottom = `-50px`;
+                    forgivenScreen.appendChild(heart);
+                    
+                    // Cleanup
+                    setTimeout(() => heart.remove(), 4000);
+                }, i * 200);
+            }
+        }
     </script>
 </body>
 </html>
