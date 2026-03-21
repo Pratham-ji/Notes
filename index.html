@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Viewport-fit=cover ensures it fills notched screens (like iPhones) perfectly -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Good Morning, My Baby</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -11,49 +12,54 @@
         :root {
             /* Color Phases for the background transition */
             --bg-night: #05050a;
-            --bg-late: #1a1525;
-            --bg-dawn1: #2d1b36;
-            --bg-dawn2: #4a2545;
-            --bg-sunrise: #e07a5f;
-            --bg-morning: #f4a261;
-            --bg-golden: #ffe8d6;
+            --bg-late: #15111d;
+            --bg-dawn1: #2a1730;
+            --bg-dawn2: #421f3b;
+            --bg-sunrise: #cc5c54;
+            --bg-morning: #e88d56;
+            --bg-golden: #fae1c5;
 
-            --text-dark: #f8f9fa;
-            --text-light: #3d2c23;
+            --text-dark: #fcfcfc;
+            --text-light: #4a3424;
         }
 
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100%;
+            height: 100dvh; /* Dynamic viewport height fixes mobile browser bar jumps */
             overflow: hidden;
             background-color: var(--bg-night);
             transition: background-color 3s ease-in-out;
             user-select: none;
+            -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
+            overscroll-behavior: none; /* Prevents mobile pull-to-refresh */
         }
 
         /* --- THE TERMINAL PHASE --- */
         #terminal-screen {
             position: absolute;
             inset: 0;
-            background: #000;
+            background: #020202;
             color: #4af626;
             font-family: 'Fira Code', monospace;
-            padding: 2rem;
-            font-size: 0.9rem;
+            padding: 1.5rem;
+            font-size: 0.8rem; /* Optimized for mobile width */
             z-index: 50;
             display: flex;
             flex-direction: column;
             justify-content: center;
             transition: opacity 2s ease-in-out;
+            word-break: break-word;
+            white-space: pre-wrap;
         }
 
         .term-line {
             opacity: 0;
-            transform: translateY(10px);
-            margin-bottom: 0.5rem;
+            transform: translate3d(0, 10px, 0);
+            margin-bottom: 0.75rem;
+            text-shadow: 0 0 5px rgba(74, 246, 38, 0.4);
         }
 
         /* --- THE DREAMSCAPE PHASE --- */
@@ -65,7 +71,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
+            padding: 1.5rem;
             cursor: pointer;
             opacity: 0;
             pointer-events: none;
@@ -77,38 +83,42 @@
             pointer-events: all;
         }
 
-        /* Beautiful text transitions */
+        /* Beautiful text transitions - Mobile Optimized */
         .story-text {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            line-height: 1.8;
+            font-size: 1.6rem; /* Large and readable on phones */
+            line-height: 1.6;
             text-align: center;
+            width: 95%;
             max-width: 600px;
             position: absolute;
             opacity: 0;
-            filter: blur(12px);
-            transform: scale(0.95);
-            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: blur(8px);
+            transform: translate3d(0, 10px, 0) scale(0.95);
+            transition: all 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
             color: var(--text-dark);
+            text-wrap: balance; /* Beautifully balances line lengths on mobile */
+            text-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
         .story-text.active {
             opacity: 1;
             filter: blur(0);
-            transform: scale(1);
+            transform: translate3d(0, 0, 0) scale(1);
         }
 
         .story-text.exit {
             opacity: 0;
-            filter: blur(12px);
-            transform: scale(1.05);
+            filter: blur(8px);
+            transform: translate3d(0, -15px, 0) scale(1.05);
         }
 
         /* Highlight texts for the end */
         .text-golden {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--text-light);
             font-weight: 500;
+            text-shadow: 0 4px 20px rgba(255, 255, 255, 0.6);
         }
 
         /* Tap indicator */
@@ -116,8 +126,8 @@
             position: absolute;
             bottom: 40px;
             font-family: sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
             opacity: 0;
             animation: pulseFade 3s infinite;
@@ -125,8 +135,8 @@
         }
 
         @keyframes pulseFade {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.7; }
+            0%, 100% { opacity: 0.15; }
+            50% { opacity: 0.6; }
         }
 
         /* Canvas Background */
@@ -137,24 +147,24 @@
             pointer-events: none;
         }
 
-        /* Custom Ripple Effect */
+        /* Touch Ripple Effect */
         .ripple {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.5);
             transform: scale(0);
-            animation: rippleAnim 0.8s linear;
+            animation: rippleAnim 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
             pointer-events: none;
             z-index: 20;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
         @keyframes rippleAnim {
-            to { transform: scale(4); opacity: 0; }
+            to { transform: scale(3); opacity: 0; }
         }
 
-        @media (max-width: 768px) {
-            .story-text { font-size: 1.3rem; }
-            .text-golden { font-size: 1.8rem; }
+        @keyframes typeIn {
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
     </style>
 </head>
@@ -163,14 +173,14 @@
     <!-- 1. THE LATE NIGHT CODE TERMINAL -->
     <div id="terminal-screen">
         <div class="max-w-2xl mx-auto w-full">
-            <div class="term-line" style="animation: typeIn 0.5s 0.5s forwards;">> compiling_project_v1.sh...</div>
-            <div class="term-line text-green-400" style="animation: typeIn 0.5s 1.5s forwards;">[SUCCESS] Build finished. Uptime: 18 hours.</div>
-            <div class="term-line" style="animation: typeIn 0.5s 2.5s forwards;">> run self_reflection.exe</div>
-            <div class="term-line text-yellow-400" style="animation: typeIn 0.5s 3.5s forwards;">[WARNING] System overworked. Responsive bugs fixed.</div>
-            <div class="term-line text-red-400" style="animation: typeIn 0.5s 4.5s forwards;">[CRITICAL ERROR] Life balance module failing.</div>
-            <div class="term-line text-red-500 font-bold" style="animation: typeIn 0.5s 5.5s forwards;">[EXCEPTION THROWN] Neglected 'My Baby' protocol.</div>
-            <div class="term-line" style="animation: typeIn 0.5s 7.0s forwards;">> init apology_and_love_sequence.js</div>
-            <div class="term-line text-pink-400 animate-pulse" style="animation: typeIn 0.5s 8.0s forwards;">Loading heart...</div>
+            <div class="term-line" style="animation: typeIn 0.4s 0.5s forwards;">> compiling_project_v1.sh...</div>
+            <div class="term-line text-green-400" style="animation: typeIn 0.4s 1.2s forwards;">[SUCCESS] Build finished. Uptime: 18 hours.</div>
+            <div class="term-line" style="animation: typeIn 0.4s 2.0s forwards;">> run self_reflection.exe</div>
+            <div class="term-line text-yellow-400" style="animation: typeIn 0.4s 3.0s forwards;">[WARNING] System overworked. Responsive bugs fixed.</div>
+            <div class="term-line text-red-400" style="animation: typeIn 0.4s 4.0s forwards;">[CRITICAL ERROR] Life balance module failing.</div>
+            <div class="term-line text-red-500 font-bold" style="animation: typeIn 0.4s 5.0s forwards;">[EXCEPTION THROWN] Neglected 'My Baby' protocol.</div>
+            <div class="term-line" style="animation: typeIn 0.4s 6.5s forwards;">> init apology_and_love_sequence.js</div>
+            <div class="term-line text-pink-400 animate-pulse" style="animation: typeIn 0.4s 7.5s forwards; text-shadow: 0 0 10px rgba(244,114,182,0.6);">Loading heart...</div>
         </div>
     </div>
 
@@ -182,14 +192,8 @@
         <div id="text-container" class="relative w-full h-full flex justify-center items-center">
             <!-- Texts injected here via JS -->
         </div>
-        <div class="tap-indicator" id="tap-hint">Tap anywhere</div>
+        <div class="tap-indicator" id="tap-hint">Tap screen to read</div>
     </div>
-
-    <style>
-        @keyframes typeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -198,7 +202,7 @@
             const story = [
                 { text: "Hey...", bg: "var(--bg-night)", color: "var(--text-dark)", phase: "night" },
                 { text: "Just got done with work.", bg: "var(--bg-night)", color: "var(--text-dark)", phase: "night" },
-                { text: "I wanted to say this properly —<br><span class='italic text-pink-200'>what you felt was valid.</span>", bg: "var(--bg-late)", color: "var(--text-dark)", phase: "night" },
+                { text: "I wanted to say this properly —<br><br><span class='italic text-pink-200'>what you felt was valid.</span>", bg: "var(--bg-late)", color: "var(--text-dark)", phase: "night" },
                 { text: "I understand it, and I’m really sorry for making you feel that way.", bg: "var(--bg-late)", color: "var(--text-dark)", phase: "night" },
                 { text: "Last few days I did overwork a lot. It’s my first project, and even though I finished it on Sunday, the small fixes kept coming.", bg: "var(--bg-dawn1)", color: "var(--text-dark)", phase: "dawn" },
                 { text: "Then I realised I made a basic mistake — I didn’t make it responsive from the start. That took time to fix, but I learned from it.", bg: "var(--bg-dawn2)", color: "var(--text-dark)", phase: "dawn" },
@@ -213,15 +217,16 @@
                 { text: "I was sleepy since the last hour, but I just wanted to finish everything before sleeping — I can’t rest with incomplete work in my head.", bg: "var(--bg-golden)", color: "var(--text-light)", phase: "day" },
                 { text: "That’s all I wanted to say.", bg: "var(--bg-golden)", color: "var(--text-light)", phase: "day" },
                 { text: "Good morning, my baby 🥹", bg: "var(--bg-golden)", color: "#b94a4a", phase: "day", special: true },
-                { text: "My sweet little angel,<br><span class='italic font-medium'>puchku bhuraaaaaaa</span>", bg: "var(--bg-golden)", color: "var(--text-light)", phase: "day", special: true },
+                { text: "My sweet little angel,<br><br><span class='italic font-medium'>puchku bhuraaaaaaa</span>", bg: "var(--bg-golden)", color: "var(--text-light)", phase: "day", special: true },
                 { text: "I’m going to sleep now… probably dreaming of you 🫠", bg: "var(--bg-golden)", color: "var(--text-light)", phase: "day", special: true },
-                { text: "I loveeeeee youuuuu ttttttheeee mooossttttt.<br>Only you.<br>Always And Forever. ❤️🤞🏻", bg: "var(--bg-golden)", color: "#b94a4a", phase: "day", special: true }
+                { text: "I loveeeeee youuuuu ttttttheeee mooossttttt.<br><br>Only you.<br>Always And Forever. ❤️🤞🏻", bg: "var(--bg-golden)", color: "#b94a4a", phase: "day", special: true }
             ];
 
             let currentIndex = -1;
             const container = document.getElementById('text-container');
             const dreamscape = document.getElementById('dreamscape');
             const tapHint = document.getElementById('tap-hint');
+            let isTransitioning = false;
 
             // --- TERMINAL TO DREAMSCAPE TRANSITION ---
             setTimeout(() => {
@@ -231,17 +236,41 @@
                     dreamscape.classList.add('active');
                     nextSlide(); // Auto-start first line
                 }, 2000);
-            }, 10500); // Waits for typing animation to finish
+            }, 9500); // Waits for typing animation to finish
 
-            // --- INTERACTION LOGIC ---
-            dreamscape.addEventListener('click', (e) => {
-                createRipple(e);
+            // --- INSTANT TOUCH INTERACTION (Mobile Optimized) ---
+            const handleInteraction = (e) => {
+                if (e.cancelable) e.preventDefault(); // Prevents double firing and zooming
+                if (isTransitioning) return; // Prevent spam-tapping
+                
+                let clientX = e.clientX || window.innerWidth / 2;
+                let clientY = e.clientY || window.innerHeight / 2;
+
+                // Extract correct coordinates for touch events
+                if (e.touches && e.touches.length > 0) {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                }
+
+                createRipple(clientX, clientY);
                 nextSlide();
+            };
+
+            // Listen for touchstart for immediate mobile response
+            dreamscape.addEventListener('touchstart', handleInteraction, { passive: false });
+            // Fallback for desktop testing
+            dreamscape.addEventListener('mousedown', (e) => {
+                if (e.pointerType !== 'touch') handleInteraction(e);
             });
 
             function nextSlide() {
-                if (currentIndex >= story.length - 1) return; // End of story
+                if (currentIndex >= story.length - 1) {
+                    triggerFinalParticleBurst();
+                    return; // End of story
+                }
                 
+                isTransitioning = true;
+
                 // Remove old text
                 if (currentIndex >= 0) {
                     const oldEl = document.getElementById(`story-${currentIndex}`);
@@ -263,31 +292,42 @@
                 textEl.style.color = currentData.color;
                 container.appendChild(textEl);
 
-                // Trigger animation frame
+                // Trigger animation frame for buttery smooth fade in
                 requestAnimationFrame(() => {
-                    setTimeout(() => textEl.classList.add('active'), 50);
+                    setTimeout(() => {
+                        textEl.classList.add('active');
+                        isTransitioning = false; // unlock tapping
+                    }, 50);
                 });
 
-                // Update Background
+                // Update Background and UI elements
                 document.body.style.backgroundColor = currentData.bg;
                 tapHint.style.color = currentData.color;
-
-                // Update Particle Engine Phase
-                currentPhase = currentData.phase;
+                currentPhase = currentData.phase; // Update Particle Engine Phase
 
                 // Hide tap hint at the end
                 if(currentIndex === story.length - 1) {
-                    tapHint.style.display = 'none';
+                    tapHint.style.opacity = '0';
+                    setTimeout(() => tapHint.style.display = 'none', 1000);
                 }
             }
 
-            function createRipple(e) {
+            function createRipple(x, y) {
                 const ripple = document.createElement('div');
                 ripple.className = 'ripple';
-                ripple.style.left = `${e.clientX - 20}px`;
-                ripple.style.top = `${e.clientY - 20}px`;
-                ripple.style.width = '40px';
-                ripple.style.height = '40px';
+                // Adjust for center of the ripple
+                ripple.style.left = `${x - 25}px`; 
+                ripple.style.top = `${y - 25}px`;
+                ripple.style.width = '50px';
+                ripple.style.height = '50px';
+                
+                // Color the ripple based on the current phase
+                if (currentPhase === 'day' || currentPhase === 'morning') {
+                    ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                } else {
+                    ripple.style.background = 'rgba(255, 194, 209, 0.3)';
+                }
+
                 dreamscape.appendChild(ripple);
                 setTimeout(() => ripple.remove(), 800);
             }
@@ -314,34 +354,35 @@
                 
                 reset() {
                     this.x = Math.random() * w;
-                    this.y = h + Math.random() * 100;
-                    this.size = Math.random() * 2 + 1;
-                    this.speedY = Math.random() * -0.5 - 0.1;
-                    this.speedX = (Math.random() - 0.5) * 0.5;
-                    this.opacity = Math.random() * 0.5 + 0.1;
+                    this.y = h + Math.random() * 50;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedY = Math.random() * -0.3 - 0.1;
+                    this.speedX = (Math.random() - 0.5) * 0.3;
+                    this.opacity = Math.random() * 0.6 + 0.1;
                     this.baseColor = '255, 255, 255';
                 }
 
                 update() {
-                    // Phase logic
+                    // Phase logic alters particle behavior dynamically
                     if (currentPhase === 'night') {
                         this.speedY = 0;
                         this.speedX = (Math.random() - 0.5) * 0.1;
-                        this.opacity += (Math.random() - 0.5) * 0.05;
-                        this.size = Math.min(this.size, 2);
+                        this.opacity += (Math.random() - 0.5) * 0.03;
+                        this.size = Math.min(this.size, 1.5);
                     } else if (currentPhase === 'dawn') {
-                        this.speedY = Math.random() * -0.8 - 0.2;
-                        this.baseColor = '255, 200, 220'; // Pinkish
+                        this.speedY = Math.random() * -0.5 - 0.1;
+                        this.baseColor = '255, 194, 209'; // Soft Pinkish
                     } else if (currentPhase === 'morning' || currentPhase === 'day') {
-                        this.speedY = Math.random() * -1.5 - 0.5;
-                        this.size = Math.random() * 4 + 2; // Bigger dust motes
-                        this.baseColor = '255, 230, 150'; // Golden
+                        this.speedY = Math.random() * -1.2 - 0.3;
+                        this.size = Math.random() * 3.5 + 1.5; // Bigger dust motes
+                        this.baseColor = '255, 245, 200'; // Golden/Warm white
                     }
 
                     this.y += this.speedY;
-                    this.x += this.speedX;
+                    this.x += this.speedX + Math.sin(this.y * 0.01) * 0.2; // Add a slight drift
 
-                    if (this.y < -10 || this.x < -10 || this.x > w + 10) {
+                    // Reset when off screen
+                    if (this.y < -20 || this.x < -20 || this.x > w + 20) {
                         this.reset();
                     }
                 }
@@ -349,10 +390,11 @@
                 draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(${this.baseColor}, ${Math.max(0.1, Math.min(this.opacity, 0.8))})`;
+                    ctx.fillStyle = `rgba(${this.baseColor}, ${Math.max(0.1, Math.min(this.opacity, 0.9))})`;
+                    
                     if(currentPhase === 'day') {
-                        ctx.shadowBlur = 10;
-                        ctx.shadowColor = `rgba(${this.baseColor}, 0.8)`;
+                        ctx.shadowBlur = 12;
+                        ctx.shadowColor = `rgba(${this.baseColor}, 0.6)`;
                     } else {
                         ctx.shadowBlur = 0;
                     }
@@ -360,7 +402,7 @@
                 }
             }
 
-            for (let i = 0; i < 100; i++) particles.push(new Particle());
+            for (let i = 0; i < 70; i++) particles.push(new Particle()); // Reduced count slightly for mobile performance
 
             function animateParticles() {
                 ctx.clearRect(0, 0, w, h);
@@ -371,6 +413,18 @@
                 requestAnimationFrame(animateParticles);
             }
             animateParticles();
+
+            // Special effect when she finishes the story
+            function triggerFinalParticleBurst() {
+                for(let i=0; i<30; i++) {
+                    let p = new Particle();
+                    p.y = h;
+                    p.speedY = Math.random() * -3 - 2;
+                    p.size = Math.random() * 5 + 2;
+                    p.baseColor = '255, 150, 150'; // Red/Pink burst
+                    particles.push(p);
+                }
+            }
         });
     </script>
 </body>
