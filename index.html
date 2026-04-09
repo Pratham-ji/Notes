@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Wifeyyy</title>
+    <title>For My Anushka</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
         /* --- RESET & SETUP --- */
@@ -21,12 +21,13 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: linear-gradient(135deg, #090a0f 0%, #151020 100%); /* Deep magical night sky */
+            /* Super cliché cute pastel pink gradient */
+            background: linear-gradient(135deg, #ffe6eb 0%, #ffc2d1 100%); 
             font-family: 'Playfair Display', serif;
         }
 
         /* --- THE CANVAS --- */
-        #constellation {
+        #cute-background {
             display: block;
             position: absolute;
             top: 0;
@@ -44,64 +45,87 @@
             transform: translate(-50%, -50%);
             z-index: 2;
             text-align: center;
-            pointer-events: none; /* Lets you interact with the canvas behind the text */
+            pointer-events: none; 
             width: 100%;
-            padding: 0 20px;
+            padding: 40px;
+            /* Soft glass effect to make text readable over the chaotic cuteness */
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.15);
+            max-width: 800px;
         }
 
         h1 {
-            font-size: 5rem;
-            color: #ffffff;
-            font-weight: 400;
+            font-size: 5.5rem;
+            color: #d81159; /* Deep romantic pink/red */
+            font-weight: 700;
             letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 0 40px rgba(230, 200, 255, 0.2);
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
             margin-bottom: 0.5rem;
             opacity: 0;
-            animation: fadeIn 3s ease forwards 0.5s;
+            animation: popIn 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.5s;
         }
 
         h2 {
-            font-size: 2rem;
-            color: #e2d1f0; /* Soft warm starlight color */
+            font-size: 2.2rem;
+            color: #8f2d56; 
             font-weight: 400;
             font-style: italic;
-            letter-spacing: 4px;
-            text-shadow: 0 0 15px rgba(226, 209, 240, 0.3);
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
             opacity: 0;
-            animation: fadeIn 3s ease forwards 2s;
+            animation: popIn 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.5s;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        h3 {
+            font-size: 1.8rem;
+            color: #ff4d6d; 
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: lowercase;
+            opacity: 0;
+            animation: popIn 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 2.5s; 
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         /* Mobile adjustments */
         @media (max-width: 768px) {
-            h1 { font-size: 3rem; }
-            h2 { font-size: 1.2rem; }
+            .glass-container { width: 90%; padding: 20px; }
+            h1 { font-size: 3.5rem; }
+            h2 { font-size: 1.5rem; }
+            h3 { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="constellation"></canvas>
+    <canvas id="cute-background"></canvas>
 
     <div class="glass-container">
-        <h1>Wifeyyy</h1>
-        <h2>& shivi ki mummy</h2>
+        <h1>My Anushka</h1>
+        <h2>Wifeyyy & shivi ki mummy</h2>
+        <h3>My Bhura</h3>
     </div>
 
     <script>
-        // --- CONSTELLATION LOGIC ---
-        const canvas = document.getElementById('constellation');
+        // --- CUTE ELEMENTS LOGIC ---
+        const canvas = document.getElementById('cute-background');
         const ctx = canvas.getContext('2d');
 
         let width, height;
         let particles = [];
-        const mouse = { x: null, y: null, radius: 150 };
+        const mouse = { x: null, y: null, radius: 180 };
 
-        // Resize canvas to fill window
+        // The cliché items!
+        const cuteItems = ['🧸', '🍼', '🌸', '🎀', 'Shivi'];
+
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
@@ -109,7 +133,6 @@
         window.addEventListener('resize', resize);
         resize();
 
-        // Track mouse/touch movement
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.x;
             mouse.y = e.y;
@@ -123,38 +146,44 @@
             mouse.y = null;
         });
 
-        // Particle (Star) Class
-        class Particle {
+        class CuteParticle {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.size = Math.random() * 2 + 0.5; // Star size
-                this.baseX = this.x;
-                this.baseY = this.y;
-                this.density = (Math.random() * 30) + 1;
-                // Soft drift velocity
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
+                
+                // Assign a random cute item
+                this.item = cuteItems[Math.floor(Math.random() * cuteItems.length)];
+                
+                // Randomize sizes (text needs to be bigger than simple dots)
+                this.size = Math.random() * 25 + 15; 
+                
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() - 0.5) * 0.8;
             }
 
             draw() {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fill();
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                if (this.item === 'Shivi') {
+                    // Style for the name Shivi
+                    ctx.font = `italic bold ${this.size}px 'Playfair Display', serif`;
+                    ctx.fillStyle = 'rgba(216, 17, 89, 0.6)'; // Soft ruby red
+                    ctx.fillText(this.item, this.x, this.y);
+                } else {
+                    // Style for Emojis
+                    ctx.font = `${this.size}px Arial`;
+                    ctx.fillText(this.item, this.x, this.y);
+                }
             }
 
             update() {
-                // Move the particles naturally
                 this.x += this.vx;
                 this.y += this.vy;
 
-                // Bounce off edges
-                if (this.x < 0 || this.x > width) this.vx = -this.vx;
-                if (this.y < 0 || this.y > height) this.vy = -this.vy;
+                if (this.x < -50 || this.x > width + 50) this.vx = -this.vx;
+                if (this.y < -50 || this.y > height + 50) this.vy = -this.vy;
 
-                // Mouse interaction - stars gently pull toward the cursor
                 if (mouse.x != null) {
                     let dx = mouse.x - this.x;
                     let dy = mouse.y - this.y;
@@ -165,37 +194,34 @@
                         const forceDirectionY = dy / distance;
                         const force = (mouse.radius - distance) / mouse.radius;
                         
-                        this.x += forceDirectionX * force * 1.5;
-                        this.y += forceDirectionY * force * 1.5;
+                        this.x += forceDirectionX * force * 2;
+                        this.y += forceDirectionY * force * 2;
                     }
                 }
             }
         }
 
-        // Initialize stars
         function init() {
             particles = [];
-            // Amount of stars based on screen size (keeps it elegant)
-            const numberOfParticles = (width * height) / 9000; 
+            // Slightly fewer particles so it doesn't get too cluttered with large emojis
+            const numberOfParticles = (width * height) / 15000; 
             for (let i = 0; i < numberOfParticles; i++) {
-                particles.push(new Particle());
+                particles.push(new CuteParticle());
             }
         }
 
-        // Draw connecting lines (The Constellation)
         function connect() {
             for (let a = 0; a < particles.length; a++) {
                 for (let b = a; b < particles.length; b++) {
                     let dx = particles[a].x - particles[b].x;
                     let dy = particles[a].y - particles[b].y;
-                    let distance = dx * dx + dy * dy; // avoiding Math.sqrt for performance
+                    let distance = dx * dx + dy * dy;
 
-                    // If stars are close enough, draw a line
-                    if (distance < 12000) { 
-                        // Line opacity fades the further apart they are
-                        let opacityValue = 1 - (distance / 12000);
-                        ctx.strokeStyle = `rgba(226, 209, 240, ${opacityValue * 0.4})`; // Soft purplish-white line
-                        ctx.lineWidth = 1;
+                    if (distance < 15000) { 
+                        let opacityValue = 1 - (distance / 15000);
+                        // Connecting strings are soft pink ribbons
+                        ctx.strokeStyle = `rgba(255, 77, 109, ${opacityValue * 0.3})`; 
+                        ctx.lineWidth = 1.5;
                         ctx.beginPath();
                         ctx.moveTo(particles[a].x, particles[a].y);
                         ctx.lineTo(particles[b].x, particles[b].y);
@@ -205,7 +231,6 @@
             }
         }
 
-        // Animation Loop
         function animate() {
             requestAnimationFrame(animate);
             ctx.clearRect(0, 0, width, height);
