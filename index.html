@@ -2,296 +2,263 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Bhura</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Right Now...</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET & VARIABLES --- */
-        :root {
-            --bg-color: #FFF5F7; /* Very soft blush pink */
-            --text-dark: #4A2B32; /* Deep warm burgundy/brown */
-            --text-light: #8B5A65; /* Soft rose */
-            --accent: #E5989B; /* Cute pastel pink */
-            --card-bg: rgba(255, 255, 255, 0.85);
-        }
-
+        /* --- MOBILE RESET & SETUP --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        body {
-            font-family: 'Lora', serif;
-            background: linear-gradient(135deg, #FFEBF0 0%, #FFF5F7 100%);
-            color: var(--text-dark);
-            line-height: 1.8;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Keep it contained */
+            /* Dreamy pastel gradient to match the bouquet and vibe */
+            background: linear-gradient(170deg, #fff5f7 0%, #ffe0e9 100%);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* --- FLOATING BACKGROUND HEARTS --- */
-        .bg-hearts {
-            position: fixed;
+        /* --- DYNAMIC BACKGROUND ELEMENTS --- */
+        .bokeh-bg {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 0;
+            z-index: 1;
             overflow: hidden;
         }
 
-        .heart {
+        .bokeh-dot {
             position: absolute;
-            color: var(--accent);
-            opacity: 0.2;
-            animation: floatUp 15s linear infinite;
+            border-radius: 50%;
+            background: rgba(255, 182, 193, 0.4);
+            filter: blur(8px);
+            animation: float 20s infinite linear;
+            pointer-events: none;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.3; }
-            80% { opacity: 0.3; }
-            100% { transform: translateY(-20vh) scale(1.2) rotate(360deg); opacity: 0; }
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) translateX(50px); opacity: 0; }
         }
 
-        /* --- LAYOUT & SECTIONS --- */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
+        /* Create different sizes of bokeh dots via JS or manually */
+        .bokeh-dot:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 25s; }
+        .bokeh-dot:nth-child(2) { width: 120px; height: 120px; left: 60%; animation-duration: 18s; animation-delay: 2s; background: rgba(255, 218, 224, 0.5); }
+        .bokeh-dot:nth-child(3) { width: 50px; height: 50px; left: 80%; animation-duration: 30s; animation-delay: 5s; }
+        .bokeh-dot:nth-child(4) { width: 100px; height: 100px; left: 30%; animation-duration: 22s; animation-delay: 8s; background: rgba(255, 255, 255, 0.6); }
+
+        /* --- FALLING PETALS --- */
+        .petals-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
         }
 
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .petal {
+            position: absolute;
+            display: block;
+            background-color: #ffb6c1; /* Light pink rose color */
+            border-radius: 150% 0 150% 0;
+            animation: petal-fall 10s infinite linear;
+            opacity: 0.7;
+        }
+
+        @keyframes petal-fall {
+            0% { top: -10%; transform: translateX(0) rotate(0deg); }
+            100% { top: 110%; transform: translateX(100px) rotate(450deg); }
+        }
+
+        /* Define various petal animations and starting positions */
+        .petal:nth-child(1) { left: 10%; width: 15px; height: 20px; animation-duration: 7s; animation-delay: 1s; }
+        .petal:nth-child(2) { left: 30%; width: 10px; height: 15px; animation-duration: 12s; animation-delay: 3s; background-color: #ffe4e1;}
+        .petal:nth-child(3) { left: 50%; width: 20px; height: 25px; animation-duration: 9s; animation-delay: 0s; }
+        .petal:nth-child(4) { left: 70%; width: 12px; height: 18px; animation-duration: 15s; animation-delay: 5s; }
+        .petal:nth-child(5) { left: 90%; width: 18px; height: 22px; animation-duration: 11s; animation-delay: 2s; background-color: #fffaf0;}
+
+        /* --- THE MAIN CARD --- */
+        .mobile-container {
+            width: 90%;
+            max-width: 380px; /* Perfect phone width */
+            padding: 2.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.3);
+            z-index: 10;
             text-align: center;
-            padding: 4rem 0;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: cardPopIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.5s;
+        }
+
+        @keyframes cardPopIn {
+            to { opacity: 1; transform: scale(1); }
         }
 
         /* --- TYPOGRAPHY --- */
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            margin-bottom: 1.5rem;
+        .moment-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #d81159;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1s;
         }
 
         h1 {
-            font-size: 4.5rem;
-            color: var(--text-dark);
-            letter-spacing: -1px;
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            color: var(--text-light);
-            font-style: italic;
-        }
-
-        p {
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-dark);
-        }
-
-        /* --- ELEGANT CARDS --- */
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 4rem 3rem;
-            border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(229, 152, 155, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            transform: translateY(30px);
-            opacity: 0;
-            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .glass-card.visible {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .highlight {
-            color: var(--accent);
-            font-weight: 500;
-            font-style: italic;
-        }
-
-        /* --- BUTTON --- */
-        .btn-container {
-            margin-top: 2rem;
-        }
-
-        .btn {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 1.2rem 3rem;
-            font-size: 1.1rem;
             font-family: 'Playfair Display', serif;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(229, 152, 155, 0.3);
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 25px rgba(229, 152, 155, 0.4);
-            background: #d48285;
-        }
-
-        /* --- ANIMATIONS --- */
-        .fade-in {
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #4A2B32;
+            margin-bottom: 2rem;
+            line-height: 1.2;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 1s ease;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+            animation: fadeIn 1s ease forwards 1.3s;
         }
 
-        /* Mobile adjustments */
-        @media (max-width: 768px) {
-            h1 { font-size: 3.5rem; }
-            .glass-card { padding: 3rem 1.5rem; }
-            p { font-size: 1.1rem; }
+        h1 span.bhura {
+            font-family: 'Pacifico', cursive;
+            color: #d81159;
+            font-size: 2.8rem;
+            font-weight: 400;
+            display: block;
+            margin-top: 5px;
         }
+
+        .live-description {
+            position: relative;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 2s;
+        }
+
+        .live-description::before {
+            content: '“';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-family: serif;
+            font-size: 4rem;
+            color: rgba(216, 17, 89, 0.2);
+            line-height: 1;
+        }
+
+        .report-text {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #4A2B32;
+            margin-bottom: 0.5rem;
+        }
+
+        .patham-text {
+            color: #8f2d56;
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .final-promise {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #d81159;
+            font-weight: 700;
+            font-style: italic;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 3s;
+        }
+
+        .emoji-line {
+            font-size: 2rem;
+            margin-top: 1rem;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 3.5s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Pulse animation for the paths-text */
+        .pulse {
+            display: inline-block;
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="bg-hearts" id="bg-hearts"></div>
+    <div class="bokeh-bg">
+        <div class="bokeh-dot"></div>
+        <div class="bokeh-dot"></div>
+        <div class="bokeh-dot"></div>
+        <div class="bokeh-dot"></div>
+    </div>
 
-    <section id="hero">
-        <div class="container">
-            <div class="glass-card fade-in">
-                <h1>My Bhura</h1>
-                <p class="subtitle">I am so sorry.</p>
-                <div style="margin-top: 3rem;">
-                    <p>I know what happened was wrong. I let you down, and I accept that fully without making excuses.</p>
-                    <p>You are my most precious responsibility in this world. My job is to protect your peace, not disrupt it.</p>
-                    <p>I failed in that moment, but I promise to never stop working to be the man you deserve.</p>
-                </div>
-            </div>
+    <div class="petals-container">
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+    </div>
+
+    <div class="mobile-container">
+        <span class="moment-tag">Captured Moment</span>
+        
+        <h1>Right Now, <span class="bhura">My Bhura</span></h1>
+        
+        <div class="live-description">
+            <p class="report-text">Is writing my report... 📝</p>
+            <p class="patham-text">with that <span class="pulse">cute patham wala face</span> ❤️</p>
         </div>
-    </section>
 
-    <section>
-        <div class="container">
-            <div class="glass-card fade-in">
-                <h2>I Am Right Here</h2>
-                <p>Things might feel heavy right now, but <span class="highlight">we got this</span>.</p>
-                <p>I am not going anywhere. Through the good days, the bad days, and the days where we just need to figure things out again.</p>
-                <p>You and me, Anushka. Always.</p>
-            </div>
+        <p class="final-promise">I swear, you are the absolute best.</p>
+        
+        <div class="emoji-line">
+            🌸🥺🧸💍
         </div>
-    </section>
+    </div>
 
-    <section>
-        <div class="container">
-            <div class="glass-card fade-in">
-                <h2>Our Future</h2>
-                <p>This is just a tiny bump in our story.</p>
-                <p>We are going to get married. We are going to build the most beautiful, perfect, and chaotic life together.</p>
-                <p>This will be the best love story ever written. I promise.</p>
-                
-                <div class="btn-container">
-                    <button class="btn" id="loveBtn">I love you, wifeyyy</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        // --- CREATE FLOATING BACKGROUND HEARTS ---
-        const heartsContainer = document.getElementById('bg-hearts');
-        const heartSymbols = ['🤍', '🌸', '✨', '🧸'];
-
-        for (let i = 0; i < 20; i++) {
-            let heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-            heart.style.left = `${Math.random() * 100}vw`;
-            heart.style.animationDuration = `${Math.random() * 10 + 10}s`; // 10s to 20s
-            heart.style.animationDelay = `${Math.random() * 5}s`;
-            heart.style.fontSize = `${Math.random() * 1.5 + 1}rem`;
-            heartsContainer.appendChild(heart);
-        }
-
-        // --- SCROLL ANIMATIONS ---
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.2
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(element => {
-            observer.observe(element);
-        });
-
-        // --- BUTTON INTERACTION ---
-        const btn = document.getElementById('loveBtn');
-        btn.addEventListener('click', function() {
-            this.innerText = "Forever & Always 💍";
-            this.style.background = "#4A2B32";
-            this.style.transform = "scale(1.05)";
-            
-            // Create a burst of emojis
-            for(let i=0; i<30; i++) {
-                createBurst();
-            }
-        });
-
-        function createBurst() {
-            const burst = document.createElement('div');
-            burst.innerText = '🌸';
-            burst.style.position = 'fixed';
-            burst.style.left = '50%';
-            burst.style.top = '80%';
-            burst.style.fontSize = '2rem';
-            burst.style.pointerEvents = 'none';
-            burst.style.zIndex = '100';
-            
-            // Random trajectory
-            const angle = Math.random() * Math.PI * 2;
-            const velocity = 10 + Math.random() * 20;
-            const tx = Math.cos(angle) * velocity * 15;
-            const ty = Math.sin(angle) * velocity * 15 - 100;
-
-            burst.animate([
-                { transform: 'translate(-50%, -50%) scale(0.5)', opacity: 1 },
-                { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.5)`, opacity: 0 }
-            ], {
-                duration: 1000 + Math.random() * 1000,
-                easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
-            });
-
-            document.body.appendChild(burst);
-            setTimeout(() => burst.remove(), 2000);
-        }
-    </script>
 </body>
 </html>
