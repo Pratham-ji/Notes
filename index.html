@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Right Now...</title>
+    <title>For My Bhura</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Pacifico&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
     <style>
-        /* --- MOBILE RESET & SETUP --- */
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --bg-color: #FFF5F7; 
+            --text-dark: #4A2B32; 
+            --text-light: #8B5A65; 
+            --accent: #d81159; 
+            --card-bg: rgba(255, 255, 255, 0.7);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -20,34 +28,33 @@
 
         body, html {
             width: 100%;
-            height: 100%;
-            overflow: hidden; /* Keep it contained */
-            /* Dreamy pastel gradient to match the bouquet and vibe */
+            overflow-x: hidden;
             background: linear-gradient(170deg, #fff5f7 0%, #ffe0e9 100%);
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-attachment: fixed;
+            font-family: 'Lora', serif;
+            color: var(--text-dark);
+            scroll-behavior: smooth;
         }
 
-        /* --- DYNAMIC BACKGROUND ELEMENTS --- */
-        .bokeh-bg {
-            position: absolute;
+        /* --- FIXED BACKGROUND EFFECTS --- */
+        .effects-layer {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            pointer-events: none;
+            z-index: 0;
             overflow: hidden;
         }
 
+        /* Bokeh Dots */
         .bokeh-dot {
             position: absolute;
             border-radius: 50%;
             background: rgba(255, 182, 193, 0.4);
             filter: blur(8px);
             animation: float 20s infinite linear;
-            pointer-events: none;
         }
 
         @keyframes float {
@@ -57,29 +64,17 @@
             100% { transform: translateY(-20vh) translateX(50px); opacity: 0; }
         }
 
-        /* Create different sizes of bokeh dots via JS or manually */
         .bokeh-dot:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 25s; }
         .bokeh-dot:nth-child(2) { width: 120px; height: 120px; left: 60%; animation-duration: 18s; animation-delay: 2s; background: rgba(255, 218, 224, 0.5); }
         .bokeh-dot:nth-child(3) { width: 50px; height: 50px; left: 80%; animation-duration: 30s; animation-delay: 5s; }
-        .bokeh-dot:nth-child(4) { width: 100px; height: 100px; left: 30%; animation-duration: 22s; animation-delay: 8s; background: rgba(255, 255, 255, 0.6); }
 
-        /* --- FALLING PETALS --- */
-        .petals-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-
+        /* Falling Petals */
         .petal {
             position: absolute;
             display: block;
-            background-color: #ffb6c1; /* Light pink rose color */
+            background-color: #ffb6c1; 
             border-radius: 150% 0 150% 0;
-            animation: petal-fall 10s infinite linear;
+            animation: petal-fall 12s infinite linear;
             opacity: 0.7;
         }
 
@@ -88,84 +83,121 @@
             100% { top: 110%; transform: translateX(100px) rotate(450deg); }
         }
 
-        /* Define various petal animations and starting positions */
-        .petal:nth-child(1) { left: 10%; width: 15px; height: 20px; animation-duration: 7s; animation-delay: 1s; }
-        .petal:nth-child(2) { left: 30%; width: 10px; height: 15px; animation-duration: 12s; animation-delay: 3s; background-color: #ffe4e1;}
-        .petal:nth-child(3) { left: 50%; width: 20px; height: 25px; animation-duration: 9s; animation-delay: 0s; }
-        .petal:nth-child(4) { left: 70%; width: 12px; height: 18px; animation-duration: 15s; animation-delay: 5s; }
-        .petal:nth-child(5) { left: 90%; width: 18px; height: 22px; animation-duration: 11s; animation-delay: 2s; background-color: #fffaf0;}
+        .petal:nth-child(4) { left: 15%; width: 15px; height: 20px; animation-duration: 8s; animation-delay: 1s; }
+        .petal:nth-child(5) { left: 45%; width: 10px; height: 15px; animation-duration: 14s; animation-delay: 3s; background-color: #ffe4e1;}
+        .petal:nth-child(6) { left: 75%; width: 20px; height: 25px; animation-duration: 10s; animation-delay: 0s; }
+        .petal:nth-child(7) { left: 90%; width: 12px; height: 18px; animation-duration: 16s; animation-delay: 5s; }
 
-        /* --- THE MAIN CARD --- */
-        .mobile-container {
-            width: 90%;
-            max-width: 380px; /* Perfect phone width */
-            padding: 2.5rem 1.5rem;
-            background: rgba(255, 255, 255, 0.6);
+        /* --- LAYOUT & SCROLLING --- */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem;
+        }
+
+        /* --- UI CARDS --- */
+        .glass-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-bg);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
+            padding: 3rem 2rem;
             border-radius: 30px;
             border: 2px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 15px 35px rgba(255, 182, 193, 0.3);
-            z-index: 10;
             text-align: center;
             opacity: 0;
-            transform: scale(0.9);
-            animation: cardPopIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.5s;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        @keyframes cardPopIn {
-            to { opacity: 1; transform: scale(1); }
+        .glass-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* --- TYPOGRAPHY --- */
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.2rem; }
+
+        p {
+            font-size: 1.15rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        /* Scroll indicator */
+        .scroll-down {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+
+        /* --- "RIGHT NOW" SECTION STYLES --- */
         .moment-tag {
+            font-family: 'Poppins', sans-serif;
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 3px;
-            color: #d81159;
+            color: var(--accent);
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             display: inline-block;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 1s;
         }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 2.5rem;
-            color: #4A2B32;
-            margin-bottom: 2rem;
-            line-height: 1.2;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 1.3s;
-        }
-
-        h1 span.bhura {
+        .bhura-name {
             font-family: 'Pacifico', cursive;
-            color: #d81159;
-            font-size: 2.8rem;
+            color: var(--accent);
+            font-size: 3rem;
             font-weight: 400;
             display: block;
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
-        .live-description {
+        .live-box {
             position: relative;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.6);
             padding: 1.5rem;
             border-radius: 20px;
-            margin-bottom: 2rem;
+            margin: 2rem 0;
             border: 1px solid rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 2s;
         }
 
-        .live-description::before {
+        .live-box::before {
             content: '“';
             position: absolute;
-            top: -10px;
-            left: 10px;
+            top: -15px;
+            left: 15px;
             font-family: serif;
             font-size: 4rem;
             color: rgba(216, 17, 89, 0.2);
@@ -173,46 +205,23 @@
         }
 
         .report-text {
-            font-family: 'Lora', serif;
             font-style: italic;
-            font-size: 1.1rem;
-            color: #4A2B32;
+            font-size: 1.2rem;
+            color: var(--text-dark);
             margin-bottom: 0.5rem;
         }
 
         .patham-text {
+            font-family: 'Poppins', sans-serif;
             color: #8f2d56;
             font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
 
-        .final-promise {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            color: #d81159;
-            font-weight: 700;
-            font-style: italic;
-            margin-bottom: 1rem;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 3s;
-        }
-
-        .emoji-line {
-            font-size: 2rem;
-            margin-top: 1rem;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 3.5s;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Pulse animation for the paths-text */
         .pulse {
             display: inline-block;
             animation: pulse-red 2s infinite;
@@ -224,41 +233,110 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
+        .emoji-line {
+            font-size: 2rem;
+            margin-top: 1.5rem;
+            letter-spacing: 5px;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="bokeh-bg">
+    <div class="effects-layer">
         <div class="bokeh-dot"></div>
         <div class="bokeh-dot"></div>
         <div class="bokeh-dot"></div>
-        <div class="bokeh-dot"></div>
-    </div>
-
-    <div class="petals-container">
-        <div class="petal"></div>
         <div class="petal"></div>
         <div class="petal"></div>
         <div class="petal"></div>
         <div class="petal"></div>
     </div>
 
-    <div class="mobile-container">
-        <span class="moment-tag">Captured Moment</span>
+    <div class="content-wrapper">
         
-        <h1>Right Now, <span class="bhura">My Bhura</span></h1>
-        
-        <div class="live-description">
-            <p class="report-text">Is writing my report... 📝</p>
-            <p class="patham-text">with that <span class="pulse">cute patham wala face</span> ❤️</p>
-        </div>
+        <section id="apology">
+            <div class="glass-card fade-element">
+                <h1>My Bhura</h1>
+                <p style="font-family: 'Playfair Display', serif; font-style: italic; color: #8B5A65; font-size: 1.3rem;">I am so sorry.</p>
+                <div style="margin-top: 2rem;">
+                    <p>I know what happened was wrong. I let you down, and I accept that fully without making excuses.</p>
+                    <p>You are my most precious responsibility in this world. My job is to protect your peace.</p>
+                </div>
+                <div class="scroll-down">↓</div>
+            </div>
+        </section>
 
-        <p class="final-promise">I swear, you are the absolute best.</p>
-        
-        <div class="emoji-line">
-            🌸🥺🧸💍
-        </div>
+        <section id="reassurance">
+            <div class="glass-card fade-element">
+                <h2>I Am Right Here</h2>
+                <p>Things might feel heavy right now, but <span class="highlight">we got this</span>.</p>
+                <p>I am not going anywhere. Through the good days, the bad days, and the days where we just need to figure things out again.</p>
+                <p style="font-weight: 500;">You and me, Anushka. Always.</p>
+                <div class="scroll-down">↓</div>
+            </div>
+        </section>
+
+        <section id="promise">
+            <div class="glass-card fade-element">
+                <h2>Our Future</h2>
+                <p>This is just a tiny bump in our story.</p>
+                <p>We are going to <span class="highlight">get married</span>. We are going to build the most beautiful, perfect, and chaotic life together.</p>
+                <p>This will be the best love story ever written. I promise.</p>
+                <div class="scroll-down">↓</div>
+            </div>
+        </section>
+
+        <section id="right-now">
+            <div class="glass-card fade-element" style="border-color: rgba(216, 17, 89, 0.3);">
+                <span class="moment-tag">Captured Moment</span>
+                
+                <h1 style="margin-bottom: 0;">Right Now, <span class="bhura-name">My Bhura</span></h1>
+                
+                <div class="live-box">
+                    <p class="report-text">Is writing my assignment... 📝</p>
+                    <p class="patham-text">with that <span class="pulse">cute patham wala face</span> ❤️</p>
+                </div>
+
+                <p style="font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #d81159; font-weight: 700; font-style: italic;">
+                    I swear, you are the absolute best.
+                </p>
+                
+                <div class="emoji-line">
+                    🌸🥺🧸💍
+                </div>
+            </div>
+        </section>
+
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.25 // Triggers when 25% of the card is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            const fadeElements = document.querySelectorAll('.fade-element');
+            fadeElements.forEach(el => observer.observe(el));
+            
+            // Force the first card to be visible immediately on load
+            if(fadeElements.length > 0) {
+                setTimeout(() => {
+                    fadeElements[0].classList.add('visible');
+                }, 100);
+            }
+        });
+    </script>
 
 </body>
 </html>
