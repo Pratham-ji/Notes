@@ -3,247 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Anushka</title>
+    <title>For My Bhura</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET & SETUP --- */
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --bg-color: #FFF5F7; /* Very soft blush pink */
+            --text-dark: #4A2B32; /* Deep warm burgundy/brown */
+            --text-light: #8B5A65; /* Soft rose */
+            --accent: #E5989B; /* Cute pastel pink */
+            --card-bg: rgba(255, 255, 255, 0.85);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            /* Super cliché cute pastel pink gradient */
-            background: linear-gradient(135deg, #ffe6eb 0%, #ffc2d1 100%); 
-            font-family: 'Playfair Display', serif;
+        body {
+            font-family: 'Lora', serif;
+            background: linear-gradient(135deg, #FFEBF0 0%, #FFF5F7 100%);
+            color: var(--text-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* --- THE CANVAS --- */
-        #cute-background {
-            display: block;
-            position: absolute;
+        /* --- FLOATING BACKGROUND HEARTS --- */
+        .bg-hearts {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: var(--accent);
+            opacity: 0.2;
+            animation: floatUp 15s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.3; }
+            80% { opacity: 0.3; }
+            100% { transform: translateY(-20vh) scale(1.2) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- LAYOUT & SECTIONS --- */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
             z-index: 1;
         }
 
-        /* --- THE TEXT CONTENT --- */
-        .glass-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            pointer-events: none; 
-            width: 100%;
-            padding: 40px;
-            /* Soft glass effect to make text readable over the chaotic cuteness */
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 30px;
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.15);
-            max-width: 800px;
+            padding: 4rem 0;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1.5rem;
         }
 
         h1 {
-            font-size: 5.5rem;
-            color: #d81159; /* Deep romantic pink/red */
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
-            margin-bottom: 0.5rem;
-            opacity: 0;
-            animation: popIn 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.5s;
+            font-size: 4.5rem;
+            color: var(--text-dark);
+            letter-spacing: -1px;
         }
 
-        h2 {
-            font-size: 2.2rem;
-            color: #8f2d56; 
-            font-weight: 400;
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-light);
             font-style: italic;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-            opacity: 0;
-            animation: popIn 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.5s;
         }
 
-        h3 {
-            font-size: 1.8rem;
-            color: #ff4d6d; 
-            font-weight: 700;
-            letter-spacing: 4px;
-            text-transform: lowercase;
-            opacity: 0;
-            animation: popIn 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 2.5s; 
+        p {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
         }
 
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+        /* --- ELEGANT CARDS --- */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 4rem 3rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(229, 152, 155, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .glass-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        /* --- BUTTON --- */
+        .btn-container {
+            margin-top: 2rem;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-family: 'Playfair Display', serif;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(229, 152, 155, 0.3);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 25px rgba(229, 152, 155, 0.4);
+            background: #d48285;
+        }
+
+        /* --- ANIMATIONS --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Mobile adjustments */
         @media (max-width: 768px) {
-            .glass-container { width: 90%; padding: 20px; }
             h1 { font-size: 3.5rem; }
-            h2 { font-size: 1.5rem; }
-            h3 { font-size: 1.2rem; }
+            .glass-card { padding: 3rem 1.5rem; }
+            p { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="cute-background"></canvas>
+    <div class="bg-hearts" id="bg-hearts"></div>
 
-    <div class="glass-container">
-        <h1>My Anushka</h1>
-        <h2>Wifeyyy & shivi ki mummy</h2>
-        <h3>My Bhura</h3>
-    </div>
+    <section id="hero">
+        <div class="container">
+            <div class="glass-card fade-in">
+                <h1>My Bhura</h1>
+                <p class="subtitle">I am so sorry.</p>
+                <div style="margin-top: 3rem;">
+                    <p>I know what happened was wrong. I let you down, and I accept that fully without making excuses.</p>
+                    <p>You are my most precious responsibility in this world. My job is to protect your peace, not disrupt it.</p>
+                    <p>I failed in that moment, but I promise to never stop working to be the man you deserve.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="glass-card fade-in">
+                <h2>I Am Right Here</h2>
+                <p>Things might feel heavy right now, but <span class="highlight">we got this</span>.</p>
+                <p>I am not going anywhere. Through the good days, the bad days, and the days where we just need to figure things out again.</p>
+                <p>You and me, Anushka. Always.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="glass-card fade-in">
+                <h2>Our Future</h2>
+                <p>This is just a tiny bump in our story.</p>
+                <p>We are going to get married. We are going to build the most beautiful, perfect, and chaotic life together.</p>
+                <p>This will be the best love story ever written. I promise.</p>
+                
+                <div class="btn-container">
+                    <button class="btn" id="loveBtn">I love you, wifeyyy</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
-        // --- CUTE ELEMENTS LOGIC ---
-        const canvas = document.getElementById('cute-background');
-        const ctx = canvas.getContext('2d');
+        // --- CREATE FLOATING BACKGROUND HEARTS ---
+        const heartsContainer = document.getElementById('bg-hearts');
+        const heartSymbols = ['🤍', '🌸', '✨', '🧸'];
 
-        let width, height;
-        let particles = [];
-        const mouse = { x: null, y: null, radius: 180 };
-
-        // The cliché items!
-        const cuteItems = ['🧸', '🍼', '🌸', '🎀', 'Shivi'];
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+        for (let i = 0; i < 20; i++) {
+            let heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.animationDuration = `${Math.random() * 10 + 10}s`; // 10s to 20s
+            heart.style.animationDelay = `${Math.random() * 5}s`;
+            heart.style.fontSize = `${Math.random() * 1.5 + 1}rem`;
+            heartsContainer.appendChild(heart);
         }
-        window.addEventListener('resize', resize);
-        resize();
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.x;
-            mouse.y = e.y;
-        });
-        window.addEventListener('touchmove', (e) => {
-            mouse.x = e.touches[0].clientX;
-            mouse.y = e.touches[0].clientY;
-        });
-        window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
+        // --- SCROLL ANIMATIONS ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2
+        };
 
-        class CuteParticle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                
-                // Assign a random cute item
-                this.item = cuteItems[Math.floor(Math.random() * cuteItems.length)];
-                
-                // Randomize sizes (text needs to be bigger than simple dots)
-                this.size = Math.random() * 25 + 15; 
-                
-                this.vx = (Math.random() - 0.5) * 0.8;
-                this.vy = (Math.random() - 0.5) * 0.8;
-            }
-
-            draw() {
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                
-                if (this.item === 'Shivi') {
-                    // Style for the name Shivi
-                    ctx.font = `italic bold ${this.size}px 'Playfair Display', serif`;
-                    ctx.fillStyle = 'rgba(216, 17, 89, 0.6)'; // Soft ruby red
-                    ctx.fillText(this.item, this.x, this.y);
-                } else {
-                    // Style for Emojis
-                    ctx.font = `${this.size}px Arial`;
-                    ctx.fillText(this.item, this.x, this.y);
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // --- BUTTON INTERACTION ---
+        const btn = document.getElementById('loveBtn');
+        btn.addEventListener('click', function() {
+            this.innerText = "Forever & Always 💍";
+            this.style.background = "#4A2B32";
+            this.style.transform = "scale(1.05)";
+            
+            // Create a burst of emojis
+            for(let i=0; i<30; i++) {
+                createBurst();
             }
+        });
 
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
+        function createBurst() {
+            const burst = document.createElement('div');
+            burst.innerText = '🌸';
+            burst.style.position = 'fixed';
+            burst.style.left = '50%';
+            burst.style.top = '80%';
+            burst.style.fontSize = '2rem';
+            burst.style.pointerEvents = 'none';
+            burst.style.zIndex = '100';
+            
+            // Random trajectory
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = 10 + Math.random() * 20;
+            const tx = Math.cos(angle) * velocity * 15;
+            const ty = Math.sin(angle) * velocity * 15 - 100;
 
-                if (this.x < -50 || this.x > width + 50) this.vx = -this.vx;
-                if (this.y < -50 || this.y > height + 50) this.vy = -this.vy;
+            burst.animate([
+                { transform: 'translate(-50%, -50%) scale(0.5)', opacity: 1 },
+                { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.5)`, opacity: 0 }
+            ], {
+                duration: 1000 + Math.random() * 1000,
+                easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
+            });
 
-                if (mouse.x != null) {
-                    let dx = mouse.x - this.x;
-                    let dy = mouse.y - this.y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < mouse.radius) {
-                        const forceDirectionX = dx / distance;
-                        const forceDirectionY = dy / distance;
-                        const force = (mouse.radius - distance) / mouse.radius;
-                        
-                        this.x += forceDirectionX * force * 2;
-                        this.y += forceDirectionY * force * 2;
-                    }
-                }
-            }
+            document.body.appendChild(burst);
+            setTimeout(() => burst.remove(), 2000);
         }
-
-        function init() {
-            particles = [];
-            // Slightly fewer particles so it doesn't get too cluttered with large emojis
-            const numberOfParticles = (width * height) / 15000; 
-            for (let i = 0; i < numberOfParticles; i++) {
-                particles.push(new CuteParticle());
-            }
-        }
-
-        function connect() {
-            for (let a = 0; a < particles.length; a++) {
-                for (let b = a; b < particles.length; b++) {
-                    let dx = particles[a].x - particles[b].x;
-                    let dy = particles[a].y - particles[b].y;
-                    let distance = dx * dx + dy * dy;
-
-                    if (distance < 15000) { 
-                        let opacityValue = 1 - (distance / 15000);
-                        // Connecting strings are soft pink ribbons
-                        ctx.strokeStyle = `rgba(255, 77, 109, ${opacityValue * 0.3})`; 
-                        ctx.lineWidth = 1.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, width, height);
-
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-            }
-            connect();
-        }
-
-        init();
-        animate();
     </script>
 </body>
 </html>
