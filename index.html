@@ -3,23 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Our First Anniversary</title>
+    <title>I Love You</title>
     
-    <!-- Bold, elegant, and romantic fonts -->
+    <!-- Elegant Serif and flowing Cursive fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET & VARIABLES --- */
-        :root {
-            --bg-dark: #0a0000;
-            --bg-crimson: #2b0004;
-            --text-main: #fce7e7;
-            --text-accent: #ff4d4d;
-            --card-bg: rgba(20, 0, 0, 0.6);
-        }
-
+        /* --- RESET & SETUP --- */
         * {
             margin: 0;
             padding: 0;
@@ -29,241 +21,161 @@
 
         body, html {
             width: 100%;
-            overflow-x: hidden;
-            /* Deep, intense romantic gradient */
-            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-crimson) 100%);
-            background-attachment: fixed;
-            font-family: 'Lora', serif;
-            color: var(--text-main);
-            scroll-behavior: smooth;
+            height: 100%;
+            overflow: hidden;
+            /* A very soft, elegant romantic gradient background */
+            background: radial-gradient(circle at center, #fff0f3 0%, #ffb3c6 100%);
+            font-family: 'Playfair Display', serif;
         }
 
-        /* --- THE MAGNETIC CANVAS --- */
-        #magnetic-embers {
-            position: fixed;
+        /* --- THE EMOJI CANVAS --- */
+        #emoji-shower {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            pointer-events: none; /* Let the canvas react, but allow scrolling */
-        }
-
-        /* Capture touch events specifically for the canvas effect across the whole document */
-        #touch-layer {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1;
+            pointer-events: none; /* Let touches pass to the interactive layer */
         }
 
-        /* --- LAYOUT & SCROLLING --- */
-        .content-wrapper {
-            position: relative;
-            z-index: 10;
-            pointer-events: none; /* Let touches pass through to the touch-layer */
-        }
-
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem 1.5rem;
-        }
-
-        /* --- INTENSE GLASS CARDS --- */
-        .glass-card {
+        #touch-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 420px;
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 3.5rem 2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 77, 77, 0.2);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 77, 77, 0.05);
-            text-align: center;
-            opacity: 0;
-            transform: scale(0.95) translateY(30px);
-            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-            pointer-events: auto; /* Allow reading but don't block scroll */
+            height: 100%;
+            z-index: 5;
         }
 
-        .glass-card.visible {
-            opacity: 1;
-            transform: scale(1) translateY(0);
+        /* --- THE ELEGANT CENTERPIECE --- */
+        .glass-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 4rem 2rem;
+            border-radius: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 30px 60px rgba(216, 17, 89, 0.15), inset 0 0 30px rgba(255, 255, 255, 0.5);
+            animation: floatingCard 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatingCard {
+            0%, 100% { transform: translate(-50%, -50%); }
+            50% { transform: translate(-50%, -52%); }
         }
 
         /* --- TYPOGRAPHY --- */
         h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.8rem;
-            color: var(--text-main);
-            margin-bottom: 1.5rem;
+            font-size: 3.5rem;
+            color: #4A2B32;
             line-height: 1.1;
-            text-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeInScale 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.5s;
         }
 
-        h2 {
-            font-family: 'Cinzel', serif;
+        .wifey {
+            font-family: 'Great Vibes', cursive;
+            font-size: 6rem;
+            color: #d81159; /* Deep romantic pink */
+            display: block;
+            margin-top: -10px;
+            text-shadow: 0 10px 20px rgba(216, 17, 89, 0.2);
+            opacity: 0;
+            transform: scale(0.8);
+            animation: bounceIn 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.5s;
+        }
+
+        p.sweet-note {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            color: #8f2d56;
+            margin-top: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeInScale 2s ease forwards 2.5s;
+        }
+
+        .heartbeat {
+            display: inline-block;
+            animation: beat 1s infinite alternate;
+            color: #ff0055;
             font-size: 2rem;
-            color: var(--text-accent);
-            margin-bottom: 1.5rem;
-            letter-spacing: 2px;
+            margin-top: 1.5rem;
+            opacity: 0;
+            animation: beat 1s infinite alternate, fadeInScale 1s forwards 3.5s;
         }
 
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
+        /* Keyframes */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .intense-text {
-            font-size: 1.4rem;
-            font-weight: 500;
-            font-style: italic;
-            color: #ffb3b3;
-            letter-spacing: 0.5px;
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            60% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
-        .highlight {
-            color: var(--text-accent);
-            font-weight: bold;
+        @keyframes beat {
+            to { transform: scale(1.3); }
         }
 
-        /* Scroll indicator */
-        .scroll-down {
-            margin-top: 2rem;
-            font-size: 1.5rem;
-            color: var(--text-accent);
-            animation: bounce 2s infinite;
-            opacity: 0.6;
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .glass-box { padding: 3rem 1.5rem; }
+            h1 { font-size: 2.8rem; }
+            .wifey { font-size: 4.5rem; margin-top: 0; }
+            p.sweet-note { font-size: 1rem; }
         }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-15px); }
-            60% { transform: translateY(-7px); }
-        }
-
     </style>
 </head>
 <body>
 
-    <!-- Touch Detection Layer -->
+    <!-- Invisible layer to capture touch without blocking the card -->
     <div id="touch-layer"></div>
 
-    <!-- Magnetic Embers Background -->
-    <canvas id="magnetic-embers"></canvas>
+    <!-- The Overwhelming Emoji Canvas -->
+    <canvas id="emoji-shower"></canvas>
 
-    <!-- Scrollable Content -->
-    <div class="content-wrapper">
-        
-        <!-- Section 1: The Anniversary -->
-        <section>
-            <div class="glass-card fade-element">
-                <h2>Happy 1st Anniversary</h2>
-                <h1>My Bhura</h1>
-                <p>We weathered the storm. We sorted it out. We are still standing.</p>
-                <p>And looking at you right now, after everything...</p>
-                <p style="font-style: italic; color: #ffb3b3;">I realized something.</p>
-                <div class="scroll-down">↓</div>
-            </div>
-        </section>
-
-        <!-- Section 2: Selfish Obsession -->
-        <section>
-            <div class="glass-card fade-element">
-                <p class="intense-text">I want you selfishly.</p>
-                <p>I want to have you all by myself. All of you.</p>
-                <p>I don't want to share you with the world, with anyone, or with anything else.</p>
-                <div class="scroll-down">↓</div>
-            </div>
-        </section>
-
-        <!-- Section 3: Absolute Presence -->
-        <section>
-            <div class="glass-card fade-element">
-                <p>I want you to be present and ready whenever I need you or want you.</p>
-                <p class="intense-text">Even if I just want a glimpse of you... I need you.</p>
-                <p>I am done being reasonable.</p>
-                <div class="scroll-down">↓</div>
-            </div>
-        </section>
-
-        <!-- Section 4: Zero Space -->
-        <section>
-            <div class="glass-card fade-element">
-                <p class="intense-text" style="font-size: 1.6rem; color: #ff4d4d;">I don't wanna be patient anymore.</p>
-                <p>I don't wanna give you space.</p>
-                <p>I don't want you to leave me for a single second.</p>
-                <div class="scroll-down">↓</div>
-            </div>
-        </section>
-
-        <!-- Section 5: The Climax -->
-        <section>
-            <div class="glass-card fade-element" style="border-color: rgba(255, 77, 77, 0.6); box-shadow: 0 0 40px rgba(255, 0, 0, 0.2);">
-                <p class="intense-text" style="font-size: 1.5rem; line-height: 2;">
-                    If I'm gonna suffocate either way...
-                </p>
-                <p class="intense-text" style="font-size: 1.5rem; line-height: 2; color: #fff;">
-                    I would choose your presence.
-                </p>
-                <p style="font-size: 1.3rem; margin-top: 2rem; font-weight: bold;">
-                    I want <span class="highlight">zero space</span> between us to be the thing that suffocates me.
-                </p>
-                <div class="scroll-down">↓</div>
-            </div>
-        </section>
-
-        <!-- Section 6: Forever -->
-        <section>
-            <div class="glass-card fade-element">
-                <h1>365 Days</h1>
-                <p>Of being completely, helplessly, obsessively yours.</p>
-                <h2 style="margin-top: 2rem; font-size: 1.5rem;">I love you, Wifeyyy.</h2>
-            </div>
-        </section>
-
+    <!-- The Elegant Centerpiece -->
+    <div class="glass-box">
+        <h1>I love you,</h1>
+        <span class="wifey">My Wifeyyyy</span>
+        <p class="sweet-note">
+            My absolute everything.<br>
+            A million emojis could fill this screen,<br>
+            but they still wouldn't be enough to show how much you mean to me.
+        </p>
+        <div class="heartbeat">❤️</div>
     </div>
 
     <script>
-        // --- INTERSECTION OBSERVER FOR SCROLL ANIMATION ---
-        document.addEventListener("DOMContentLoaded", () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.3
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
-
-            const fadeElements = document.querySelectorAll('.fade-element');
-            fadeElements.forEach(el => observer.observe(el));
-            
-            setTimeout(() => {
-                if(fadeElements.length > 0) fadeElements[0].classList.add('visible');
-            }, 100);
-        });
-
-        // --- MAGNETIC EMBERS CANVAS LOGIC ---
-        const canvas = document.getElementById('magnetic-embers');
+        // --- OVERWHELMING EMOJI SHOWER LOGIC ---
+        const canvas = document.getElementById('emoji-shower');
         const ctx = canvas.getContext('2d');
         const touchLayer = document.getElementById('touch-layer');
 
         let width, height;
-        let particles = [];
-        // The pull radius is large to represent the intense "pull"
-        const mouse = { x: null, y: null, radius: 250 };
+        let emojis = [];
+        
+        // A huge array of love!
+        const emojiList = ['❤️', '💖', '💕', '💗', '💓', '💞', '💘', '🌸', '✨', '🧸', '🥺', '💍', '🥰', '😘'];
+
+        const mouse = { x: null, y: null, radius: 150 };
 
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -272,7 +184,7 @@
         window.addEventListener('resize', resize);
         resize();
 
-        // Track touches on the transparent top layer
+        // Track touches to make emojis "explode" away from the finger
         touchLayer.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
@@ -290,102 +202,94 @@
             mouse.y = null;
         });
 
-        class Ember {
+        class FloatingEmoji {
             constructor() {
+                this.reset();
+                // Randomize initial Y so they start already filling the screen
+                this.y = Math.random() * height; 
+            }
+
+            reset() {
                 this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.baseSize = Math.random() * 2.5 + 0.5;
-                this.size = this.baseSize;
-                this.vx = (Math.random() - 0.5) * 1;
-                this.vy = (Math.random() - 0.5) * 1;
-                // Deep reds, bright oranges, and sharp whites
-                const colors = ['rgba(255, 77, 77, 0.8)', 'rgba(255, 20, 20, 0.6)', 'rgba(255, 153, 153, 0.9)'];
-                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.y = height + (Math.random() * 200); // Start below screen
+                this.emoji = emojiList[Math.floor(Math.random() * emojiList.length)];
+                
+                // Mix of massive emojis and smaller ones for depth
+                this.size = Math.random() * 40 + 15; 
+                
+                // Drift speeds
+                this.vy = -(Math.random() * 2 + 1); // Floating UP
+                this.vx = (Math.random() - 0.5) * 1.5; // Slight sway
+                
+                // Wiggle effect
+                this.angle = Math.random() * Math.PI * 2;
+                this.spinSpeed = (Math.random() - 0.5) * 0.05;
+                
+                this.opacity = Math.random() * 0.7 + 0.3;
             }
 
             draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.font = `${this.size}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                // Translate to emoji center to spin it gently
+                ctx.translate(this.x, this.y);
+                ctx.rotate(Math.sin(this.angle) * 0.3); // Gentle sway rotation
+                
+                ctx.fillText(this.emoji, 0, 0);
+                ctx.restore();
             }
 
             update() {
-                this.x += this.vx;
                 this.y += this.vy;
+                this.x += this.vx + Math.sin(this.angle) * 0.5; // Swaying motion
+                this.angle += this.spinSpeed;
 
-                // Wrap around edges
-                if (this.x < 0) this.x = width;
-                if (this.x > width) this.x = 0;
-                if (this.y < 0) this.y = height;
-                if (this.y > height) this.y = 0;
-
-                // MAGNETIC PULL LOGIC
+                // INTERACTIVE: Explode away from touch
                 if (mouse.x != null) {
-                    let dx = mouse.x - this.x;
-                    let dy = mouse.y - this.y;
+                    let dx = this.x - mouse.x;
+                    let dy = this.y - mouse.y;
                     let distance = Math.sqrt(dx * dx + dy * dy);
                     
                     if (distance < mouse.radius) {
-                        // Aggressive pull towards the touch point
                         const forceDirectionX = dx / distance;
                         const forceDirectionY = dy / distance;
                         const force = (mouse.radius - distance) / mouse.radius;
                         
-                        // Multiply by a high number for that "zero space" magnetic rush
-                        this.x += forceDirectionX * force * 6;
-                        this.y += forceDirectionY * force * 6;
-                        
-                        // Embers flare up when close to her touch
-                        this.size = Math.min(this.baseSize + (force * 3), 6);
-                    } else {
-                        this.size = this.baseSize;
+                        this.x += forceDirectionX * force * 5;
+                        this.y += forceDirectionY * force * 5;
                     }
-                } else {
-                    this.size = this.baseSize;
+                }
+
+                // If it goes off the top, reset it to the bottom to create infinite flow
+                if (this.y < -100 || this.x < -100 || this.x > width + 100) {
+                    this.reset();
+                    this.y = height + 50; // Reset exactly at bottom
                 }
             }
         }
 
+        // Initialize A LOT of emojis to make it look "full"
         function init() {
-            particles = [];
-            const numberOfParticles = (width * height) / 5000; 
-            for (let i = 0; i < numberOfParticles; i++) {
-                particles.push(new Ember());
-            }
-        }
-
-        function connect() {
-            for (let a = 0; a < particles.length; a++) {
-                for (let b = a; b < particles.length; b++) {
-                    let dx = particles[a].x - particles[b].x;
-                    let dy = particles[a].y - particles[b].y;
-                    let distance = dx * dx + dy * dy;
-
-                    if (distance < 7000) { 
-                        let opacityValue = 1 - (distance / 7000);
-                        ctx.strokeStyle = `rgba(255, 77, 77, ${opacityValue * 0.5})`; 
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
-                        ctx.stroke();
-                    }
-                }
+            emojis = [];
+            // Spawn an overwhelming amount based on screen size
+            const numberOfEmojis = Math.floor((width * height) / 8000); 
+            for (let i = 0; i < numberOfEmojis; i++) {
+                emojis.push(new FloatingEmoji());
             }
         }
 
         function animate() {
             requestAnimationFrame(animate);
-            // Deep crimson trail effect
-            ctx.fillStyle = 'rgba(10, 0, 0, 0.2)';
-            ctx.fillRect(0, 0, width, height);
+            ctx.clearRect(0, 0, width, height);
 
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
+            for (let i = 0; i < emojis.length; i++) {
+                emojis[i].update();
+                emojis[i].draw();
             }
-            connect();
         }
 
         init();
