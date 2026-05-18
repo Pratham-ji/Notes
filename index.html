@@ -22,13 +22,35 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            /* A deep, calming, ocean-to-dusk gradient. */
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #31102f 100%);
             font-family: 'Cormorant Garamond', serif;
             color: #f8fafc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #0f172a;
+        }
+
+        /* --- DYNAMIC AURORA BACKGROUND --- */
+        .aurora-bg {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg, 
+                #0f172a 0%, 
+                #2e1065 25%, 
+                #31102f 50%, 
+                #1e1b4b 75%, 
+                #0f172a 100%
+            );
+            background-size: 400% 400%;
+            animation: shiftAurora 20s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes shiftAurora {
+            0% { background-position: 0% 50%; transform: rotate(0deg); }
+            50% { background-position: 100% 50%; transform: rotate(5deg); }
+            100% { background-position: 0% 50%; transform: rotate(0deg); }
         }
 
         /* --- BACKGROUND PARTICLES --- */
@@ -46,98 +68,106 @@
         .container {
             position: relative;
             z-index: 10;
-            width: 100%; /* Changed to 100% to ensure perfect centering */
-            max-width: 600px;
-            text-align: center;
-            padding: 0 1.5rem;
-            cursor: pointer; 
+            width: 100%;
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
         }
 
         #text-container {
             position: relative;
             width: 100%;
+            max-width: 700px;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 60vh; /* Gives the text room to breathe vertically */
         }
 
         /* --- TYPOGRAPHY & ANIMATIONS --- */
         .affirmation {
-            /* Responsive font sizing so it never breaks on mobile */
-            font-size: clamp(1.6rem, 7vw, 2.2rem); 
-            line-height: 1.4;
+            font-size: clamp(1.8rem, 7vw, 2.5rem); 
+            line-height: 1.5;
             font-weight: 500;
             color: #fdf2f8; 
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
             opacity: 0;
             
-            /* THIS FIXES THE SAFARI BUG */
+            /* Perfect centering for Safari/iOS */
             position: absolute;
             left: 0;
             width: 100%;
+            text-align: center;
+            padding: 0 2rem;
             
-            transform: translateY(20px);
-            transition: opacity 1.5s ease, transform 1.5s ease;
-            padding: 0 1rem;
+            transform: translateY(30px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
         }
 
         .affirmation.active {
             opacity: 1;
             transform: translateY(0);
+            /* Adds a continuous, subtle floating effect so it never looks dead */
+            animation: floatText 4s ease-in-out infinite alternate 1.2s;
         }
 
         .affirmation.fade-out {
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(-30px);
+        }
+
+        @keyframes floatText {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-5px) scale(1.02); }
         }
 
         .instruction {
             position: absolute;
-            bottom: 40px;
+            bottom: 50px;
             left: 0;
             width: 100%;
             text-align: center;
             font-family: 'Lato', sans-serif;
             font-size: 0.85rem;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            color: #94a3b8;
+            color: #cbd5e1;
             opacity: 0;
-            animation: pulseFade 4s infinite 2s;
+            animation: pulseFade 3s infinite 2s;
         }
 
         @keyframes pulseFade {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.8; }
+            0%, 100% { opacity: 0.2; transform: translateY(0); }
+            50% { opacity: 0.9; transform: translateY(-3px); }
         }
 
         /* Ambient glow when tapping */
         .tap-glow {
             position: fixed;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(244, 114, 182, 0.15) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.2) 0%, rgba(0,0,0,0) 70%);
             transform: translate(-50%, -50%) scale(0);
             pointer-events: none;
             z-index: 5;
         }
 
         .tap-glow.expand {
-            animation: ripple 1.5s ease-out forwards;
+            animation: ripple 1.2s ease-out forwards;
         }
 
         @keyframes ripple {
             0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
         }
 
     </style>
 </head>
 <body>
+
+    <div class="aurora-bg"></div>
 
     <canvas id="calm-water"></canvas>
 
@@ -145,25 +175,34 @@
         
         <div id="text-container"></div>
 
-        <div class="instruction" id="instruction-text">Tap anywhere</div>
+        <div class="instruction" id="instruction-text">Tap to read</div>
     </div>
 
     <script>
+        // --- EXPANDED, DEEPER AFFIRMATIONS ---
         const affirmations = [
             "I know you feel a little distant right now.",
             "And I just want you to know...",
             "You are completely allowed to feel whatever you are feeling.",
-            "Take all the space and time you need.",
+            "Take all the space and time your heart needs.",
             "Because my love for you hasn't moved an inch.",
             "I am firmly planted right here, anchored to you.",
+            "I don't just love you when it's easy.",
+            "I love you when your mind is loud and when your heart is heavy.",
+            "I love you when you're pulling away, because I know my job is to stay right here.",
+            "I'll be your quiet place when the world is too much.",
             "Even when you feel far away, you are the absolute center of my universe.",
             "Nothing you feel, and nothing we go through, changes my certainty about us.",
+            "You don't have to force yourself to feel 'okay' for my sake.",
+            "Just exist. Just breathe. Let me do the holding for a while.",
             "You are enough, Anushka. Exactly as you are in this very second.",
-            "I choose you when we are laughing.",
-            "I choose you when things are heavy.",
-            "And I choose you when you feel distant.",
-            "You are my Bhura.",
-            "You are my safest place.",
+            "You are my Bhura. The one I choose every single morning.",
+            "You are my safest place, and I will always strive to be yours.",
+            "Our future is built on an unshakable foundation.",
+            "Those sleepy mornings, our chaotic kitchen, the tiny footsteps... they are all still waiting for us.",
+            "Every single promise I made is still intact.",
+            "No matter how far you drift, the tether between us holds strong.",
+            "I am yours, completely and without condition.",
             "And whenever you are ready to reach back out...",
             "My hand is already right here waiting for yours.",
             "I love you, Wifeyyy. Endlessly."
@@ -179,13 +218,15 @@
             const el = document.createElement('div');
             el.className = 'affirmation';
             
-            if (text.includes("I choose you") || text.includes("anchored to you") || text.includes("My hand is already")) {
+            // Add styling for specific emotional beats
+            if (text.includes("anchored to you") || text.includes("Let me do the holding") || text.includes("My hand is already")) {
                 el.style.fontStyle = 'italic';
+                el.style.color = '#fbcfe8'; // Slight pink tint
             }
-            if (text.includes("I love you")) {
+            if (text.includes("I love you, Wifeyyy")) {
                 el.style.color = '#fbcfe8';
-                // Made this responsive too so it doesn't break on small screens
-                el.style.fontSize = 'clamp(2rem, 8vw, 2.8rem)';
+                el.style.fontSize = 'clamp(2.2rem, 9vw, 3.2rem)';
+                el.style.fontStyle = 'italic';
             }
             el.innerText = text;
             return el;
@@ -196,7 +237,7 @@
         
         setTimeout(() => {
             currentElement.classList.add('active');
-        }, 500);
+        }, 300);
 
         interactionArea.addEventListener('click', (e) => {
             if (isAnimating) return; 
@@ -220,6 +261,7 @@
             const newElement = createAffirmationElement(affirmations[currentIndex]);
             textContainer.appendChild(newElement);
 
+            // Sped up the transition slightly so it feels more responsive to her taps
             setTimeout(() => {
                 newElement.classList.add('active');
                 currentElement = newElement;
@@ -229,11 +271,11 @@
                         oldElement.parentNode.removeChild(oldElement);
                     }
                     isAnimating = false;
-                }, 1500); 
-            }, 800); 
+                }, 1000); 
+            }, 600); 
         });
 
-        // --- BACKGROUND AMBIENT PARTICLES ---
+        // --- ENHANCED BACKGROUND PARTICLES ---
         const canvas = document.getElementById('calm-water');
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
@@ -249,31 +291,39 @@
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.size = Math.random() * 2 + 0.5;
-                this.vx = (Math.random() - 0.5) * 0.2;
-                this.vy = -(Math.random() * 0.2 + 0.05); 
-                this.opacity = Math.random() * 0.4 + 0.1;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = -(Math.random() * 0.3 + 0.1); 
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.pulseSpeed = Math.random() * 0.02;
             }
 
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(248, 250, 252, ${this.opacity})`; 
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = 'rgba(248, 250, 252, 0.5)';
                 ctx.fill();
             }
 
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-                this.x += Math.sin(this.y * 0.01) * 0.2;
+                // Wavy movement
+                this.x += Math.sin(this.y * 0.02) * 0.3;
+                
+                // Pulsing glow
+                this.opacity += Math.sin(Date.now() * this.pulseSpeed) * 0.01;
 
-                if (this.y < 0) this.y = height;
-                if (this.x < 0) this.x = width;
-                if (this.x > width) this.x = 0;
+                if (this.y < -10) this.y = height + 10;
+                if (this.x < -10) this.x = width + 10;
+                if (this.x > width + 10) this.x = -10;
             }
         }
 
-        for (let i = 0; i < 40; i++) {
+        // Increased particle count for a less static feel
+        for (let i = 0; i < 60; i++) {
             particles.push(new AmbientParticle());
         }
 
