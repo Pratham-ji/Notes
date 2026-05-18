@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For My Anushka</title>
     
-    <!-- Elegant, soft, and readable fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lato:wght@300;400&display=swap" rel="stylesheet">
@@ -23,8 +22,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            /* A deep, calming, ocean-to-dusk gradient. 
-               Blue represents stability, depth, and unwavering calm. */
+            /* A deep, calming, ocean-to-dusk gradient. */
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #31102f 100%);
             font-family: 'Cormorant Garamond', serif;
             color: #f8fafc;
@@ -33,7 +31,7 @@
             align-items: center;
         }
 
-        /* --- BACKGROUND PARTICLES (CALM WATER VIBE) --- */
+        /* --- BACKGROUND PARTICLES --- */
         #calm-water {
             position: absolute;
             top: 0;
@@ -48,11 +46,11 @@
         .container {
             position: relative;
             z-index: 10;
-            width: 90%;
+            width: 100%; /* Changed to 100% to ensure perfect centering */
             max-width: 600px;
             text-align: center;
-            padding: 2rem;
-            cursor: pointer; /* Indicates the whole screen is interactive */
+            padding: 0 1.5rem;
+            cursor: pointer; 
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -60,18 +58,31 @@
             align-items: center;
         }
 
+        #text-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         /* --- TYPOGRAPHY & ANIMATIONS --- */
         .affirmation {
-            font-size: 2.2rem;
+            /* Responsive font sizing so it never breaks on mobile */
+            font-size: clamp(1.6rem, 7vw, 2.2rem); 
             line-height: 1.4;
             font-weight: 500;
-            color: #fdf2f8; /* Soft pink-white */
+            color: #fdf2f8; 
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             opacity: 0;
+            
+            /* THIS FIXES THE SAFARI BUG */
+            position: absolute;
+            left: 0;
+            width: 100%;
+            
             transform: translateY(20px);
             transition: opacity 1.5s ease, transform 1.5s ease;
-            position: absolute; /* Keep them centered without shifting layout */
-            width: 100%;
             padding: 0 1rem;
         }
 
@@ -88,6 +99,9 @@
         .instruction {
             position: absolute;
             bottom: 40px;
+            left: 0;
+            width: 100%;
+            text-align: center;
             font-family: 'Lato', sans-serif;
             font-size: 0.85rem;
             letter-spacing: 4px;
@@ -125,23 +139,16 @@
 </head>
 <body>
 
-    <!-- Soft Ambient Background -->
     <canvas id="calm-water"></canvas>
 
-    <!-- Interactive Container -->
     <div class="container" id="interaction-area">
         
-        <!-- The Text Container -->
-        <div id="text-container">
-            <!-- Affirmations will be injected here by JS -->
-        </div>
+        <div id="text-container"></div>
 
         <div class="instruction" id="instruction-text">Tap anywhere</div>
     </div>
 
     <script>
-        // --- THE WORDS OF AFFIRMATION ---
-        // Crafted to bridge emotional distance without pressure.
         const affirmations = [
             "I know you feel a little distant right now.",
             "And I just want you to know...",
@@ -168,56 +175,48 @@
         const interactionArea = document.getElementById('interaction-area');
         const instructionText = document.getElementById('instruction-text');
 
-        // Initialize the first affirmation
         function createAffirmationElement(text) {
             const el = document.createElement('div');
             el.className = 'affirmation';
-            // Use italic for specific emotional emphasis
+            
             if (text.includes("I choose you") || text.includes("anchored to you") || text.includes("My hand is already")) {
                 el.style.fontStyle = 'italic';
             }
             if (text.includes("I love you")) {
                 el.style.color = '#fbcfe8';
-                el.style.fontSize = '2.8rem';
+                // Made this responsive too so it doesn't break on small screens
+                el.style.fontSize = 'clamp(2rem, 8vw, 2.8rem)';
             }
             el.innerText = text;
             return el;
         }
 
-        // Setup the first text
         let currentElement = createAffirmationElement(affirmations[0]);
         textContainer.appendChild(currentElement);
         
-        // Short delay before showing the first text
         setTimeout(() => {
             currentElement.classList.add('active');
         }, 500);
 
-        // Handle the tap/click to progress
         interactionArea.addEventListener('click', (e) => {
-            if (isAnimating) return; // Prevent spam clicking
+            if (isAnimating) return; 
 
-            // Hide the instruction text after the first tap
             if (currentIndex === 0) {
                 instructionText.style.display = 'none';
             }
 
-            // Create visual ripple effect at the tap location
             createRipple(e.clientX, e.clientY);
 
-            // If we reached the end, just let the last message stay
             if (currentIndex >= affirmations.length - 1) return;
 
             isAnimating = true;
 
-            // Fade out current text
             const oldElement = currentElement;
             oldElement.classList.remove('active');
             oldElement.classList.add('fade-out');
 
             currentIndex++;
 
-            // Create and fade in new text
             const newElement = createAffirmationElement(affirmations[currentIndex]);
             textContainer.appendChild(newElement);
 
@@ -225,32 +224,14 @@
                 newElement.classList.add('active');
                 currentElement = newElement;
                 
-                // Cleanup old element
                 setTimeout(() => {
                     if (oldElement.parentNode) {
                         oldElement.parentNode.removeChild(oldElement);
                     }
                     isAnimating = false;
-                }, 1500); // Wait for fade-out to finish
-            }, 800); // Slight delay before new text starts fading in to give a breathing pause
+                }, 1500); 
+            }, 800); 
         });
-
-        // --- RIPPLE EFFECT LOGIC ---
-        function createRipple(x, y) {
-            const glow = document.createElement('div');
-            glow.className = 'tap-glow expand';
-            glow.style.left = `${x}px`;
-            glow.style.top = `${y}px`;
-            // Make the glow huge to cover a lot of the screen softly
-            glow.style.width = '150vw';
-            glow.style.height = '150vw';
-            
-            document.body.appendChild(glow);
-
-            setTimeout(() => {
-                glow.remove();
-            }, 1500);
-        }
 
         // --- BACKGROUND AMBIENT PARTICLES ---
         const canvas = document.getElementById('calm-water');
@@ -270,22 +251,20 @@
                 this.y = Math.random() * height;
                 this.size = Math.random() * 2 + 0.5;
                 this.vx = (Math.random() - 0.5) * 0.2;
-                this.vy = -(Math.random() * 0.2 + 0.05); // Very slow drift up
+                this.vy = -(Math.random() * 0.2 + 0.05); 
                 this.opacity = Math.random() * 0.4 + 0.1;
             }
 
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(248, 250, 252, ${this.opacity})`; // Soft white/blue glow
+                ctx.fillStyle = `rgba(248, 250, 252, ${this.opacity})`; 
                 ctx.fill();
             }
 
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-
-                // Gentle sine wave swaying
                 this.x += Math.sin(this.y * 0.01) * 0.2;
 
                 if (this.y < 0) this.y = height;
