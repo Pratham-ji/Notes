@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 
     <style>
         /* --- RESET & SETUP --- */
@@ -84,7 +84,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 60vh; /* Gives the text room to breathe vertically */
+            height: 60vh; 
         }
 
         /* --- TYPOGRAPHY & ANIMATIONS --- */
@@ -96,7 +96,6 @@
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
             opacity: 0;
             
-            /* Perfect centering for Safari/iOS */
             position: absolute;
             left: 0;
             width: 100%;
@@ -104,14 +103,13 @@
             padding: 0 2rem;
             
             transform: translateY(30px);
-            transition: opacity 1.2s ease, transform 1.2s ease;
+            transition: opacity 1.5s ease, transform 1.5s ease;
         }
 
         .affirmation.active {
             opacity: 1;
             transform: translateY(0);
-            /* Adds a continuous, subtle floating effect so it never looks dead */
-            animation: floatText 4s ease-in-out infinite alternate 1.2s;
+            animation: floatText 4s ease-in-out infinite alternate 1.5s;
         }
 
         .affirmation.fade-out {
@@ -122,26 +120,6 @@
         @keyframes floatText {
             0% { transform: translateY(0px) scale(1); }
             100% { transform: translateY(-5px) scale(1.02); }
-        }
-
-        .instruction {
-            position: absolute;
-            bottom: 50px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            font-family: 'Lato', sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: #cbd5e1;
-            opacity: 0;
-            animation: pulseFade 3s infinite 2s;
-        }
-
-        @keyframes pulseFade {
-            0%, 100% { opacity: 0.2; transform: translateY(0); }
-            50% { opacity: 0.9; transform: translateY(-3px); }
         }
 
         /* Ambient glow when tapping */
@@ -168,18 +146,13 @@
 <body>
 
     <div class="aurora-bg"></div>
-
     <canvas id="calm-water"></canvas>
 
     <div class="container" id="interaction-area">
-        
         <div id="text-container"></div>
-
-        <div class="instruction" id="instruction-text">Tap to read</div>
     </div>
 
     <script>
-        // --- EXPANDED, DEEPER AFFIRMATIONS ---
         const affirmations = [
             "I know you feel a little distant right now.",
             "And I just want you to know...",
@@ -210,18 +183,20 @@
 
         let currentIndex = 0;
         let isAnimating = false;
+        let autoPlayTimer;
+        // The time each sentence stays on screen (6 seconds)
+        const readingTime = 6000; 
+
         const textContainer = document.getElementById('text-container');
         const interactionArea = document.getElementById('interaction-area');
-        const instructionText = document.getElementById('instruction-text');
 
         function createAffirmationElement(text) {
             const el = document.createElement('div');
             el.className = 'affirmation';
             
-            // Add styling for specific emotional beats
             if (text.includes("anchored to you") || text.includes("Let me do the holding") || text.includes("My hand is already")) {
                 el.style.fontStyle = 'italic';
-                el.style.color = '#fbcfe8'; // Slight pink tint
+                el.style.color = '#fbcfe8'; 
             }
             if (text.includes("I love you, Wifeyyy")) {
                 el.style.color = '#fbcfe8';
@@ -235,20 +210,14 @@
         let currentElement = createAffirmationElement(affirmations[0]);
         textContainer.appendChild(currentElement);
         
+        // Start the automatic flow
         setTimeout(() => {
             currentElement.classList.add('active');
-        }, 300);
+            startAutoPlay();
+        }, 500);
 
-        interactionArea.addEventListener('click', (e) => {
-            if (isAnimating) return; 
-
-            if (currentIndex === 0) {
-                instructionText.style.display = 'none';
-            }
-
-            createRipple(e.clientX, e.clientY);
-
-            if (currentIndex >= affirmations.length - 1) return;
+        function showNextAffirmation() {
+            if (isAnimating || currentIndex >= affirmations.length - 1) return;
 
             isAnimating = true;
 
@@ -261,7 +230,6 @@
             const newElement = createAffirmationElement(affirmations[currentIndex]);
             textContainer.appendChild(newElement);
 
-            // Sped up the transition slightly so it feels more responsive to her taps
             setTimeout(() => {
                 newElement.classList.add('active');
                 currentElement = newElement;
@@ -271,8 +239,33 @@
                         oldElement.parentNode.removeChild(oldElement);
                     }
                     isAnimating = false;
-                }, 1000); 
-            }, 600); 
+                    
+                    // Automatically trigger the next one if not at the end
+                    if (currentIndex < affirmations.length - 1) {
+                        startAutoPlay();
+                    }
+                }, 1500); // Wait for fade out
+            }, 800); // Wait for text to swap
+        }
+
+        function startAutoPlay() {
+            clearTimeout(autoPlayTimer);
+            autoPlayTimer = setTimeout(showNextAffirmation, readingTime);
+        }
+
+        // Allow her to tap to speed it up if she wants
+        interactionArea.addEventListener('click', (e) => {
+            // Visual tap effect
+            const glow = document.createElement('div');
+            glow.className = 'tap-glow expand';
+            glow.style.left = `${e.clientX}px`;
+            glow.style.top = `${e.clientY}px`;
+            document.body.appendChild(glow);
+            setTimeout(() => glow.remove(), 1200);
+
+            // Cancel the automatic timer and advance immediately
+            clearTimeout(autoPlayTimer);
+            showNextAffirmation();
         });
 
         // --- ENHANCED BACKGROUND PARTICLES ---
@@ -310,10 +303,7 @@
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-                // Wavy movement
                 this.x += Math.sin(this.y * 0.02) * 0.3;
-                
-                // Pulsing glow
                 this.opacity += Math.sin(Date.now() * this.pulseSpeed) * 0.01;
 
                 if (this.y < -10) this.y = height + 10;
@@ -322,7 +312,6 @@
             }
         }
 
-        // Increased particle count for a less static feel
         for (let i = 0; i < 60; i++) {
             particles.push(new AmbientParticle());
         }
