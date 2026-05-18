@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>11:08 PM</title>
+    <title>For My Anushka</title>
     
-    <!-- Calming, elegant fonts -->
+    <!-- Elegant, soft, and readable fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
         /* --- RESET & SETUP --- */
@@ -21,274 +21,241 @@
 
         body, html {
             width: 100%;
-            overflow-x: hidden;
-            /* A deep, warm, comforting sunset-to-dusk gradient */
-            background: linear-gradient(180deg, #2b1b24 0%, #3d232e 50%, #1a1016 100%);
+            height: 100%;
+            overflow: hidden;
+            /* A deep, calming, ocean-to-dusk gradient. 
+               Blue represents stability, depth, and unwavering calm. */
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #31102f 100%);
             font-family: 'Cormorant Garamond', serif;
-            color: #fdf5e6; /* Soft warm cream */
-            scroll-behavior: smooth;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* --- BACKGROUND FIREFLIES (CALMING EFFECT) --- */
-        #fireflies {
-            position: fixed;
+        /* --- BACKGROUND PARTICLES (CALM WATER VIBE) --- */
+        #calm-water {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* --- LAYOUT --- */
-        .wrapper {
-            position: relative;
-            z-index: 10;
-        }
-
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 4rem 1.5rem;
-            text-align: center;
-        }
-
-        /* --- THE BREATHE MODULE (PSYCHOLOGICAL GROUNDING) --- */
-        .breathe-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .breathing-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 182, 193, 0.4) 0%, rgba(216, 17, 89, 0) 70%);
-            box-shadow: 0 0 40px rgba(255, 182, 193, 0.2);
-            animation: breathe 8s ease-in-out infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-
-        @keyframes breathe {
-            0% { transform: scale(0.8); opacity: 0.5; }
-            50% { transform: scale(1.5); opacity: 1; }
-            100% { transform: scale(0.8); opacity: 0.5; }
-        }
-
-        .breathe-text {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: #ffb6c1;
-            opacity: 0.8;
-            animation: fadeInOut 8s ease-in-out infinite;
-        }
-
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
-        }
-
-        /* --- CONTENT STYLES --- */
-        .glass-panel {
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .glass-panel.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .time-stamp {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.2rem;
-            letter-spacing: 5px;
-            color: #ff9eaf;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        h1 {
-            font-size: 2.8rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            color: #fff;
-        }
-
-        p {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 300;
-            line-height: 1.9;
-            margin-bottom: 1.5rem;
-            color: rgba(253, 245, 230, 0.9);
-        }
-
-        .italic-highlight {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1.4rem;
-            color: #ffb6c1;
-        }
-
-        /* --- INTERACTIVE HEARTBEAT BUTTON --- */
-        .touch-container {
-            margin-top: 2rem;
-            position: relative;
-        }
-
-        .hold-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 182, 193, 0.5);
-            color: #ffb6c1;
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s;
-            outline: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
-        .hold-glow {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            width: 150vw;
-            height: 150vw;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(216, 17, 89, 0.15) 0%, rgba(0,0,0,0) 70%);
             z-index: 1;
             pointer-events: none;
-            transition: transform 3s ease-out, opacity 1s;
-            opacity: 0;
         }
 
-        .hold-glow.active {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-        }
-
-        .hidden-message {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 1s ease;
-            margin-top: 2rem;
-            font-size: 1.5rem;
-            font-style: italic;
-            color: #fff;
+        /* --- THE CONTENT AREA --- */
+        .container {
             position: relative;
             z-index: 10;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            padding: 2rem;
+            cursor: pointer; /* Indicates the whole screen is interactive */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .hidden-message.show {
+        /* --- TYPOGRAPHY & ANIMATIONS --- */
+        .affirmation {
+            font-size: 2.2rem;
+            line-height: 1.4;
+            font-weight: 500;
+            color: #fdf2f8; /* Soft pink-white */
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            position: absolute; /* Keep them centered without shifting layout */
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        .affirmation.active {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        .affirmation.fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .instruction {
+            position: absolute;
+            bottom: 40px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #94a3b8;
+            opacity: 0;
+            animation: pulseFade 4s infinite 2s;
+        }
+
+        @keyframes pulseFade {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Ambient glow when tapping */
+        .tap-glow {
+            position: fixed;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.15) 0%, rgba(0,0,0,0) 70%);
+            transform: translate(-50%, -50%) scale(0);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .tap-glow.expand {
+            animation: ripple 1.5s ease-out forwards;
+        }
+
+        @keyframes ripple {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Soft Ambient Fireflies -->
-    <canvas id="fireflies"></canvas>
+    <!-- Soft Ambient Background -->
+    <canvas id="calm-water"></canvas>
 
-    <!-- Expanding Warmth Layer for interaction -->
-    <div class="hold-glow" id="hold-glow"></div>
+    <!-- Interactive Container -->
+    <div class="container" id="interaction-area">
+        
+        <!-- The Text Container -->
+        <div id="text-container">
+            <!-- Affirmations will be injected here by JS -->
+        </div>
 
-    <div class="wrapper">
-
-        <!-- SECTION 1: Grounding -->
-        <section>
-            <div class="breathe-container fade-element">
-                <div class="breathing-circle"></div>
-                <div class="breathe-text">Breathe with me, Bhura</div>
-            </div>
-            <div style="font-family: 'Montserrat'; font-size: 0.8rem; letter-spacing: 2px; opacity: 0.5; margin-top: 2rem;">
-                Scroll down slowly
-            </div>
-        </section>
-
-        <!-- SECTION 2: The Acknowledgment -->
-        <section>
-            <div class="glass-panel fade-element">
-                <div class="time-stamp">11:08 PM</div>
-                <h1>The Minute Everything Changed</h1>
-                <p>I read your poem. I read it over and over again, feeling every single piece of your heart that you poured into it.</p>
-                <p>I know your mind feels heavy right now. I know you are feeling low. But I want you to stop, close your eyes for a second, and remember the warmth of that exact moment on the 13th.</p>
-                <p class="italic-highlight">You are safe here with me.</p>
-            </div>
-        </section>
-
-        <!-- SECTION 3: Mirroring Her Words -->
-        <section>
-            <div class="glass-panel fade-element">
-                <h1>I Remember It All</h1>
-                <p>I may have said "I love you" first, but you were the one who made my world softer.</p>
-                <p>I cherish every sunset date where time moved too fast. I cherish the dairy dates, the shared bites, and holding your hand while you bravely learned to ride that scooty.</p>
-                <p>You watched my reactions during movie nights, but I was just mesmerized that someone like you chose me.</p>
-            </div>
-        </section>
-
-        <!-- SECTION 4: Future Pacing -->
-        <section>
-            <div class="glass-panel fade-element">
-                <h1>Our Dream House</h1>
-                <p>Whatever storm you are facing today, it is temporary. Because our future is permanent.</p>
-                <p>I am going to give you those sleepy mornings. We are going to have a kitchen filled with my favorite food and our terrible singing.</p>
-                <p>I already hear the tiny footsteps. I can already picture the pets curled up beside us.</p>
-                <p class="italic-highlight">Loving you feels like coming home. And I am never leaving.</p>
-            </div>
-        </section>
-
-        <!-- SECTION 5: The Ultimate Reassurance & Interaction -->
-        <section>
-            <div class="glass-panel fade-element">
-                <h1>My Vow</h1>
-                <p>I know today is hard. But let me carry the weight for you today.</p>
-                <p>You said you'll love me forever, but I promise I will spend every ordinary day and every beautiful moment making sure you never doubt it.</p>
-                
-                <div class="touch-container">
-                    <button class="hold-btn" id="hold-btn">Touch and Hold</button>
-                    <div class="hidden-message" id="hidden-message">
-                        I love you more than you'll ever know. ❤️
-                    </div>
-                </div>
-            </div>
-        </section>
-
+        <div class="instruction" id="instruction-text">Tap anywhere</div>
     </div>
 
     <script>
-        // --- CALMING FIREFLIES LOGIC ---
-        const canvas = document.getElementById('fireflies');
+        // --- THE WORDS OF AFFIRMATION ---
+        // Crafted to bridge emotional distance without pressure.
+        const affirmations = [
+            "I know you feel a little distant right now.",
+            "And I just want you to know...",
+            "You are completely allowed to feel whatever you are feeling.",
+            "Take all the space and time you need.",
+            "Because my love for you hasn't moved an inch.",
+            "I am firmly planted right here, anchored to you.",
+            "Even when you feel far away, you are the absolute center of my universe.",
+            "Nothing you feel, and nothing we go through, changes my certainty about us.",
+            "You are enough, Anushka. Exactly as you are in this very second.",
+            "I choose you when we are laughing.",
+            "I choose you when things are heavy.",
+            "And I choose you when you feel distant.",
+            "You are my Bhura.",
+            "You are my safest place.",
+            "And whenever you are ready to reach back out...",
+            "My hand is already right here waiting for yours.",
+            "I love you, Wifeyyy. Endlessly."
+        ];
+
+        let currentIndex = 0;
+        let isAnimating = false;
+        const textContainer = document.getElementById('text-container');
+        const interactionArea = document.getElementById('interaction-area');
+        const instructionText = document.getElementById('instruction-text');
+
+        // Initialize the first affirmation
+        function createAffirmationElement(text) {
+            const el = document.createElement('div');
+            el.className = 'affirmation';
+            // Use italic for specific emotional emphasis
+            if (text.includes("I choose you") || text.includes("anchored to you") || text.includes("My hand is already")) {
+                el.style.fontStyle = 'italic';
+            }
+            if (text.includes("I love you")) {
+                el.style.color = '#fbcfe8';
+                el.style.fontSize = '2.8rem';
+            }
+            el.innerText = text;
+            return el;
+        }
+
+        // Setup the first text
+        let currentElement = createAffirmationElement(affirmations[0]);
+        textContainer.appendChild(currentElement);
+        
+        // Short delay before showing the first text
+        setTimeout(() => {
+            currentElement.classList.add('active');
+        }, 500);
+
+        // Handle the tap/click to progress
+        interactionArea.addEventListener('click', (e) => {
+            if (isAnimating) return; // Prevent spam clicking
+
+            // Hide the instruction text after the first tap
+            if (currentIndex === 0) {
+                instructionText.style.display = 'none';
+            }
+
+            // Create visual ripple effect at the tap location
+            createRipple(e.clientX, e.clientY);
+
+            // If we reached the end, just let the last message stay
+            if (currentIndex >= affirmations.length - 1) return;
+
+            isAnimating = true;
+
+            // Fade out current text
+            const oldElement = currentElement;
+            oldElement.classList.remove('active');
+            oldElement.classList.add('fade-out');
+
+            currentIndex++;
+
+            // Create and fade in new text
+            const newElement = createAffirmationElement(affirmations[currentIndex]);
+            textContainer.appendChild(newElement);
+
+            setTimeout(() => {
+                newElement.classList.add('active');
+                currentElement = newElement;
+                
+                // Cleanup old element
+                setTimeout(() => {
+                    if (oldElement.parentNode) {
+                        oldElement.parentNode.removeChild(oldElement);
+                    }
+                    isAnimating = false;
+                }, 1500); // Wait for fade-out to finish
+            }, 800); // Slight delay before new text starts fading in to give a breathing pause
+        });
+
+        // --- RIPPLE EFFECT LOGIC ---
+        function createRipple(x, y) {
+            const glow = document.createElement('div');
+            glow.className = 'tap-glow expand';
+            glow.style.left = `${x}px`;
+            glow.style.top = `${y}px`;
+            // Make the glow huge to cover a lot of the screen softly
+            glow.style.width = '150vw';
+            glow.style.height = '150vw';
+            
+            document.body.appendChild(glow);
+
+            setTimeout(() => {
+                glow.remove();
+            }, 1500);
+        }
+
+        // --- BACKGROUND AMBIENT PARTICLES ---
+        const canvas = document.getElementById('calm-water');
         const ctx = canvas.getContext('2d');
-        let width, height, flies = [];
+        let width, height, particles = [];
 
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -297,22 +264,20 @@
         window.addEventListener('resize', resize);
         resize();
 
-        class Firefly {
+        class AmbientParticle {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.size = Math.random() * 2;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = -(Math.random() * 0.3 + 0.1); // Slowly drift up
-                this.opacity = Math.random() * 0.5 + 0.1;
-                this.pulseSpeed = Math.random() * 0.02 + 0.01;
-                this.pulseSign = Math.random() > 0.5 ? 1 : -1;
+                this.size = Math.random() * 2 + 0.5;
+                this.vx = (Math.random() - 0.5) * 0.2;
+                this.vy = -(Math.random() * 0.2 + 0.05); // Very slow drift up
+                this.opacity = Math.random() * 0.4 + 0.1;
             }
 
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 228, 196, ${this.opacity})`; // Warm glow
+                ctx.fillStyle = `rgba(248, 250, 252, ${this.opacity})`; // Soft white/blue glow
                 ctx.fill();
             }
 
@@ -320,74 +285,25 @@
                 this.x += this.vx;
                 this.y += this.vy;
 
-                // Pulsing glow
-                this.opacity += this.pulseSpeed * this.pulseSign;
-                if(this.opacity > 0.7 || this.opacity < 0.1) this.pulseSign *= -1;
+                // Gentle sine wave swaying
+                this.x += Math.sin(this.y * 0.01) * 0.2;
 
-                // Wrap around
                 if (this.y < 0) this.y = height;
                 if (this.x < 0) this.x = width;
                 if (this.x > width) this.x = 0;
             }
         }
 
-        for(let i = 0; i < 50; i++) flies.push(new Firefly());
-
-        function animateFlies() {
-            ctx.clearRect(0, 0, width, height);
-            flies.forEach(fly => { fly.update(); fly.draw(); });
-            requestAnimationFrame(animateFlies);
+        for (let i = 0; i < 40; i++) {
+            particles.push(new AmbientParticle());
         }
-        animateFlies();
 
-        // --- SCROLL ANIMATIONS ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.3 });
-
-        document.querySelectorAll('.fade-element').forEach(el => observer.observe(el));
-
-        // --- INTERACTIVE TOUCH TO CALM ---
-        const btn = document.getElementById('hold-btn');
-        const glow = document.getElementById('hold-glow');
-        const hiddenMsg = document.getElementById('hidden-message');
-        let holdTimer;
-
-        // When she touches/clicks the button
-        const startHold = (e) => {
-            if(e.cancelable) e.preventDefault(); // Prevent text selection on mobile
-            btn.style.background = 'rgba(255, 182, 193, 0.2)';
-            btn.innerText = "Hold tightly...";
-            glow.classList.add('active'); // The screen slowly fills with warm light
-            
-            // After holding for 2.5 seconds, reveal the final message
-            holdTimer = setTimeout(() => {
-                btn.style.display = 'none';
-                hiddenMsg.classList.add('show');
-            }, 2500);
-        };
-
-        // If she lets go too early
-        const endHold = (e) => {
-            if(e.cancelable) e.preventDefault();
-            clearTimeout(holdTimer);
-            btn.style.background = 'transparent';
-            if(!hiddenMsg.classList.contains('show')) {
-                btn.innerText = "Touch and Hold";
-            }
-            glow.classList.remove('active'); // The warm light recedes
-        };
-
-        // Event listeners for mobile and desktop
-        btn.addEventListener('touchstart', startHold, {passive: false});
-        btn.addEventListener('touchend', endHold, {passive: false});
-        btn.addEventListener('mousedown', startHold);
-        btn.addEventListener('mouseup', endHold);
-        btn.addEventListener('mouseleave', endHold);
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
 
     </script>
 </body>
