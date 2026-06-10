@@ -2,370 +2,277 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>I Am Sorry</title>
-    
-    <!-- Elegant Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Am Sorry Babu</title>
     <style>
-        /* --- RESET & SETUP --- */
-        * {
+        /* --- DARK ROOM ENVIRONMENT --- */
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body, html {
             width: 100%;
             height: 100%;
+            background: #030303; /* Pitch black room */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
-            background-color: #1a0b1c;
-            font-family: 'Playfair Display', serif;
-            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
         }
 
-        /* --- ENDLESS SHIFTING BACKGROUND --- */
-        .ambient-bg {
+        /* Ambient glow in the dark room casting from the screen */
+        .ambient-glow {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 50%, #4a154b 0%, #1a0b1c 40%, #0d040f 100%),
-                        radial-gradient(circle at 80% 20%, #701a75 0%, transparent 40%),
-                        radial-gradient(circle at 20% 80%, #be185d 0%, transparent 40%);
-            background-size: 150% 150%;
-            animation: breatheBg 20s ease-in-out infinite alternate;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 50vh;
+            background: radial-gradient(circle, rgba(0, 255, 150, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
             z-index: 0;
-            opacity: 0.8;
+            pointer-events: none;
+            transition: background 1s ease;
         }
 
-        @keyframes breatheBg {
-            0% { transform: scale(1) rotate(0deg); }
-            100% { transform: scale(1.1) rotate(5deg); }
+        /* --- THE CSS 3D LAPTOP --- */
+        .laptop-container {
+            perspective: 1200px; /* Gives the 3D depth to the keyboard */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
         }
 
-        /* --- FLOATING DUST --- */
-        canvas#dust {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* The Laptop Lid / Screen Bezel */
+        .laptop-lid {
+            width: 85vw;
+            max-width: 600px;
+            aspect-ratio: 16 / 10;
+            background: #111;
+            border-radius: 12px 12px 0 0;
+            padding: 3%;
+            box-shadow: 
+                inset 0 2px 5px rgba(255,255,255,0.1),
+                0 -5px 20px rgba(0, 0, 0, 0.8),
+                0 0 50px rgba(0, 255, 0, 0.1); /* Screen bleeding light behind */
+            position: relative;
+            z-index: 2;
+        }
+
+        /* The Actual Glowing Screen */
+        .laptop-screen {
             width: 100%;
             height: 100%;
-            z-index: 1;
+            background: #000;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,1);
+        }
+
+        /* CRT Scanline Effect */
+        .scanlines {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+            background-size: 100% 4px;
+            z-index: 100;
             pointer-events: none;
         }
 
-        /* --- SLIDER CONTAINER --- */
-        .slider-container {
+        /* Screen Glare */
+        .glare {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 60%);
+            z-index: 101;
+            pointer-events: none;
         }
 
-        /* --- THE SLIDES --- */
+        /* The Keyboard Base */
+        .laptop-base {
+            width: 95vw;
+            max-width: 670px;
+            height: 140px;
+            background: linear-gradient(to bottom, #1a1a1a 0%, #050505 100%);
+            border-radius: 4px 4px 20px 20px;
+            transform: rotateX(65deg) translateY(-25px);
+            transform-origin: top;
+            position: relative;
+            z-index: 1;
+            box-shadow: 
+                0 40px 50px rgba(0,0,0,0.9),
+                inset 0 1px 2px rgba(255,255,255,0.1);
+        }
+
+        /* Keyboard Reflection (Light bouncing from screen) */
+        .base-reflection {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, rgba(0, 255, 0, 0.05) 0%, transparent 50%);
+            border-radius: inherit;
+            transition: background 1s ease;
+        }
+
+        /* Trackpad */
+        .laptop-base::after {
+            content: '';
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25%;
+            height: 35%;
+            background: #111;
+            border-radius: 4px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5), 0 1px 1px rgba(255,255,255,0.05);
+        }
+
+        /* --- OLD SCHOOL ANIMATIONS --- */
+        .slideshow-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
         .slide {
             position: absolute;
-            width: 100%;
-            padding: 0 2rem;
-            text-align: center;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
             opacity: 0;
             visibility: hidden;
-            /* Cinematic slide & fade effect */
-            transform: translateX(50px) scale(0.98);
-            transition: all 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: opacity 0.5s ease;
         }
 
         .slide.active {
             opacity: 1;
             visibility: visible;
-            transform: translateX(0) scale(1);
         }
 
-        .slide.exit {
-            opacity: 0;
-            visibility: hidden;
-            transform: translateX(-50px) scale(1.02);
-        }
-
-        /* --- TYPOGRAPHY --- */
-        h1 {
-            font-size: clamp(3rem, 10vw, 5.5rem);
-            font-weight: 500;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            letter-spacing: -1px;
-            color: #fdf2f8;
-        }
-
-        .highlight {
-            font-style: italic;
-            color: #fbcfe8;
-        }
-
-        p {
-            font-family: 'Montserrat', sans-serif;
-            font-size: clamp(1rem, 4vw, 1.3rem);
-            font-weight: 300;
-            color: #fce7f3;
-            letter-spacing: 2px;
-            line-height: 1.6;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* --- PROGRESS BAR & INDICATORS --- */
-        .ui-container {
+        /* Text Styles */
+        .retro-text {
             position: absolute;
-            bottom: 40px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 20;
-        }
-
-        .progress-track {
-            width: 200px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0%;
-            background: #fbcfe8;
-            border-radius: 2px;
-            box-shadow: 0 0 10px #fbcfe8;
-        }
-
-        .swipe-hint {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.7rem;
+            white-space: nowrap;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            color: rgba(255, 255, 255, 0.4);
-            margin-top: 15px;
+        }
+
+        /* Animation 1: Classic Hacker Marquee */
+        .anim-marquee {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            top: 40%;
+            animation: slideLeft 6s linear infinite;
+        }
+
+        /* Animation 2: Windows 95 Bouncing DVD style */
+        .anim-bounce {
+            color: #ffff00;
+            text-shadow: 3px 3px 0 #ff0000;
+            animation: 
+                slideRight 8s linear infinite,
+                bounceUp 3s ease-in-out infinite alternate;
+        }
+
+        /* Animation 3: Glitchy Cyberpunk */
+        .anim-glitch {
+            color: #00ffff;
+            text-shadow: -2px 0 #ff00ff, 2px 0 #0000ff;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: slideLeftFast 4s linear infinite;
+        }
+
+        /* Keyframes */
+        @keyframes slideLeft {
+            0% { left: 100%; }
+            100% { left: -100%; }
+        }
+
+        @keyframes slideLeftFast {
+            0% { left: 100%; }
+            100% { left: -150%; }
+        }
+
+        @keyframes slideRight {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes bounceUp {
+            0% { top: 10%; }
+            100% { top: 70%; }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Beautiful shifting background -->
-    <div class="ambient-bg"></div>
-    <canvas id="dust"></canvas>
+    <!-- Light cast onto the wall behind the laptop -->
+    <div class="ambient-glow" id="ambient-glow"></div>
 
-    <!-- The Endless Slider -->
-    <div class="slider-container" id="slider">
-        <!-- Slides will be injected here via JS -->
-    </div>
+    <div class="laptop-container">
+        <!-- The Screen -->
+        <div class="laptop-lid" id="laptop-lid">
+            <div class="laptop-screen">
+                <div class="scanlines"></div>
+                <div class="glare"></div>
+                
+                <div class="slideshow-container">
+                    <!-- Slide 1: Matrix / Hacker Style -->
+                    <div class="slide active" data-color="rgba(0, 255, 0, 0.15)">
+                        <div class="retro-text anim-marquee">I am sorry babu!</div>
+                    </div>
+                    
+                    <!-- Slide 2: Retro Windows Bouncing Style -->
+                    <div class="slide" data-color="rgba(255, 255, 0, 0.15)">
+                        <div class="retro-text anim-bounce">I am sorry babu!</div>
+                    </div>
 
-    <!-- UI Elements -->
-    <div class="ui-container">
-        <div class="progress-track">
-            <div class="progress-fill" id="progress"></div>
+                    <!-- Slide 3: 80s Cyberpunk Fast Slide -->
+                    <div class="slide" data-color="rgba(0, 255, 255, 0.15)">
+                        <div class="retro-text anim-glitch">I am sorry babu!</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="swipe-hint">Swipe or Wait</div>
+
+        <!-- The Keyboard Area -->
+        <div class="laptop-base">
+            <div class="base-reflection" id="base-reflection"></div>
+        </div>
     </div>
 
     <script>
-        // --- SLIDE CONTENT ---
-        // A continuous, heartfelt letter broken into slides
-        const slidesData = [
-            { title: "I am <span class='highlight'>sorry.</span>", text: "For the moments I let you down." },
-            { title: "My heart is <span class='highlight'>heavy.</span>", text: "Knowing I caused a shadow in your day." },
-            { title: "I am still <span class='highlight'>learning.</span>", text: "But I am trying, every single day, for you." },
-            { title: "You are my <span class='highlight'>priority.</span>", text: "And I never want to make you feel otherwise." },
-            { title: "I <span class='highlight'>see</span> you.", text: "I hear you. I value every single word you say." },
-            { title: "My beautiful <span class='highlight'>Bhura.</span>", text: "My Wifeyyy. My absolute everything." },
-            { title: "This is <span class='highlight'>endless.</span>", text: "Just like my patience and love for you." }
-        ];
+        // Endless Slideshow Logic
+        const slides = document.querySelectorAll('.slide');
+        const ambientGlow = document.getElementById('ambient-glow');
+        const lidShadow = document.getElementById('laptop-lid');
+        const baseReflection = document.getElementById('base-reflection');
+        
+        let currentSlide = 0;
 
-        const slider = document.getElementById('slider');
-        const progress = document.getElementById('progress');
-        let currentIndex = 0;
-        let slideElements = [];
-        let autoPlayTimer;
-        const slideDuration = 5000; // 5 seconds per slide
-        let progressAnimation;
-
-        // Initialize Slides
-        function initSlider() {
-            slidesData.forEach((data, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'slide';
-                if (index === 0) slide.classList.add('active');
-                
-                slide.innerHTML = `
-                    <h1>${data.title}</h1>
-                    <p>${data.text}</p>
-                `;
-                slider.appendChild(slide);
-                slideElements.push(slide);
-            });
-            startProgress();
-        }
-
-        // Change Slide Logic
-        function goToSlide(nextIndex) {
-            // Remove active class and add exit class to current slide
-            slideElements[currentIndex].classList.remove('active');
-            slideElements[currentIndex].classList.add('exit');
-
-            // Wait a tiny bit, then clean up the exit class so it resets position silently
-            const prevIndex = currentIndex;
-            setTimeout(() => {
-                slideElements[prevIndex].classList.remove('exit');
-            }, 1500);
-
-            // Set new index (looping seamlessly)
-            currentIndex = nextIndex;
-            if (currentIndex >= slideElements.length) currentIndex = 0;
-            if (currentIndex < 0) currentIndex = slideElements.length - 1;
-
-            // Make next slide active
-            slideElements[currentIndex].classList.add('active');
-
-            // Reset and restart progress bar
-            startProgress();
-        }
-
-        // Progress Bar Animation
-        function startProgress() {
-            // Clear existing timers
-            clearTimeout(autoPlayTimer);
-            if (progressAnimation) cancelAnimationFrame(progressAnimation);
-
-            let startTime = null;
+        function nextSlide() {
+            // Hide current slide
+            slides[currentSlide].classList.remove('active');
             
-            function animateProgress(timestamp) {
-                if (!startTime) startTime = timestamp;
-                const runtime = timestamp - startTime;
-                let percent = (runtime / slideDuration) * 100;
-                
-                if (percent >= 100) {
-                    percent = 100;
-                    progress.style.width = percent + '%';
-                    goToSlide(currentIndex + 1); // Move to next slide automatically
-                    return;
-                }
-                
-                progress.style.width = percent + '%';
-                progressAnimation = requestAnimationFrame(animateProgress);
-            }
+            // Move to next slide
+            currentSlide = (currentSlide + 1) % slides.length;
             
-            progressAnimation = requestAnimationFrame(animateProgress);
+            // Show new slide
+            slides[currentSlide].classList.add('active');
+            
+            // Update the room's ambient glow to match the screen's current color
+            const glowColor = slides[currentSlide].getAttribute('data-color');
+            
+            ambientGlow.style.background = `radial-gradient(circle, ${glowColor} 0%, rgba(0, 0, 0, 0) 70%)`;
+            lidShadow.style.boxShadow = `inset 0 2px 5px rgba(255,255,255,0.1), 0 -5px 20px rgba(0, 0, 0, 0.8), 0 0 50px ${glowColor}`;
+            baseReflection.style.background = `linear-gradient(to bottom, ${glowColor} 0%, transparent 50%)`;
         }
 
-        // --- SWIPE (TOUCH) CONTROLS FOR MOBILE ---
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        slider.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, {passive: true});
-
-        slider.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, {passive: true});
-
-        // Mouse drag support for desktop testing
-        let isDragging = false;
-        slider.addEventListener('mousedown', e => {
-            isDragging = true;
-            touchStartX = e.clientX;
-        });
-        slider.addEventListener('mouseup', e => {
-            if(!isDragging) return;
-            isDragging = false;
-            touchEndX = e.clientX;
-            handleSwipe();
-        });
-        slider.addEventListener('mouseleave', () => { isDragging = false; });
-
-        function handleSwipe() {
-            const swipeThreshold = 50; // minimum distance to be considered a swipe
-            if (touchEndX < touchStartX - swipeThreshold) {
-                // Swiped Left -> Next Slide
-                goToSlide(currentIndex + 1);
-            }
-            if (touchEndX > touchStartX + swipeThreshold) {
-                // Swiped Right -> Previous Slide
-                goToSlide(currentIndex - 1);
-            }
-        }
-
-        // --- AMBIENT FLOATING DUST ---
-        const canvas = document.getElementById('dust');
-        const ctx = canvas.getContext('2d');
-        let width, height, particles = [];
-
-        function resizeCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class DustParticle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 2 + 0.5;
-                this.vx = (Math.random() - 0.5) * 0.4;
-                this.vy = -(Math.random() * 0.4 + 0.1);
-                this.opacity = Math.random() * 0.5 + 0.1;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(251, 207, 232, ${this.opacity})`;
-                ctx.fill();
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                this.x += Math.sin(this.y * 0.01) * 0.2; // Soft sway
-                
-                if (this.y < -10) this.y = height + 10;
-                if (this.x < -10) this.x = width + 10;
-                if (this.x > width + 10) this.x = -10;
-            }
-        }
-
-        for (let i = 0; i < 40; i++) particles.push(new DustParticle());
-
-        function animateDust() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animateDust);
-        }
-
-        // Start Everything
-        initSlider();
-        animateDust();
-
+        // Change animation style every 8 seconds endlessly
+        setInterval(nextSlide, 8000);
     </script>
 </body>
 </html>
