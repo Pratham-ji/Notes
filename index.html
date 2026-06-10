@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For My Anushka</title>
+    <title>I Am Sorry</title>
     
+    <!-- Elegant Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
         /* --- RESET & SETUP --- */
@@ -22,39 +23,34 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            font-family: 'Cormorant Garamond', serif;
-            color: #f8fafc;
-            background-color: #0f172a;
+            background-color: #1a0b1c;
+            font-family: 'Playfair Display', serif;
+            color: #ffffff;
         }
 
-        /* --- DYNAMIC AURORA BACKGROUND --- */
-        .aurora-bg {
+        /* --- ENDLESS SHIFTING BACKGROUND --- */
+        .ambient-bg {
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(
-                45deg, 
-                #0f172a 0%, 
-                #2e1065 25%, 
-                #31102f 50%, 
-                #1e1b4b 75%, 
-                #0f172a 100%
-            );
-            background-size: 400% 400%;
-            animation: shiftAurora 20s ease-in-out infinite;
+            background: radial-gradient(circle at 50% 50%, #4a154b 0%, #1a0b1c 40%, #0d040f 100%),
+                        radial-gradient(circle at 80% 20%, #701a75 0%, transparent 40%),
+                        radial-gradient(circle at 20% 80%, #be185d 0%, transparent 40%);
+            background-size: 150% 150%;
+            animation: breatheBg 20s ease-in-out infinite alternate;
             z-index: 0;
+            opacity: 0.8;
         }
 
-        @keyframes shiftAurora {
-            0% { background-position: 0% 50%; transform: rotate(0deg); }
-            50% { background-position: 100% 50%; transform: rotate(5deg); }
-            100% { background-position: 0% 50%; transform: rotate(0deg); }
+        @keyframes breatheBg {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.1) rotate(5deg); }
         }
 
-        /* --- BACKGROUND PARTICLES --- */
-        #calm-water {
+        /* --- FLOATING DUST --- */
+        canvas#dust {
             position: absolute;
             top: 0;
             left: 0;
@@ -64,264 +60,311 @@
             pointer-events: none;
         }
 
-        /* --- THE CONTENT AREA --- */
-        .container {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        #text-container {
-            position: relative;
-            width: 100%;
-            max-width: 700px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 60vh; 
-        }
-
-        /* --- TYPOGRAPHY & ANIMATIONS --- */
-        .affirmation {
-            font-size: clamp(1.8rem, 7vw, 2.5rem); 
-            line-height: 1.5;
-            font-weight: 500;
-            color: #fdf2f8; 
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-            opacity: 0;
-            
+        /* --- SLIDER CONTAINER --- */
+        .slider-container {
             position: absolute;
+            top: 0;
             left: 0;
             width: 100%;
-            text-align: center;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- THE SLIDES --- */
+        .slide {
+            position: absolute;
+            width: 100%;
             padding: 0 2rem;
-            
-            transform: translateY(30px);
-            transition: opacity 1.5s ease, transform 1.5s ease;
-        }
-
-        .affirmation.active {
-            opacity: 1;
-            transform: translateY(0);
-            animation: floatText 4s ease-in-out infinite alternate 1.5s;
-        }
-
-        .affirmation.fade-out {
+            text-align: center;
             opacity: 0;
-            transform: translateY(-30px);
+            visibility: hidden;
+            /* Cinematic slide & fade effect */
+            transform: translateX(50px) scale(0.98);
+            transition: all 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        @keyframes floatText {
-            0% { transform: translateY(0px) scale(1); }
-            100% { transform: translateY(-5px) scale(1.02); }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0) scale(1);
         }
 
-        /* Ambient glow when tapping */
-        .tap-glow {
-            position: fixed;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(244, 114, 182, 0.2) 0%, rgba(0,0,0,0) 70%);
-            transform: translate(-50%, -50%) scale(0);
-            pointer-events: none;
-            z-index: 5;
+        .slide.exit {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-50px) scale(1.02);
         }
 
-        .tap-glow.expand {
-            animation: ripple 1.2s ease-out forwards;
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            font-weight: 500;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            letter-spacing: -1px;
+            color: #fdf2f8;
         }
 
-        @keyframes ripple {
-            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+        .highlight {
+            font-style: italic;
+            color: #fbcfe8;
+        }
+
+        p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-weight: 300;
+            color: #fce7f3;
+            letter-spacing: 2px;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- PROGRESS BAR & INDICATORS --- */
+        .ui-container {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .progress-track {
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: #fbcfe8;
+            border-radius: 2px;
+            box-shadow: 0 0 10px #fbcfe8;
+        }
+
+        .swipe-hint {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 15px;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="aurora-bg"></div>
-    <canvas id="calm-water"></canvas>
+    <!-- Beautiful shifting background -->
+    <div class="ambient-bg"></div>
+    <canvas id="dust"></canvas>
 
-    <div class="container" id="interaction-area">
-        <div id="text-container"></div>
+    <!-- The Endless Slider -->
+    <div class="slider-container" id="slider">
+        <!-- Slides will be injected here via JS -->
+    </div>
+
+    <!-- UI Elements -->
+    <div class="ui-container">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+        <div class="swipe-hint">Swipe or Wait</div>
     </div>
 
     <script>
-        const affirmations = [
-            "I know you feel a little distant right now.",
-            "And I just want you to know...",
-            "You are completely allowed to feel whatever you are feeling.",
-            "Take all the space and time your heart needs.",
-            "Because my love for you hasn't moved an inch.",
-            "I am firmly planted right here, anchored to you.",
-            "I don't just love you when it's easy.",
-            "I love you when your mind is loud and when your heart is heavy.",
-            "I love you when you're pulling away, because I know my job is to stay right here.",
-            "I'll be your quiet place when the world is too much.",
-            "Even when you feel far away, you are the absolute center of my universe.",
-            "Nothing you feel, and nothing we go through, changes my certainty about us.",
-            "You don't have to force yourself to feel 'okay' for my sake.",
-            "Just exist. Just breathe. Let me do the holding for a while.",
-            "You are enough, Anushka. Exactly as you are in this very second.",
-            "You are my Bhura. The one I choose every single morning.",
-            "You are my safest place, and I will always strive to be yours.",
-            "Our future is built on an unshakable foundation.",
-            "Those sleepy mornings, our chaotic kitchen, the tiny footsteps... they are all still waiting for us.",
-            "Every single promise I made is still intact.",
-            "No matter how far you drift, the tether between us holds strong.",
-            "I am yours, completely and without condition.",
-            "And whenever you are ready to reach back out...",
-            "My hand is already right here waiting for yours.",
-            "I love you, Wifeyyy. Endlessly."
+        // --- SLIDE CONTENT ---
+        // A continuous, heartfelt letter broken into slides
+        const slidesData = [
+            { title: "I am <span class='highlight'>sorry.</span>", text: "For the moments I let you down." },
+            { title: "My heart is <span class='highlight'>heavy.</span>", text: "Knowing I caused a shadow in your day." },
+            { title: "I am still <span class='highlight'>learning.</span>", text: "But I am trying, every single day, for you." },
+            { title: "You are my <span class='highlight'>priority.</span>", text: "And I never want to make you feel otherwise." },
+            { title: "I <span class='highlight'>see</span> you.", text: "I hear you. I value every single word you say." },
+            { title: "My beautiful <span class='highlight'>Bhura.</span>", text: "My Wifeyyy. My absolute everything." },
+            { title: "This is <span class='highlight'>endless.</span>", text: "Just like my patience and love for you." }
         ];
 
+        const slider = document.getElementById('slider');
+        const progress = document.getElementById('progress');
         let currentIndex = 0;
-        let isAnimating = false;
+        let slideElements = [];
         let autoPlayTimer;
-        // The time each sentence stays on screen (6 seconds)
-        const readingTime = 6000; 
+        const slideDuration = 5000; // 5 seconds per slide
+        let progressAnimation;
 
-        const textContainer = document.getElementById('text-container');
-        const interactionArea = document.getElementById('interaction-area');
-
-        function createAffirmationElement(text) {
-            const el = document.createElement('div');
-            el.className = 'affirmation';
-            
-            if (text.includes("anchored to you") || text.includes("Let me do the holding") || text.includes("My hand is already")) {
-                el.style.fontStyle = 'italic';
-                el.style.color = '#fbcfe8'; 
-            }
-            if (text.includes("I love you, Wifeyyy")) {
-                el.style.color = '#fbcfe8';
-                el.style.fontSize = 'clamp(2.2rem, 9vw, 3.2rem)';
-                el.style.fontStyle = 'italic';
-            }
-            el.innerText = text;
-            return el;
-        }
-
-        let currentElement = createAffirmationElement(affirmations[0]);
-        textContainer.appendChild(currentElement);
-        
-        // Start the automatic flow
-        setTimeout(() => {
-            currentElement.classList.add('active');
-            startAutoPlay();
-        }, 500);
-
-        function showNextAffirmation() {
-            if (isAnimating || currentIndex >= affirmations.length - 1) return;
-
-            isAnimating = true;
-
-            const oldElement = currentElement;
-            oldElement.classList.remove('active');
-            oldElement.classList.add('fade-out');
-
-            currentIndex++;
-
-            const newElement = createAffirmationElement(affirmations[currentIndex]);
-            textContainer.appendChild(newElement);
-
-            setTimeout(() => {
-                newElement.classList.add('active');
-                currentElement = newElement;
+        // Initialize Slides
+        function initSlider() {
+            slidesData.forEach((data, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                if (index === 0) slide.classList.add('active');
                 
-                setTimeout(() => {
-                    if (oldElement.parentNode) {
-                        oldElement.parentNode.removeChild(oldElement);
-                    }
-                    isAnimating = false;
-                    
-                    // Automatically trigger the next one if not at the end
-                    if (currentIndex < affirmations.length - 1) {
-                        startAutoPlay();
-                    }
-                }, 1500); // Wait for fade out
-            }, 800); // Wait for text to swap
+                slide.innerHTML = `
+                    <h1>${data.title}</h1>
+                    <p>${data.text}</p>
+                `;
+                slider.appendChild(slide);
+                slideElements.push(slide);
+            });
+            startProgress();
         }
 
-        function startAutoPlay() {
-            clearTimeout(autoPlayTimer);
-            autoPlayTimer = setTimeout(showNextAffirmation, readingTime);
+        // Change Slide Logic
+        function goToSlide(nextIndex) {
+            // Remove active class and add exit class to current slide
+            slideElements[currentIndex].classList.remove('active');
+            slideElements[currentIndex].classList.add('exit');
+
+            // Wait a tiny bit, then clean up the exit class so it resets position silently
+            const prevIndex = currentIndex;
+            setTimeout(() => {
+                slideElements[prevIndex].classList.remove('exit');
+            }, 1500);
+
+            // Set new index (looping seamlessly)
+            currentIndex = nextIndex;
+            if (currentIndex >= slideElements.length) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = slideElements.length - 1;
+
+            // Make next slide active
+            slideElements[currentIndex].classList.add('active');
+
+            // Reset and restart progress bar
+            startProgress();
         }
 
-        // Allow her to tap to speed it up if she wants
-        interactionArea.addEventListener('click', (e) => {
-            // Visual tap effect
-            const glow = document.createElement('div');
-            glow.className = 'tap-glow expand';
-            glow.style.left = `${e.clientX}px`;
-            glow.style.top = `${e.clientY}px`;
-            document.body.appendChild(glow);
-            setTimeout(() => glow.remove(), 1200);
-
-            // Cancel the automatic timer and advance immediately
+        // Progress Bar Animation
+        function startProgress() {
+            // Clear existing timers
             clearTimeout(autoPlayTimer);
-            showNextAffirmation();
+            if (progressAnimation) cancelAnimationFrame(progressAnimation);
+
+            let startTime = null;
+            
+            function animateProgress(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const runtime = timestamp - startTime;
+                let percent = (runtime / slideDuration) * 100;
+                
+                if (percent >= 100) {
+                    percent = 100;
+                    progress.style.width = percent + '%';
+                    goToSlide(currentIndex + 1); // Move to next slide automatically
+                    return;
+                }
+                
+                progress.style.width = percent + '%';
+                progressAnimation = requestAnimationFrame(animateProgress);
+            }
+            
+            progressAnimation = requestAnimationFrame(animateProgress);
+        }
+
+        // --- SWIPE (TOUCH) CONTROLS FOR MOBILE ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        slider.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        slider.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        // Mouse drag support for desktop testing
+        let isDragging = false;
+        slider.addEventListener('mousedown', e => {
+            isDragging = true;
+            touchStartX = e.clientX;
         });
+        slider.addEventListener('mouseup', e => {
+            if(!isDragging) return;
+            isDragging = false;
+            touchEndX = e.clientX;
+            handleSwipe();
+        });
+        slider.addEventListener('mouseleave', () => { isDragging = false; });
 
-        // --- ENHANCED BACKGROUND PARTICLES ---
-        const canvas = document.getElementById('calm-water');
+        function handleSwipe() {
+            const swipeThreshold = 50; // minimum distance to be considered a swipe
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // Swiped Left -> Next Slide
+                goToSlide(currentIndex + 1);
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                // Swiped Right -> Previous Slide
+                goToSlide(currentIndex - 1);
+            }
+        }
+
+        // --- AMBIENT FLOATING DUST ---
+        const canvas = document.getElementById('dust');
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
 
-        function resize() {
+        function resizeCanvas() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
         }
-        window.addEventListener('resize', resize);
-        resize();
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-        class AmbientParticle {
+        class DustParticle {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.size = Math.random() * 2.5 + 0.5;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = -(Math.random() * 0.3 + 0.1); 
-                this.opacity = Math.random() * 0.5 + 0.2;
-                this.pulseSpeed = Math.random() * 0.02;
+                this.size = Math.random() * 2 + 0.5;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = -(Math.random() * 0.4 + 0.1);
+                this.opacity = Math.random() * 0.5 + 0.1;
             }
-
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(248, 250, 252, ${this.opacity})`; 
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = 'rgba(248, 250, 252, 0.5)';
+                ctx.fillStyle = `rgba(251, 207, 232, ${this.opacity})`;
                 ctx.fill();
             }
-
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-                this.x += Math.sin(this.y * 0.02) * 0.3;
-                this.opacity += Math.sin(Date.now() * this.pulseSpeed) * 0.01;
-
+                this.x += Math.sin(this.y * 0.01) * 0.2; // Soft sway
+                
                 if (this.y < -10) this.y = height + 10;
                 if (this.x < -10) this.x = width + 10;
                 if (this.x > width + 10) this.x = -10;
             }
         }
 
-        for (let i = 0; i < 60; i++) {
-            particles.push(new AmbientParticle());
-        }
+        for (let i = 0; i < 40; i++) particles.push(new DustParticle());
 
-        function animateCanvas() {
+        function animateDust() {
             ctx.clearRect(0, 0, width, height);
             particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animateCanvas);
+            requestAnimationFrame(animateDust);
         }
-        animateCanvas();
+
+        // Start Everything
+        initSlider();
+        animateDust();
 
     </script>
 </body>
