@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For My Bhura ❤️</title>
     
+    <!-- Elegant and cute fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
@@ -47,39 +48,29 @@
 
         .heart {
             position: absolute;
-            color: rgba(216, 17, 89, 0.6); /* Slightly more visible but still soft */
-            opacity: 0.4;
+            color: rgba(216, 17, 89, 0.6);
+            opacity: 0.5;
             animation: floatUp linear infinite;
         }
 
         @keyframes floatUp {
             0% { transform: translateY(100vh) scale(0.8) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
             100% { transform: translateY(-20vh) scale(1.2) rotate(360deg); opacity: 0; }
         }
 
-        /* --- MAIN LAYOUT --- */
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 2rem 1.2rem; /* Adjusted for mobile */
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* --- FIXED & ALIGNED POLAROID --- */
+        /* --- FIXED POLAROID (CONSTANT BACKGROUND) --- */
         .polaroid-wrapper {
-            opacity: 0;
-            transform: translateY(20px) rotate(-3deg);
-            animation: fadeInPolaroid 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.3s;
-            margin: 1rem auto 2.5rem auto;
-            width: 85%; /* Perfectly sized for mobile */
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            width: 85%;
             max-width: 320px;
+            z-index: 1; /* Stays behind the scrolling text cards */
+            opacity: 0;
+            /* Animation combined with the fixed centering transform */
+            animation: fadeInPolaroid 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.3s;
         }
 
         .polaroid {
@@ -92,7 +83,6 @@
 
         .polaroid img {
             width: 100%;
-            /* This aspect-ratio + object-fit PREVENTS the stretching issue */
             aspect-ratio: 4 / 3; 
             object-fit: cover; 
             object-position: center;
@@ -113,17 +103,33 @@
         }
 
         @keyframes fadeInPolaroid {
-            to { opacity: 1; transform: translateY(0) rotate(-3deg); }
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px) rotate(-3deg); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0) rotate(-3deg); }
+        }
+
+        /* --- MAIN SCROLLING CONTENT --- */
+        .content-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            /* Pushes the text down so the polaroid is visible at the start */
+            margin-top: 340px; 
+            padding: 0 1.2rem 3rem 1.2rem;
+            position: relative;
+            z-index: 10; /* Scrolls OVER the polaroid */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         /* --- THE LETTER SECTIONS --- */
         .letter-card {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 2rem 1.5rem; /* Better mobile padding */
+            backdrop-filter: blur(12px); /* Stronger blur for parallax effect */
+            -webkit-backdrop-filter: blur(12px);
+            padding: 2rem 1.5rem;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.9);
             margin-bottom: 1.5rem;
             width: 100%;
@@ -137,24 +143,32 @@
             transform: translateY(0);
         }
 
+        /* --- FIXED SALUTATION (ONE LINE) --- */
         .salutation {
             font-family: 'Caveat', cursive;
-            /* Using clamp so it shrinks nicely on small screens */
-            font-size: clamp(1.8rem, 8vw, 2.5rem); 
-            line-height: 1.2;
             color: var(--text-light);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-align: left;
-            /* This prevents Bhuraaaaa from breaking the layout */
-            word-wrap: break-word; 
-            hyphens: auto;
+            line-height: 1.1;
+        }
+        
+        .salutation-greeting {
+            font-size: 2rem;
+            display: block;
+        }
+
+        .salutation-name {
+            display: block;
+            /* Dynamically scales the font to ensure it NEVER wraps */
+            font-size: clamp(1.4rem, 8.5vw, 2.5rem); 
+            white-space: nowrap; /* Forces one line */
         }
 
         p {
             font-size: 1.05rem;
             font-weight: 500;
             margin-bottom: 1.2rem;
-            text-align: left; /* Changed from justify for better mobile readability */
+            text-align: left;
         }
 
         p:last-child {
@@ -175,13 +189,26 @@
         }
 
         /* --- SCROLL INDICATOR --- */
+        .scroll-indicator-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
         .scroll-down {
-            margin-bottom: 2rem;
             color: var(--text-light);
             font-size: 1.5rem;
             animation: bounce 2s infinite;
-            opacity: 0.6;
-            text-align: center;
+            opacity: 0.8;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
         }
 
         @keyframes bounce {
@@ -193,44 +220,58 @@
 </head>
 <body>
 
+    <!-- Floating Background Emojis -->
     <div class="hearts-bg" id="hearts-container"></div>
 
-    <div class="container">
+    <!-- The FIXED Polaroid (Stays Constant) -->
+    <div class="polaroid-wrapper">
+        <div class="polaroid">
+            <img src="image.jpeg" alt="I am sorry">
+            <div class="polaroid-caption">I'm so sorry...</div>
+        </div>
+    </div>
+
+    <!-- The Scrolling Content -->
+    <div class="content-container">
         
-        <div class="polaroid-wrapper">
-            <div class="polaroid">
-                <img src="image.jpeg" alt="I am sorry">
-                <div class="polaroid-caption">I'm so sorry...</div>
-            </div>
+        <div class="scroll-indicator-wrapper">
+            <div class="scroll-down">↓</div>
         </div>
 
-        <div class="scroll-down">↓</div>
-
+        <!-- Section 1 -->
         <div class="letter-card fade-element">
-            <div class="salutation">Hey My Bhuraaaaaaaaaaaaa,</div>
+            <div class="salutation">
+                <span class="salutation-greeting">Hey My</span>
+                <span class="salutation-name">Bhuraaaaaaaaaaaaa,</span>
+            </div>
             <p>I want to say sorry for what I said that stupid sa para. When I said that I was giving up and that maybe parting our ways was the best option, those weren’t words coming from my heart. They came from a place where I was hurt and I couldn’t even think straight.</p>
             <p>Yk sometimes when emotions get too loud, you end up saying things that don’t even represent what you truly feel. That’s exactly what happened with me.</p>
         </div>
 
+        <!-- Section 2 -->
         <div class="letter-card fade-element">
             <p>The truth is… <span class="highlight">I don’t want to give up on you.</span> I never have. And I honestly don’t think I ever will.</p>
             <p>You are not someone I can just walk away from because things got difficult. Loving you has never been the problem. The problem was that I let my hurt become louder than my love, and I am really really sorry for that.</p>
         </div>
 
+        <!-- Section 3 -->
         <div class="letter-card fade-element">
             <p>I know saying sorry doesn’t magically undo the pain I caused, but I hope you know how genuine this apology is. I never wanted you to feel like my love for you can ever change or that I would leave when things get hard.</p>
             <p>If anything, I want to learn how to stay better, communicate better, and love you better.</p>
         </div>
 
+        <!-- Section 4 -->
         <div class="letter-card fade-element">
             <p>Yk, when I imagined a future, it was always with you in it. So saying that we should part ways wasn’t me choosing what I wanted, it was me speaking from exhaustion and pain. Looking back, I hate that I let those emotions speak for me.</p>
         </div>
 
+        <!-- Section 5 -->
         <div class="letter-card fade-element">
             <p>I don’t promise that we’ll never fight again because we’re both human. But I do promise that I don’t want to reach a point where giving up becomes an option.</p>
             <p><span class="highlight">I want us to choose conversations over silence, understanding over assumptions, and each other over our egos.</span></p>
         </div>
 
+        <!-- Section 6 (Ending) -->
         <div class="letter-card fade-element">
             <p>I’m really sorry, my Bhura. Thank you for not letting one bad moment define everything we’ve built together.</p>
             <p>I love you more than my anger, more than my fears, and definitely more than the words I said that day.</p>
@@ -242,24 +283,19 @@
     <script>
         // --- ADD FLOATING CUTE EMOJIS ---
         const heartsContainer = document.getElementById('hearts-container');
-        // Added the super cute emojis you requested!
         const cuteEmojis = ['🤍', '🌸', '✨', '🥺', '🐢', '🎀', '🧸', '🦋', '🐧', '🦭'];
 
-        // Spawning the emojis across the screen
         for (let i = 0; i < 30; i++) {
             let emoji = document.createElement('div');
             emoji.classList.add('heart');
             emoji.innerText = cuteEmojis[Math.floor(Math.random() * cuteEmojis.length)];
             
-            // Random horizontal positioning
             emoji.style.left = `${Math.random() * 100}vw`;
             
-            // Randomize floating speed and delay so they don't move in clumps
-            let duration = Math.random() * 20 + 15; // 15s to 35s
+            let duration = Math.random() * 20 + 15; 
             emoji.style.animationDuration = `${duration}s`; 
-            emoji.style.animationDelay = `-${Math.random() * 20}s`; // Start some mid-screen
+            emoji.style.animationDelay = `-${Math.random() * 20}s`; 
             
-            // Slight size variations
             emoji.style.fontSize = `${Math.random() * 1 + 1.2}rem`;
             
             heartsContainer.appendChild(emoji);
