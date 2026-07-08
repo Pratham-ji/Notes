@@ -2,277 +2,275 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I Am Sorry Babu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Bhura ❤️</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+
     <style>
-        /* --- DARK ROOM ENVIRONMENT --- */
-        body, html {
+        /* --- RESET & VARIABLES --- */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-color: #fdf2f8; /* Soft blush pink */
+            --text-main: #4a2b32; /* Deep warm brown/burgundy */
+            --text-light: #8f2d56; /* Romantic dark pink */
+            --card-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #ffe6ea 0%, #fdf2f8 100%);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+
+        /* --- FLOATING HEARTS BACKGROUND --- */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: #030303; /* Pitch black room */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        /* Ambient glow in the dark room casting from the screen */
-        .ambient-glow {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vw;
-            height: 50vh;
-            background: radial-gradient(circle, rgba(0, 255, 150, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
-            z-index: 0;
             pointer-events: none;
-            transition: background 1s ease;
+            z-index: 0;
         }
 
-        /* --- THE CSS 3D LAPTOP --- */
-        .laptop-container {
-            perspective: 1200px; /* Gives the 3D depth to the keyboard */
+        .heart {
+            position: absolute;
+            color: rgba(216, 17, 89, 0.15);
+            font-size: 1.5rem;
+            animation: floatUp 15s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.8) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) scale(1.2) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+            position: relative;
+            z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 10;
         }
 
-        /* The Laptop Lid / Screen Bezel */
-        .laptop-lid {
-            width: 85vw;
-            max-width: 600px;
-            aspect-ratio: 16 / 10;
-            background: #111;
-            border-radius: 12px 12px 0 0;
-            padding: 3%;
-            box-shadow: 
-                inset 0 2px 5px rgba(255,255,255,0.1),
-                0 -5px 20px rgba(0, 0, 0, 0.8),
-                0 0 50px rgba(0, 255, 0, 0.1); /* Screen bleeding light behind */
-            position: relative;
-            z-index: 2;
-        }
-
-        /* The Actual Glowing Screen */
-        .laptop-screen {
-            width: 100%;
-            height: 100%;
-            background: #000;
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 0 20px rgba(0,0,0,1);
-        }
-
-        /* CRT Scanline Effect */
-        .scanlines {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
-            background-size: 100% 4px;
-            z-index: 100;
-            pointer-events: none;
-        }
-
-        /* Screen Glare */
-        .glare {
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 60%);
-            z-index: 101;
-            pointer-events: none;
-        }
-
-        /* The Keyboard Base */
-        .laptop-base {
-            width: 95vw;
-            max-width: 670px;
-            height: 140px;
-            background: linear-gradient(to bottom, #1a1a1a 0%, #050505 100%);
-            border-radius: 4px 4px 20px 20px;
-            transform: rotateX(65deg) translateY(-25px);
-            transform-origin: top;
-            position: relative;
-            z-index: 1;
-            box-shadow: 
-                0 40px 50px rgba(0,0,0,0.9),
-                inset 0 1px 2px rgba(255,255,255,0.1);
-        }
-
-        /* Keyboard Reflection (Light bouncing from screen) */
-        .base-reflection {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to bottom, rgba(0, 255, 0, 0.05) 0%, transparent 50%);
-            border-radius: inherit;
-            transition: background 1s ease;
-        }
-
-        /* Trackpad */
-        .laptop-base::after {
-            content: '';
-            position: absolute;
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 25%;
-            height: 35%;
-            background: #111;
-            border-radius: 4px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5), 0 1px 1px rgba(255,255,255,0.05);
-        }
-
-        /* --- OLD SCHOOL ANIMATIONS --- */
-        .slideshow-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        .slide {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex;
-            align-items: center;
+        /* --- THE POLAROID IMAGE --- */
+        .polaroid-wrapper {
             opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease;
+            transform: translateY(30px) rotate(-3deg);
+            animation: fadeInPolaroid 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.5s;
+            margin-bottom: 3rem;
+            width: 100%;
+            max-width: 350px;
         }
 
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
+        .polaroid {
+            background: #ffffff;
+            padding: 15px 15px 45px 15px;
+            box-shadow: 0 15px 35px rgba(216, 17, 89, 0.15);
+            border-radius: 4px;
+            position: relative;
         }
 
-        /* Text Styles */
-        .retro-text {
+        .polaroid img {
+            width: 100%;
+            height: auto;
+            border-radius: 2px;
+            display: block;
+            border: 1px solid #f0f0f0;
+        }
+
+        .polaroid-caption {
             position: absolute;
-            white-space: nowrap;
-            font-size: clamp(2rem, 5vw, 4rem);
-            font-weight: 900;
-            text-transform: uppercase;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: var(--text-light);
         }
 
-        /* Animation 1: Classic Hacker Marquee */
-        .anim-marquee {
-            color: #00ff00;
-            text-shadow: 0 0 10px #00ff00;
-            top: 40%;
-            animation: slideLeft 6s linear infinite;
+        @keyframes fadeInPolaroid {
+            to { opacity: 1; transform: translateY(0) rotate(-3deg); }
         }
 
-        /* Animation 2: Windows 95 Bouncing DVD style */
-        .anim-bounce {
-            color: #ffff00;
-            text-shadow: 3px 3px 0 #ff0000;
-            animation: 
-                slideRight 8s linear infinite,
-                bounceUp 3s ease-in-out infinite alternate;
+        /* --- THE LETTER SECTIONS --- */
+        .letter-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
         }
 
-        /* Animation 3: Glitchy Cyberpunk */
-        .anim-glitch {
-            color: #00ffff;
-            text-shadow: -2px 0 #ff00ff, 2px 0 #0000ff;
-            top: 50%;
-            transform: translateY(-50%);
-            animation: slideLeftFast 4s linear infinite;
+        .letter-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Keyframes */
-        @keyframes slideLeft {
-            0% { left: 100%; }
-            100% { left: -100%; }
+        .salutation {
+            font-family: 'Caveat', cursive;
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            text-align: left;
         }
 
-        @keyframes slideLeftFast {
-            0% { left: 100%; }
-            100% { left: -150%; }
+        p {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            text-align: justify;
         }
 
-        @keyframes slideRight {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        p:last-child {
+            margin-bottom: 0;
         }
 
-        @keyframes bounceUp {
-            0% { top: 10%; }
-            100% { top: 70%; }
+        .highlight {
+            color: var(--text-light);
+            font-weight: 600;
         }
 
+        .sign-off {
+            font-family: 'Caveat', cursive;
+            font-size: 2.2rem;
+            color: var(--text-light);
+            text-align: right;
+            margin-top: 1rem;
+        }
+
+        /* --- SCROLL INDICATOR --- */
+        .scroll-down {
+            margin: 2rem 0;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+            opacity: 0.6;
+            text-align: center;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @media (max-width: 600px) {
+            .letter-card { padding: 2rem 1.5rem; }
+            p { font-size: 1.05rem; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Light cast onto the wall behind the laptop -->
-    <div class="ambient-glow" id="ambient-glow"></div>
+    <div class="hearts-bg" id="hearts-container"></div>
 
-    <div class="laptop-container">
-        <!-- The Screen -->
-        <div class="laptop-lid" id="laptop-lid">
-            <div class="laptop-screen">
-                <div class="scanlines"></div>
-                <div class="glare"></div>
-                
-                <div class="slideshow-container">
-                    <!-- Slide 1: Matrix / Hacker Style -->
-                    <div class="slide active" data-color="rgba(0, 255, 0, 0.15)">
-                        <div class="retro-text anim-marquee">I am sorry babu!</div>
-                    </div>
-                    
-                    <!-- Slide 2: Retro Windows Bouncing Style -->
-                    <div class="slide" data-color="rgba(255, 255, 0, 0.15)">
-                        <div class="retro-text anim-bounce">I am sorry babu!</div>
-                    </div>
-
-                    <!-- Slide 3: 80s Cyberpunk Fast Slide -->
-                    <div class="slide" data-color="rgba(0, 255, 255, 0.15)">
-                        <div class="retro-text anim-glitch">I am sorry babu!</div>
-                    </div>
-                </div>
+    <div class="container">
+        
+        <div class="polaroid-wrapper">
+            <div class="polaroid">
+                <img src="image.jpeg" alt="I am sorry">
+                <div class="polaroid-caption">I'm so sorry...</div>
             </div>
         </div>
 
-        <!-- The Keyboard Area -->
-        <div class="laptop-base">
-            <div class="base-reflection" id="base-reflection"></div>
+        <div class="scroll-down">↓</div>
+
+        <div class="letter-card fade-element">
+            <div class="salutation">Hey My Bhuraaaaaaaaaaaaa,</div>
+            <p>I want to say sorry for what I said that stupid sa para. When I said that I was giving up and that maybe parting our ways was the best option, those weren’t words coming from my heart. They came from a place where I was hurt and I couldn’t even think straight.</p>
+            <p>Yk sometimes when emotions get too loud, you end up saying things that don’t even represent what you truly feel. That’s exactly what happened with me.</p>
         </div>
+
+        <div class="letter-card fade-element">
+            <p>The truth is… <span class="highlight">I don’t want to give up on you.</span> I never have. And I honestly don’t think I ever will.</p>
+            <p>You are not someone I can just walk away from because things got difficult. Loving you has never been the problem. The problem was that I let my hurt become louder than my love, and I am really really sorry for that.</p>
+        </div>
+
+        <div class="letter-card fade-element">
+            <p>I know saying sorry doesn’t magically undo the pain I caused, but I hope you know how genuine this apology is. I never wanted you to feel like my love for you can ever change or that I would leave when things get hard.</p>
+            <p>If anything, I want to learn how to stay better, communicate better, and love you better.</p>
+        </div>
+
+        <div class="letter-card fade-element">
+            <p>Yk, when I imagined a future, it was always with you in it. So saying that we should part ways wasn’t me choosing what I wanted, it was me speaking from exhaustion and pain. Looking back, I hate that I let those emotions speak for me.</p>
+        </div>
+
+        <div class="letter-card fade-element">
+            <p>I don’t promise that we’ll never fight again because we’re both human. But I do promise that I don’t want to reach a point where giving up becomes an option.</p>
+            <p><span class="highlight">I want us to choose conversations over silence, understanding over assumptions, and each other over our egos.</span></p>
+        </div>
+
+        <div class="letter-card fade-element">
+            <p>I’m really sorry, my Bhura. Thank you for not letting one bad moment define everything we’ve built together.</p>
+            <p>I love you more than my anger, more than my fears, and definitely more than the words I said that day.</p>
+            <div class="sign-off">Always and forever, okay? ♾️🧿❤️</div>
+        </div>
+
     </div>
 
     <script>
-        // Endless Slideshow Logic
-        const slides = document.querySelectorAll('.slide');
-        const ambientGlow = document.getElementById('ambient-glow');
-        const lidShadow = document.getElementById('laptop-lid');
-        const baseReflection = document.getElementById('base-reflection');
-        
-        let currentSlide = 0;
+        // --- ADD FLOATING HEARTS ---
+        const heartsContainer = document.getElementById('hearts-container');
+        const heartSymbols = ['🤍', '🌸', '✨', '💕', '🥺'];
 
-        function nextSlide() {
-            // Hide current slide
-            slides[currentSlide].classList.remove('active');
-            
-            // Move to next slide
-            currentSlide = (currentSlide + 1) % slides.length;
-            
-            // Show new slide
-            slides[currentSlide].classList.add('active');
-            
-            // Update the room's ambient glow to match the screen's current color
-            const glowColor = slides[currentSlide].getAttribute('data-color');
-            
-            ambientGlow.style.background = `radial-gradient(circle, ${glowColor} 0%, rgba(0, 0, 0, 0) 70%)`;
-            lidShadow.style.boxShadow = `inset 0 2px 5px rgba(255,255,255,0.1), 0 -5px 20px rgba(0, 0, 0, 0.8), 0 0 50px ${glowColor}`;
-            baseReflection.style.background = `linear-gradient(to bottom, ${glowColor} 0%, transparent 50%)`;
+        for (let i = 0; i < 25; i++) {
+            let heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.animationDuration = `${Math.random() * 15 + 10}s`; // 10s to 25s
+            heart.style.animationDelay = `${Math.random() * 5}s`;
+            heart.style.fontSize = `${Math.random() * 1 + 1}rem`;
+            heartsContainer.appendChild(heart);
         }
 
-        // Change animation style every 8 seconds endlessly
-        setInterval(nextSlide, 8000);
+        // --- SCROLL ANIMATION LOGIC ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // Trigger when 15% of the card is visible
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            const fadeElements = document.querySelectorAll('.fade-element');
+            fadeElements.forEach(el => observer.observe(el));
+        });
     </script>
+
 </body>
 </html>
