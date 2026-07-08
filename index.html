@@ -60,17 +60,27 @@
             100% { transform: translateY(-20vh) scale(1.2) rotate(360deg); opacity: 0; }
         }
 
-        /* --- FIXED POLAROID (CONSTANT BACKGROUND) --- */
+        /* --- MAIN CONTAINER --- */
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 1.2rem;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- STANDARD IN-FLOW POLAROID --- */
         .polaroid-wrapper {
-            position: fixed;
-            top: 20px;
-            left: 50%;
+            opacity: 0;
+            transform: translateY(20px) rotate(-3deg);
+            animation: fadeInPolaroid 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.3s;
+            margin: 1rem auto 2rem auto;
             width: 85%;
             max-width: 320px;
-            z-index: 1; /* Stays behind the scrolling text cards */
-            opacity: 0;
-            /* Animation combined with the fixed centering transform */
-            animation: fadeInPolaroid 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.3s;
         }
 
         .polaroid {
@@ -103,33 +113,18 @@
         }
 
         @keyframes fadeInPolaroid {
-            0% { opacity: 0; transform: translateX(-50%) translateY(20px) rotate(-3deg); }
-            100% { opacity: 1; transform: translateX(-50%) translateY(0) rotate(-3deg); }
-        }
-
-        /* --- MAIN SCROLLING CONTENT --- */
-        .content-container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            /* Pushes the text down so the polaroid is visible at the start */
-            margin-top: 340px; 
-            padding: 0 1.2rem 3rem 1.2rem;
-            position: relative;
-            z-index: 10; /* Scrolls OVER the polaroid */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            0% { opacity: 0; transform: translateY(20px) rotate(-3deg); }
+            100% { opacity: 1; transform: translateY(0) rotate(-3deg); }
         }
 
         /* --- THE LETTER SECTIONS --- */
         .letter-card {
             background: var(--card-bg);
-            backdrop-filter: blur(12px); /* Stronger blur for parallax effect */
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 2rem 1.5rem;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.9);
             margin-bottom: 1.5rem;
             width: 100%;
@@ -143,7 +138,7 @@
             transform: translateY(0);
         }
 
-        /* --- FIXED SALUTATION (ONE LINE) --- */
+        /* --- SALUTATION (ONE LINE FIX) --- */
         .salutation {
             font-family: 'Caveat', cursive;
             color: var(--text-light);
@@ -159,9 +154,9 @@
 
         .salutation-name {
             display: block;
-            /* Dynamically scales the font to ensure it NEVER wraps */
-            font-size: clamp(1.4rem, 8.5vw, 2.5rem); 
-            white-space: nowrap; /* Forces one line */
+            /* Ensures it scales smoothly and stays on a single line */
+            font-size: clamp(1.2rem, 9.5vw, 2.5rem); 
+            white-space: nowrap; 
         }
 
         p {
@@ -189,26 +184,14 @@
         }
 
         /* --- SCROLL INDICATOR --- */
-        .scroll-indicator-wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
         .scroll-down {
+            margin-bottom: 2rem;
             color: var(--text-light);
             font-size: 1.5rem;
             animation: bounce 2s infinite;
-            opacity: 0.8;
-            background: rgba(255,255,255,0.6);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
+            opacity: 0.6;
+            text-align: center;
+            width: 100%;
         }
 
         @keyframes bounce {
@@ -223,20 +206,17 @@
     <!-- Floating Background Emojis -->
     <div class="hearts-bg" id="hearts-container"></div>
 
-    <!-- The FIXED Polaroid (Stays Constant) -->
-    <div class="polaroid-wrapper">
-        <div class="polaroid">
-            <img src="image.jpeg" alt="I am sorry">
-            <div class="polaroid-caption">I'm so sorry...</div>
-        </div>
-    </div>
-
-    <!-- The Scrolling Content -->
-    <div class="content-container">
+    <div class="container">
         
-        <div class="scroll-indicator-wrapper">
-            <div class="scroll-down">↓</div>
+        <!-- The Standard Polaroid (Scrolls normally with page) -->
+        <div class="polaroid-wrapper">
+            <div class="polaroid">
+                <img src="image.jpeg" alt="I am sorry">
+                <div class="polaroid-caption">I'm so sorry...</div>
+            </div>
         </div>
+
+        <div class="scroll-down">↓</div>
 
         <!-- Section 1 -->
         <div class="letter-card fade-element">
