@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>In Every Universe</title>
+    <title>First Spider-Man Date ❤️</title>
     
-    <!-- Cinematic and elegant fonts -->
+    <!-- Cute, human-written font (Caveat) and soft readable font (Nunito) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
         /* --- RESET & SETUP --- */
@@ -22,275 +22,257 @@
         body, html {
             width: 100%;
             overflow-x: hidden;
-            background-color: #050508; /* Deep cinematic black */
-            font-family: 'Montserrat', sans-serif;
+            /* A deep, romantic sunset gradient matching your photo */
+            background: linear-gradient(135deg, #171026 0%, #4a2545 40%, #a84857 100%);
+            background-attachment: fixed;
+            font-family: 'Nunito', sans-serif;
             color: #ffffff;
             scroll-behavior: smooth;
         }
 
-        /* --- THE MULTIVERSE CANVAS BACKGROUND --- */
-        #multiverse-canvas {
+        /* --- SUBTLE FLOATING SPARKLES --- */
+        .sparkles-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            pointer-events: none;
             z-index: 0;
-            pointer-events: none;
         }
 
-        /* Subtle glowing gradient behind the content */
-        .ambient-glow {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle at center, rgba(30, 10, 40, 0.4) 0%, rgba(5, 5, 8, 1) 70%);
-            z-index: 1;
-            pointer-events: none;
+        .sparkle {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 4s infinite ease-in-out;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
         }
 
-        /* --- CONTENT LAYOUT --- */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        /* --- MAIN LAYOUT --- */
         .container {
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
-            padding: 3rem 1.5rem 5rem 1.5rem;
+            padding: 2.5rem 1.2rem 4rem 1.2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* --- THE MOVIE POSTER / TICKET IMAGE --- */
-        .image-wrapper {
-            width: 100%;
-            max-width: 350px;
+        /* --- THE POLAROID (HERO IMAGE) --- */
+        .polaroid-wrapper {
+            opacity: 0;
+            transform: translateY(20px) rotate(2deg);
+            animation: popIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.3s;
             margin-bottom: 2.5rem;
-            border-radius: 12px;
-            padding: 8px;
-            /* Glowing red/blue border effect */
-            background: linear-gradient(135deg, rgba(229, 9, 20, 0.5) 0%, rgba(10, 25, 120, 0.5) 100%);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 
-                        0 0 30px rgba(229, 9, 20, 0.2), 
-                        0 0 30px rgba(10, 25, 120, 0.2);
+            width: 90%;
+            max-width: 340px;
+        }
+
+        .polaroid {
+            background: #fdfdfd;
+            padding: 12px 12px 45px 12px;
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(227, 104, 92, 0.2);
+            position: relative;
+        }
+
+        .polaroid img {
+            width: 100%;
+            /* Keeps the tall aspect ratio of your beautiful photo */
+            aspect-ratio: 3 / 4; 
+            object-fit: cover;
+            border-radius: 2px;
+            display: block;
+        }
+
+        .polaroid-caption {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: #d84b55;
+            font-weight: 700;
+        }
+
+        @keyframes popIn {
+            to { opacity: 1; transform: translateY(0) rotate(-2deg); }
+        }
+
+        /* --- HANDWRITTEN LOVE NOTES --- */
+        .note-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            
+            /* Animation starts hidden */
             opacity: 0;
             transform: translateY(30px);
-            animation: cinematicReveal 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.5s;
-        }
-
-        .image-inner {
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #000;
-        }
-
-        .image-inner img {
-            width: 100%;
-            aspect-ratio: 4 / 5;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-            opacity: 0.9;
-            transition: opacity 0.5s ease;
-        }
-
-        .image-inner img:hover {
-            opacity: 1;
-        }
-
-        @keyframes cinematicReveal {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- TYPOGRAPHY & CARDS --- */
-        .text-card {
-            background: rgba(15, 15, 20, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            width: 100%;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transform: translateY(20px);
             transition: all 1s ease;
         }
 
-        .text-card.visible {
+        .note-card.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        h1 {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(2rem, 7vw, 2.8rem);
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 1rem;
-            line-height: 1.2;
+        /* The cute handwriting font applied to the text */
+        .handwritten {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            line-height: 1.3;
+            color: #ffe8e8;
             letter-spacing: 1px;
-            text-shadow: 0 2px 10px rgba(255,255,255,0.2);
         }
 
-        .accent-red {
-            color: #ff4d4d;
+        .greeting {
+            font-size: 2.4rem;
+            color: #ff9e9e;
+            margin-bottom: 1rem;
+            display: block;
         }
 
-        .accent-blue {
-            color: #4d4dff;
+        .highlight {
+            color: #ff7474;
+            font-weight: 700;
         }
 
-        p {
-            font-size: 1.05rem;
-            font-weight: 300;
-            line-height: 1.8;
-            color: #cbd5e1;
-            margin-bottom: 1.5rem;
-        }
-
-        p:last-child {
-            margin-bottom: 0;
-        }
-
-        .date-tag {
-            font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            color: #8b9bb4;
+        /* --- SCROLL HINT --- */
+        .scroll-down {
             margin-bottom: 2rem;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: cinematicReveal 1s forwards 1.5s;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
         }
 
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Cute little footer element */
+        .spider-emoji {
+            font-size: 2.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            display: block;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .spider-emoji.visible {
+            opacity: 1;
+            transform: scale(1) rotate(360deg);
+        }
     </style>
 </head>
 <body>
 
-    <canvas id="multiverse-canvas"></canvas>
-    <div class="ambient-glow"></div>
+    <!-- Subtle sparkles reflecting the sunset -->
+    <div class="sparkles-container" id="sparkles"></div>
 
     <div class="container">
         
-        <div class="date-tag">Movie Night</div>
-
-        <!-- The Image Wrapper -->
-        <div class="image-wrapper">
-            <div class="image-inner">
-                <img src="spider.jpeg" alt="Our Spiderman Date">
+        <!-- The beautiful upside-down kiss picture -->
+        <div class="polaroid-wrapper">
+            <div class="polaroid">
+                <img src="spider.jpeg" alt="Our upside down kiss">
+                <div class="polaroid-caption">My MJ... ❤️</div>
             </div>
         </div>
 
+        <div class="scroll-down">↓</div>
+
         <!-- Section 1 -->
-        <div class="text-card fade-element">
-            <h1>In every <span class="accent-red">universe</span>,</h1>
-            <p>They say every Spider-Man has a story, a timeline, and a universe they belong to.</p>
-            <p>I don't know much about the multiverse, but I know one thing for absolutely certain.</p>
+        <div class="note-card fade-element">
+            <span class="handwritten greeting">Hey My Bhura,</span>
+            <p class="handwritten">
+                Yk, leading up to today has been so incredibly special to me. 
+            </p>
         </div>
 
         <!-- Section 2 -->
-        <div class="text-card fade-element">
-            <h1>I would always <span class="accent-blue">find you.</span></h1>
-            <p>Tonight is a special little milestone. Our very first Spider-Man movie together.</p>
-            <p>It might just be a movie to the rest of the world, but getting to sit next to you in the dark, holding your hand, and sharing these moments... that's my favorite kind of magic.</p>
+        <div class="note-card fade-element">
+            <p class="handwritten">
+                From that very first <span class="highlight">Deadpool-looking Spidey figurine</span> you gave me 😂...
+            </p>
+            <p class="handwritten" style="margin-top: 10px;">
+                To the cozy Spidey hoodie, and all the beautiful little letters you wrote for me.
+            </p>
         </div>
 
         <!-- Section 3 -->
-        <div class="text-card fade-element" style="border-bottom: 2px solid #ff4d4d;">
-            <h1 style="font-size: 1.8rem; font-family: 'Montserrat', sans-serif; font-weight: 500;">Get ready, Anushka.</h1>
-            <p style="font-style: italic;">Let's go make a core memory, my Bhura.</p>
+        <div class="note-card fade-element">
+            <p class="handwritten">
+                And now... looking down at this <span class="highlight">Spidey t-shirt</span> you gave me, that I am literally wearing right now for this exact moment. 
+            </p>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="note-card fade-element">
+            <p class="handwritten">
+                It's finally time. Our very first Spider-Man movie date together. 
+            </p>
+            <p class="handwritten" style="margin-top: 15px;">
+                Thank you for spoiling me, for loving me, and for being the best girlfriend in every single universe.
+            </p>
+            <p class="handwritten greeting" style="margin-top: 20px; font-size: 2.2rem; text-align: center;">
+                Let's go watch our movie! 🍿
+            </p>
+            <span class="spider-emoji fade-element">🕸️🕷️❤️</span>
         </div>
 
     </div>
 
     <script>
-        // --- MULTIVERSE PARTICLE EFFECT ---
-        // Creates a cinematic, slow-moving particle system with Spidey colors
-        const canvas = document.getElementById('multiverse-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Spark {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 1.5 + 0.5;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                
-                // Mix of deep red, neon blue, and soft white for the multiverse feel
-                const colors = [
-                    'rgba(229, 9, 20, 0.6)',   // Red
-                    'rgba(77, 77, 255, 0.6)',  // Blue
-                    'rgba(255, 255, 255, 0.4)',// White
-                    'rgba(147, 51, 234, 0.3)'  // Purple/Multiverse
-                ];
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.opacity = Math.random() * 0.5 + 0.2;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = this.color;
-                ctx.fill();
-                ctx.shadowBlur = 0; // reset
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // Seamless wrap
-                if (this.x < 0) this.x = width;
-                if (this.x > width) this.x = 0;
-                if (this.y < 0) this.y = height;
-                if (this.y > height) this.y = 0;
-            }
-        }
-
-        // Initialize particles
-        for (let i = 0; i < 70; i++) {
-            particles.push(new Spark());
-        }
-
-        function animateCanvas() {
-            // Subtle trail effect
-            ctx.fillStyle = 'rgba(5, 5, 8, 0.2)';
-            ctx.fillRect(0, 0, width, height);
+        // --- ADD FLOATING SPARKLES ---
+        const sparklesContainer = document.getElementById('sparkles');
+        for (let i = 0; i < 40; i++) {
+            let sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
             
-            particles.forEach(p => { 
-                p.update(); 
-                p.draw(); 
-            });
-            requestAnimationFrame(animateCanvas);
+            // Random positioning
+            sparkle.style.left = `${Math.random() * 100}vw`;
+            sparkle.style.top = `${Math.random() * 100}vh`;
+            
+            // Random sizes
+            let size = Math.random() * 3 + 1;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            
+            // Random timing
+            sparkle.style.animationDelay = `${Math.random() * 4}s`;
+            sparkle.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            
+            sparklesContainer.appendChild(sparkle);
         }
-        animateCanvas();
 
-        // --- SCROLL ANIMATION FOR CARDS ---
+        // --- SCROLL ANIMATION LOGIC ---
         document.addEventListener("DOMContentLoaded", () => {
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.15 
+                threshold: 0.2 // Trigger when 20% of the card is visible
             };
 
             const observer = new IntersectionObserver((entries) => {
@@ -305,5 +287,6 @@
             fadeElements.forEach(el => observer.observe(el));
         });
     </script>
+
 </body>
 </html>
