@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For My Anushka ❤️</title>
+    <title>In Every Universe</title>
     
-    <!-- Elegant and dreamy fonts -->
+    <!-- Cinematic and elegant fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET & VARIABLES --- */
+        /* --- RESET & SETUP --- */
         * {
             margin: 0;
             padding: 0;
@@ -22,130 +22,137 @@
         body, html {
             width: 100%;
             overflow-x: hidden;
-            background-color: #0b0c10;
+            background-color: #050508; /* Deep cinematic black */
             font-family: 'Montserrat', sans-serif;
             color: #ffffff;
             scroll-behavior: smooth;
         }
 
-        /* --- THE MIDNIGHT AMBIENT BACKGROUND --- */
-        .ambient-bg {
+        /* --- THE MULTIVERSE CANVAS BACKGROUND --- */
+        #multiverse-canvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle at 50% 0%, #2f1b41 0%, #0b0c10 60%);
+            width: 100%;
+            height: 100%;
             z-index: 0;
+            pointer-events: none;
         }
 
-        /* Twinkling Stars */
-        .stars {
+        /* Subtle glowing gradient behind the content */
+        .ambient-glow {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, rgba(30, 10, 40, 0.4) 0%, rgba(5, 5, 8, 1) 70%);
             z-index: 1;
             pointer-events: none;
         }
 
-        .star {
-            position: absolute;
-            background: #ffffff;
-            border-radius: 50%;
-            animation: twinkle infinite ease-in-out;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.1; transform: scale(0.8); }
-            50% { opacity: 0.8; transform: scale(1.2); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
-        }
-
-        /* --- MAIN CONTENT CONTAINER --- */
+        /* --- CONTENT LAYOUT --- */
         .container {
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
+            padding: 3rem 1.5rem 5rem 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* --- LIVE TIME HERO SECTION --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        /* --- THE MOVIE POSTER / TICKET IMAGE --- */
+        .image-wrapper {
+            width: 100%;
+            max-width: 350px;
+            margin-bottom: 2.5rem;
+            border-radius: 12px;
+            padding: 8px;
+            /* Glowing red/blue border effect */
+            background: linear-gradient(135deg, rgba(229, 9, 20, 0.5) 0%, rgba(10, 25, 120, 0.5) 100%);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 
+                        0 0 30px rgba(229, 9, 20, 0.2), 
+                        0 0 30px rgba(10, 25, 120, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cinematicReveal 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.5s;
+        }
+
+        .image-inner {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .image-inner img {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            opacity: 0.9;
+            transition: opacity 0.5s ease;
+        }
+
+        .image-inner img:hover {
+            opacity: 1;
+        }
+
+        @keyframes cinematicReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- TYPOGRAPHY & CARDS --- */
+        .text-card {
+            background: rgba(15, 15, 20, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
             text-align: center;
             width: 100%;
-        }
-
-        .time-display {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(3rem, 12vw, 4.5rem);
-            color: #fbcfe8;
-            text-shadow: 0 0 20px rgba(251, 207, 232, 0.4);
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             opacity: 0;
-            animation: fadeIn 2s ease forwards 0.5s;
-            /* Using tabular lining so the numbers don't shift left/right as they tick */
-            font-variant-numeric: tabular-nums;
+            transform: translateY(20px);
+            transition: all 1s ease;
         }
 
-        .hero-text {
-            font-size: 1.1rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            color: #cbd5e1;
-            opacity: 0;
-            animation: fadeIn 2s ease forwards 2s;
-        }
-
-        /* --- SLEEK GLASS CARDS --- */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            border-radius: 24px;
-            padding: 3rem 2rem;
-            text-align: center;
-            width: 100%;
-            margin-bottom: 8rem;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .glass-card.visible {
+        .text-card.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- TYPOGRAPHY --- */
         h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.2rem, 8vw, 3rem);
-            font-weight: 400;
-            color: #fce7f3;
-            margin-bottom: 1.5rem;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 7vw, 2.8rem);
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
             line-height: 1.2;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.2);
         }
 
-        .highlight {
-            font-style: italic;
-            color: #f472b6; 
+        .accent-red {
+            color: #ff4d4d;
+        }
+
+        .accent-blue {
+            color: #4d4dff;
         }
 
         p {
             font-size: 1.05rem;
             font-weight: 300;
             line-height: 1.8;
-            color: rgba(255, 255, 255, 0.85);
+            color: #cbd5e1;
             margin-bottom: 1.5rem;
         }
 
@@ -153,138 +160,137 @@
             margin-bottom: 0;
         }
 
-        .signature {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            font-style: italic;
-            color: #fbcfe8;
-            margin-top: 2rem;
-            display: block;
-        }
-
-        /* --- SCROLL INDICATOR --- */
-        .scroll-down {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.8rem;
+        .date-tag {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
             letter-spacing: 3px;
+            color: #8b9bb4;
+            margin-bottom: 2rem;
             text-transform: uppercase;
-            animation: pulse 2s infinite;
             opacity: 0;
-            animation: fadeInPulse 2s forwards 3.5s;
+            animation: cinematicReveal 1s forwards 1.5s;
         }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInPulse {
-            0% { opacity: 0; }
-            50% { opacity: 0.6; }
-            100% { opacity: 0.3; }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: translate(-50%, 0); }
-            50% { transform: translate(-50%, 5px); }
-        }
     </style>
 </head>
 <body>
 
-    <!-- Midnight Background & Stars -->
-    <div class="ambient-bg"></div>
-    <div class="stars" id="stars"></div>
+    <canvas id="multiverse-canvas"></canvas>
+    <div class="ambient-glow"></div>
 
     <div class="container">
         
-        <!-- Hero Section -->
-        <div class="hero">
-            <!-- The ID here allows JavaScript to update the time live -->
-            <div class="time-display" id="live-time">Loading...</div>
-            <div class="hero-text">The day is almost over...</div>
-            <div class="scroll-down">Scroll softly</div>
+        <div class="date-tag">Movie Night</div>
+
+        <!-- The Image Wrapper -->
+        <div class="image-wrapper">
+            <div class="image-inner">
+                <img src="spider.jpeg" alt="Our Spiderman Date">
+            </div>
         </div>
 
         <!-- Section 1 -->
-        <div class="glass-card fade-element">
-            <h1>I didn't <span class="highlight">forget.</span></h1>
-            <p>I know it's incredibly late. I know the clock is ticking down to midnight.</p>
-            <p>But there was no way I was going to let today end without telling the most important person in my life how much she means to me.</p>
+        <div class="text-card fade-element">
+            <h1>In every <span class="accent-red">universe</span>,</h1>
+            <p>They say every Spider-Man has a story, a timeline, and a universe they belong to.</p>
+            <p>I don't know much about the multiverse, but I know one thing for absolutely certain.</p>
         </div>
 
         <!-- Section 2 -->
-        <div class="glass-card fade-element">
-            <h1>Happy Girlfriend's Day,<br><span class="highlight">My Bhura.</span></h1>
-            <p>You are the softest, most beautiful part of my chaotic world.</p>
-            <p>From the moment you walked into my life, you changed everything. Every sunset, every late-night talk, every single laugh we share is my favorite memory.</p>
+        <div class="text-card fade-element">
+            <h1>I would always <span class="accent-blue">find you.</span></h1>
+            <p>Tonight is a special little milestone. Our very first Spider-Man movie together.</p>
+            <p>It might just be a movie to the rest of the world, but getting to sit next to you in the dark, holding your hand, and sharing these moments... that's my favorite kind of magic.</p>
         </div>
 
         <!-- Section 3 -->
-        <div class="glass-card fade-element">
-            <p>I may not always say it perfectly, and I might literally wait until the very last 15 minutes of the day...</p>
-            <p>But you are the girl I want by my side for every single tomorrow.</p>
-        </div>
-
-        <!-- Section 4 -->
-        <div class="glass-card fade-element" style="border: 1px solid rgba(244, 114, 182, 0.3); box-shadow: 0 0 30px rgba(244, 114, 182, 0.1);">
-            <h1>I love you.</h1>
-            <p>More than my words can say. More than the time on a clock.</p>
-            <p>Thank you for being mine.</p>
-            <span class="signature">Your Pratham ❤️</span>
+        <div class="text-card fade-element" style="border-bottom: 2px solid #ff4d4d;">
+            <h1 style="font-size: 1.8rem; font-family: 'Montserrat', sans-serif; font-weight: 500;">Get ready, Anushka.</h1>
+            <p style="font-style: italic;">Let's go make a core memory, my Bhura.</p>
         </div>
 
     </div>
 
     <script>
-        // --- LIVE INDIAN STANDARD TIME CLOCK ---
-        function updateTime() {
-            const timeDisplay = document.getElementById('live-time');
-            const now = new Date();
-            
-            // Format for Indian Standard Time (Asia/Kolkata)
-            const options = {
-                timeZone: 'Asia/Kolkata',
-                hour: 'numeric',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true
-            };
-            
-            timeDisplay.innerText = now.toLocaleTimeString('en-US', options);
+        // --- MULTIVERSE PARTICLE EFFECT ---
+        // Creates a cinematic, slow-moving particle system with Spidey colors
+        const canvas = document.getElementById('multiverse-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Spark {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                
+                // Mix of deep red, neon blue, and soft white for the multiverse feel
+                const colors = [
+                    'rgba(229, 9, 20, 0.6)',   // Red
+                    'rgba(77, 77, 255, 0.6)',  // Blue
+                    'rgba(255, 255, 255, 0.4)',// White
+                    'rgba(147, 51, 234, 0.3)'  // Purple/Multiverse
+                ];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.shadowBlur = 0; // reset
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Seamless wrap
+                if (this.x < 0) this.x = width;
+                if (this.x > width) this.x = 0;
+                if (this.y < 0) this.y = height;
+                if (this.y > height) this.y = 0;
+            }
         }
 
-        // Run immediately, then update every 1000ms (1 second)
-        updateTime();
-        setInterval(updateTime, 1000);
-
-        // --- GENERATE STARS ---
-        const starsContainer = document.getElementById('stars');
+        // Initialize particles
         for (let i = 0; i < 70; i++) {
-            let star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = `${Math.random() * 100}vw`;
-            star.style.top = `${Math.random() * 100}vh`;
-            
-            let size = Math.random() * 2 + 1;
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            
-            star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-            star.style.animationDelay = `${Math.random() * 5}s`;
-            
-            starsContainer.appendChild(star);
+            particles.push(new Spark());
         }
 
-        // --- SCROLL ANIMATION ---
+        function animateCanvas() {
+            // Subtle trail effect
+            ctx.fillStyle = 'rgba(5, 5, 8, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+            
+            particles.forEach(p => { 
+                p.update(); 
+                p.draw(); 
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // --- SCROLL ANIMATION FOR CARDS ---
         document.addEventListener("DOMContentLoaded", () => {
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.2
+                threshold: 0.15 
             };
 
             const observer = new IntersectionObserver((entries) => {
