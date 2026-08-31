@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* --- RESET & VARIABLES --- */
@@ -21,7 +21,6 @@
         body, html {
             width: 100%;
             overflow-x: hidden;
-            /* Soft, romantic pastel gradient */
             background: linear-gradient(135deg, #fff0f3 0%, #ffc2d1 100%);
             background-attachment: fixed;
             font-family: 'Nunito', sans-serif;
@@ -31,7 +30,7 @@
             align-items: center;
         }
 
-        /* --- FLOATING HEARTS BACKGROUND --- */
+        /* --- FLOATING BACKGROUND --- */
         .bg-hearts {
             position: fixed;
             top: 0;
@@ -106,8 +105,16 @@
         }
 
         .highlight {
-            font-weight: 600;
+            font-weight: 700;
             color: #ff4d6d;
+        }
+        
+        .quote {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            color: #8f2d56;
+            display: inline-block;
+            transform: rotate(-1deg);
         }
 
         /* --- THE QUESTION & BUTTONS --- */
@@ -131,15 +138,15 @@
             align-items: center;
             gap: 20px;
             position: relative;
-            height: 80px; /* Gives room for moving buttons */
+            height: 80px;
             width: 100%;
         }
 
         .btn {
             font-family: 'Nunito', sans-serif;
             font-size: 1.2rem;
-            font-weight: 600;
-            padding: 12px 30px;
+            font-weight: 700;
+            padding: 12px 35px;
             border-radius: 50px;
             border: none;
             cursor: pointer;
@@ -172,11 +179,10 @@
             color: #8f2d56;
             border: 2px solid #ffb3c6;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            /* Transition for smooth jumping */
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
         }
 
-        /* --- HIDDEN MESSAGES --- */
+        /* --- HIDDEN MESSAGE (NO) --- */
         .hidden-message {
             display: none;
             background: rgba(255, 255, 255, 0.9);
@@ -195,11 +201,11 @@
             100% { opacity: 1; transform: scale(1); }
         }
         
-        /* Happy state overlay */
+        /* --- HAPPY OVERLAY (YES) --- */
         .happy-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(253, 242, 248, 0.98);
             z-index: 100;
             display: flex;
             flex-direction: column;
@@ -208,6 +214,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 1s ease;
+            padding: 2rem;
         }
 
         .happy-overlay.show {
@@ -215,12 +222,51 @@
             pointer-events: all;
         }
         
-        .happy-text {
-            font-family: 'Caveat', cursive;
-            font-size: 4rem;
-            color: #ff4d6d;
+        .happy-box {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.15);
+            border: 2px solid #ffb3c6;
             text-align: center;
-            padding: 20px;
+            max-width: 450px;
+            transform: scale(0.9);
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .happy-overlay.show .happy-box {
+            transform: scale(1);
+        }
+
+        .happy-title {
+            font-family: 'Caveat', cursive;
+            font-size: 3rem;
+            color: #ff4d6d;
+            margin-bottom: 10px;
+        }
+
+        .happy-subtitle {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #8f2d56;
+            margin-bottom: 1.5rem;
+        }
+
+        .screenshot-instruction {
+            background: #fff0f3;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            color: #4a2b32;
+            border: 2px dashed #ff4d6d;
+            margin-top: 1rem;
+        }
+
+        .screenshot-instruction span {
+            display: block;
+            font-size: 2rem;
+            margin-top: 10px;
         }
 
     </style>
@@ -233,46 +279,56 @@
         
         <div class="glass-card">
             <h1>My Beautiful Bhura,</h1>
-            <p>I know I messed up. I know that recently, my lack of consideration made you feel unvalued, and that is the absolute biggest mistake I could ever make. You deserve someone who shows up for you constantly, who pays attention to the little things, and who protects your peace.</p>
             
-            <p>I don't want to give you empty words anymore. An apology means absolutely nothing without changed behavior, and I am ready to give you my absolute best. Not just through promises, but through <span class="highlight">actions</span>. Through the way I treat you, the way I listen to you, and the way I prioritize us.</p>
+            <p>I know I messed up. Just like a certain dumb bunny once said: <span class="quote">"I was ignorant, and irresponsible, and small-minded."</span> My lack of consideration made you feel unvalued, and that is the absolute biggest mistake I could ever make. But please... don't let my mistakes ruin us.</p>
             
-            <p>I hate that I pushed us to the verge of this, but I am not giving up. I want to earn your trust back, step by step, day by day. You are my home, Anushka. You are my safe place. And I am so, so deeply sorry for taking that for granted.</p>
+            <p>I don't want to give you empty words anymore. I am ready to <span class="highlight">Try Everything</span> to make this right. Not just through promises, but through real actions. Through the way I treat you, the way I listen to you, and the way I prioritize us every single day.</p>
+            
+            <p>I know I can be a stubborn, frustrating sly fox sometimes 🦊, but I hate that I pushed us to the verge of this. I am not giving up. You are my home, Anushka. You are my safe place. And I am so, so deeply sorry for taking you for granted.</p>
         </div>
 
         <div class="question-section">
             <h2>One last chance? My wifeyyyyyy 🥺</h2>
             
             <div class="btn-container" id="btn-container">
-                <button class="btn btn-yes" id="yesBtn">Yes ❤️</button>
+                <button class="btn btn-yes" id="yesBtn">Yes 🐰❤️</button>
                 <button class="btn btn-no" id="noBtn">No</button>
             </div>
 
             <div class="hidden-message" id="noMessage">
                 I get it, no means no... <br><br>
-                <strong>But maybe this 'no' can pass, and we can fall in love all over again?</strong> <br>
-                I'm not giving up on us. I love you too much to walk away. 🌸
+                <strong>But even Flash the sloth 🦥 moves faster than I'd give up on you!</strong> <br>
+                Can we please fall in love all over again? 🌸
             </div>
         </div>
 
     </div>
 
     <div class="happy-overlay" id="happyOverlay">
-        <div class="happy-text">I promise to never let you down again.<br>I love you infinitely! 💍🧸✨</div>
+        <div class="happy-box">
+            <div class="happy-title">"You know you love me." 🦊</div>
+            <div class="happy-subtitle">(Do I know that? Yes, yes I do. 🐰)</div>
+            
+            <div class="screenshot-instruction">
+                <strong>Mission Accomplished! 🚓✨</strong><br><br>
+                Now quickly, take a screenshot of this and send it to your <strong>chini</strong> to claim your lifetime supply of cuddles!
+                <span>📸💖</span>
+            </div>
+        </div>
     </div>
 
     <script>
-        // --- BACKGROUND HEARTS ---
+        // --- BACKGROUND HEARTS & ZOOTOPIA EMOJIS ---
         const heartsContainer = document.getElementById('bg-hearts');
-        const emojis = ['🤍', '🌸', '✨', '💕', '🥺', '🦋'];
+        const emojis = ['🤍', '🌸', '✨', '💕', '🥺', '🦊', '🐰', '🐾', '🥕', '🍩'];
 
-        for (let i = 0; i < 25; i++) {
+        for (let i = 0; i < 30; i++) {
             let heart = document.createElement('div');
             heart.classList.add('floating-heart');
             heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
             heart.style.left = `${Math.random() * 100}vw`;
             heart.style.fontSize = `${Math.random() * 1.5 + 1}rem`;
-            heart.style.animationDuration = `${Math.random() * 10 + 10}s`;
+            heart.style.animationDuration = `${Math.random() * 12 + 10}s`;
             heart.style.animationDelay = `${Math.random() * 5}s`;
             heartsContainer.appendChild(heart);
         }
@@ -282,16 +338,13 @@
         const yesBtn = document.getElementById('yesBtn');
         const noMessage = document.getElementById('noMessage');
         const happyOverlay = document.getElementById('happyOverlay');
-        const btnContainer = document.getElementById('btn-container');
         
         let noClickCount = 0;
 
-        // Function to make the NO button run away
+        // Make NO button run away
         function moveNoButton() {
-            // Change position to fixed so it can jump anywhere on screen safely
             noBtn.style.position = 'fixed';
             
-            // Calculate safe boundaries so it stays on screen
             const safeWidth = window.innerWidth - noBtn.offsetWidth - 20;
             const safeHeight = window.innerHeight - noBtn.offsetHeight - 20;
             
@@ -301,27 +354,23 @@
             noBtn.style.left = `${randomX}px`;
             noBtn.style.top = `${randomY}px`;
             
-            // Make the yes button slightly bigger to encourage clicking it
-            yesBtn.style.transform = 'scale(1.2)';
+            yesBtn.style.transform = 'scale(1.15)';
             setTimeout(() => { yesBtn.style.transform = 'scale(1)'; }, 300);
         }
 
-        // NO Button Interaction
         noBtn.addEventListener('click', (e) => {
             e.preventDefault();
             noClickCount++;
             
             if (noClickCount === 1) {
-                // First click: It jumps away
                 moveNoButton();
             } else if (noClickCount >= 2) {
-                // Second click: She caught it. Show the emotional message.
-                noBtn.style.display = 'none'; // Hide the button
-                noMessage.style.display = 'block'; // Show the message
+                noBtn.style.display = 'none'; 
+                noMessage.style.display = 'block'; 
             }
         });
 
-        // For desktop users trying to hover (adds extra playfulness)
+        // Add mouseover for desktop playfulness
         noBtn.addEventListener('mouseover', () => {
             if (noClickCount === 0) {
                 noClickCount++;
@@ -331,14 +380,14 @@
 
         // YES Button Interaction
         yesBtn.addEventListener('click', () => {
-            // Show full screen happy overlay
             happyOverlay.classList.add('show');
             
-            // Create a burst of hearts
-            for(let i=0; i<50; i++) {
+            // Burst of hearts and paws
+            const burstEmojis = ['❤️', '🐾', '🦊', '🐰'];
+            for(let i=0; i<40; i++) {
                 setTimeout(() => {
                     let heart = document.createElement('div');
-                    heart.innerText = '❤️';
+                    heart.innerText = burstEmojis[Math.floor(Math.random() * burstEmojis.length)];
                     heart.style.position = 'fixed';
                     heart.style.left = '50%';
                     heart.style.top = '50%';
@@ -352,8 +401,8 @@
                     const ty = Math.sin(angle) * velocity * 15;
 
                     heart.animate([
-                        { transform: 'translate(-50%, -50%) scale(0.5)', opacity: 1 },
-                        { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.5)`, opacity: 0 }
+                        { transform: 'translate(-50%, -50%) scale(0.5) rotate(0deg)', opacity: 1 },
+                        { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.5) rotate(${Math.random() * 180}deg)`, opacity: 0 }
                     ], {
                         duration: 1000 + Math.random() * 1000,
                         easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
@@ -361,7 +410,7 @@
 
                     document.body.appendChild(heart);
                     setTimeout(() => heart.remove(), 2000);
-                }, i * 20); // staggered burst
+                }, i * 20);
             }
         });
 
