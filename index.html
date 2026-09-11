@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Your August Flower</title>
+    <title>Weightless — For My Bhura</title>
     
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET & VARIABLES --- */
         * {
             margin: 0;
             padding: 0;
@@ -22,302 +22,361 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            /* Starts dim and a bit sad/melancholy */
-            background-color: #1a1a2e;
-            font-family: 'Nunito', sans-serif;
-            transition: background-color 2s ease;
+            background-color: #171215;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #f5f5f4;
+            transition: background-color 2.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Anti-Gravity Ambient Warmth Layer */
+        .ambient-warmth {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 100%, rgba(217, 119, 6, 0.35) 0%, rgba(180, 83, 9, 0.15) 45%, transparent 75%);
+            opacity: 0;
+            transition: opacity 3s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        canvas#physics-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        /* UI Container */
+        .ui-overlay {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-        }
-
-        /* --- DYNAMIC BACKGROUND SHIFT --- */
-        .bg-gradient {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-            opacity: 0;
-            z-index: 0;
-            transition: opacity 1.5s ease;
+            padding: 3.5rem 1.5rem 2.5rem 1.5rem;
             pointer-events: none;
         }
 
-        /* --- MAIN TEXT --- */
-        .text-container {
-            position: absolute;
-            top: 15%;
-            width: 90%;
-            max-width: 500px;
+        /* Header Tag */
+        .header-tag {
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #a8a29e;
+            opacity: 0.8;
+            transition: color 2s ease;
+        }
+
+        /* Main Narrative Card */
+        .narrative-card {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(30, 26, 29, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.2rem 1.8rem;
             text-align: center;
-            z-index: 10;
-            pointer-events: none;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            pointer-events: auto;
+            transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .message {
-            font-size: 1.2rem;
-            color: #e2e8f0;
-            line-height: 1.6;
-            opacity: 1;
-            transition: opacity 1s ease, transform 1s ease;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        .narrative-card.weightless {
+            background: rgba(254, 243, 199, 0.08);
+            border-color: rgba(251, 191, 36, 0.25);
+            box-shadow: 0 25px 50px rgba(217, 119, 6, 0.15);
+            transform: translateY(-15px);
         }
 
-        .message.hide {
-            opacity: 0;
-            transform: translateY(-20px);
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 7vw, 2.7rem);
+            font-weight: 600;
+            line-height: 1.15;
+            color: #fafaf9;
+            margin-bottom: 1.2rem;
+            transition: color 2s ease;
+        }
+
+        p {
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.8;
+            color: #d6d3d1;
+            margin-bottom: 1rem;
+            transition: color 2s ease;
+        }
+
+        p:last-of-type {
+            margin-bottom: 0;
         }
 
         .highlight {
-            color: #ffb3c6;
-            font-weight: 600;
+            color: #f59e0b;
+            font-weight: 500;
         }
 
-        /* --- THE INTERACTIVE FLOWER --- */
-        .flower-area {
-            position: absolute;
-            bottom: 20%;
-            z-index: 20;
+        /* Anti-Gravity Action Button */
+        .action-container {
+            pointer-events: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-antigravity {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            color: #fff;
+            border: none;
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
             cursor: pointer;
-            width: 100%;
-            height: 50vh;
+            box-shadow: 0 10px 25px rgba(217, 119, 6, 0.35);
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .seed {
-            font-size: 3rem;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: breathe 2s infinite alternate;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+        .btn-antigravity:active {
+            transform: scale(0.96);
         }
 
-        @keyframes breathe {
-            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2)); }
-            100% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6)); }
+        .hint {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #78716c;
         }
 
-        .instruction {
-            margin-top: 20px;
-            font-family: 'Caveat', cursive;
-            font-size: 1.8rem;
-            color: #94a3b8;
-            opacity: 0;
-            animation: fadeIn 2s forwards 1.5s;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        /* --- FINAL BLOOM STATE --- */
-        .final-message {
+        /* Floating Thought Orbs */
+        .thought-bubble {
             position: absolute;
-            top: 15%;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            z-index: 30;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 1.5s ease 0.5s;
-            pointer-events: none;
-        }
-
-        .final-message.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .final-message h1 {
-            font-family: 'Caveat', cursive;
-            font-size: 3.5rem;
-            color: #d81159;
-            margin-bottom: 1rem;
-            line-height: 1;
-        }
-
-        .final-message p {
-            font-size: 1.15rem;
-            color: #4a2b32;
-            font-weight: 500;
-            line-height: 1.7;
-            background: rgba(255, 255, 255, 0.6);
-            padding: 1.5rem;
-            border-radius: 20px;
+            background: rgba(254, 243, 199, 0.12);
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(216, 17, 89, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-        }
-
-        /* --- PARTICLE EFFECTS --- */
-        .drop {
-            position: absolute;
-            font-size: 1.5rem;
-            pointer-events: none;
-            animation: dropAnim 1s ease-out forwards;
-            z-index: 25;
-        }
-
-        @keyframes dropAnim {
-            0% { transform: translateY(-50px) scale(0.5); opacity: 1; }
-            100% { transform: translateY(0) scale(1.5); opacity: 0; }
-        }
-
-        .butterfly {
-            position: absolute;
-            font-size: 2rem;
-            pointer-events: none;
-            z-index: 15;
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: #fef3c7;
+            padding: 0.8rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            pointer-events: auto;
+            cursor: grab;
+            white-space: nowrap;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             opacity: 0;
+            transition: opacity 1.5s ease;
         }
-
     </style>
 </head>
 <body>
 
-    <div class="bg-gradient" id="bg-gradient"></div>
+    <div class="ambient-warmth" id="warmth"></div>
+    <canvas id="physics-canvas"></canvas>
 
-    <div class="text-container" id="intro-text">
-        <div class="message">
-            My beautiful Bhura,<br><br>
-            You told me you haven't been feeling loved lately, and hearing that shattered my heart. My biggest job in this world is to make sure you know exactly how cherished you are.<br><br>
-            I know August just slipped away yesterday, and I missed giving you your August flower. I couldn't let it go without making it right.
+    <div class="ui-overlay">
+        <div class="header-tag" id="tag">Phase: Heavy</div>
+
+        <div class="narrative-card" id="card">
+            <h1 id="title">Take a breath, Bhura.</h1>
+            <p id="body-text">
+                I know you are covered in biscuit crumbs right now, carefully layering that Lotus Biscoff cheesecake for me. But I can also feel how heavy everything feels on your shoulders.
+            </p>
+            <p id="sub-text">
+                You carry so much without saying a word. But you don't have to carry the sky alone.
+            </p>
+        </div>
+
+        <div class="action-container" id="action-box">
+            <button class="btn-antigravity" id="trigger-btn">
+                <span>Lift The Weight</span>
+                <span style="font-size: 1.2rem;">↑</span>
+            </button>
+            <div class="hint" id="hint">Tap to invert gravity</div>
         </div>
     </div>
 
-    <div class="flower-area" id="flower-area">
-        <div class="seed" id="seed">🌱</div>
-        <div class="instruction" id="instruction">Tap repeatedly to give it love...</div>
-    </div>
-
-    <div class="final-message" id="final-message">
-        <h1>Your August Flower</h1>
-        <p>
-            You deserve to feel overwhelmingly loved every single day, Wifeyyy. Not just with words, but with actions that prove you are my priority. <br><br>
-            I am so sorry I let you doubt it. I promise to be better, to show up, and to never let a month pass without reminding you that you are my entire world. <br><br>
-            <strong>I love you, endlessly. 🦋🌸</strong>
-        </p>
-    </div>
-
     <script>
-        const flowerArea = document.getElementById('flower-area');
-        const seed = document.getElementById('seed');
-        const introText = document.getElementById('intro-text');
-        const finalMessage = document.getElementById('final-message');
-        const bgGradient = document.getElementById('bg-gradient');
-        const instruction = document.getElementById('instruction');
+        const canvas = document.getElementById('physics-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
 
-        let growthLevel = 0;
-        let isFullyGrown = false;
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
 
-        // The stages of the flower growing
-        const stages = ['🌱', '🌿', '🪴', '🌸', '💐'];
+        // Physics State
+        let gravity = 0.25; // Initial downward pull
+        let antiGravityActive = false;
 
-        flowerArea.addEventListener('click', (e) => {
-            if (isFullyGrown) return;
-
-            // Increase growth on each tap
-            growthLevel += 10;
-            
-            // Create a cute water drop/heart effect where tapped
-            createLoveDrop(e.clientX, e.clientY);
-
-            // Update the flower based on growth
-            if (growthLevel < 25) {
-                seed.innerText = stages[0];
-                seed.style.transform = `scale(${1 + growthLevel/50})`;
-            } else if (growthLevel < 50) {
-                seed.innerText = stages[1];
-                seed.style.transform = `scale(${1 + growthLevel/50})`;
-                bgGradient.style.opacity = 0.2; // Slowly getting warmer
-            } else if (growthLevel < 75) {
-                seed.innerText = stages[2];
-                seed.style.transform = `scale(${1 + growthLevel/40})`;
-                bgGradient.style.opacity = 0.5;
-            } else if (growthLevel < 100) {
-                seed.innerText = stages[3];
-                seed.style.transform = `scale(${1 + growthLevel/30})`;
-                bgGradient.style.opacity = 0.8;
-                introText.querySelector('.message').classList.add('hide'); // Hide sad text
-                instruction.style.opacity = 0;
-            } else {
-                // IT BLOOMS
-                bloomFlower();
+        // Particle Class (Crumbs & Embers)
+        class Particle {
+            constructor() {
+                this.reset(true);
             }
+
+            reset(initial = false) {
+                this.x = Math.random() * width;
+                this.y = initial ? Math.random() * height : (gravity > 0 ? -10 : height + 10);
+                this.radius = Math.random() * 3 + 1.5;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = Math.random() * 2 - 1;
+                this.color = '#854d0e'; // Default crumb color
+                this.alpha = Math.random() * 0.5 + 0.3;
+                this.oscillationSpeed = Math.random() * 0.02 + 0.01;
+            }
+
+            update() {
+                this.vy += gravity * 0.15;
+                this.x += this.vx + Math.sin(this.y * 0.01) * 0.5;
+                this.y += this.vy;
+
+                // Air resistance
+                this.vx *= 0.99;
+                this.vy *= 0.98;
+
+                // Rebound or reset depending on gravity direction
+                if (gravity > 0 && this.y > height - 10) {
+                    this.y = height - 10;
+                    this.vy *= -0.3; // Rest on floor
+                } else if (gravity < 0 && this.y < -20) {
+                    this.reset(false);
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = antiGravityActive ? `rgba(251, 191, 36, ${this.alpha})` : `rgba(180, 83, 9, ${this.alpha})`;
+                ctx.shadowBlur = antiGravityActive ? 12 : 0;
+                ctx.shadowColor = '#f59e0b';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        // Initialize 70 biscuit crumbs
+        const particles = [];
+        for (let i = 0; i < 70; i++) {
+            particles.push(new Particle());
+        }
+
+        // Floating Thoughts Data
+        const thoughts = [
+            "Pass some of that weight to me.",
+            "You are doing so much, Anushka.",
+            "I'm right here beside you.",
+            "Your cheesecake will be incredible.",
+            "Let me hold the sky for you today."
+        ];
+
+        const activeBubbles = [];
+
+        function spawnFloatingThought(text, index) {
+            const el = document.createElement('div');
+            el.className = 'thought-bubble';
+            el.innerText = text;
+            document.body.appendChild(el);
+
+            const bubbleObj = {
+                element: el,
+                x: width * 0.15 + (Math.random() * (width * 0.6)),
+                y: height * 0.5 + (index * 60) + Math.random() * 20,
+                vx: (Math.random() - 0.5) * 0.8,
+                vy: -(Math.random() * 0.6 + 0.4),
+                seed: Math.random() * 100
+            };
+
+            activeBubbles.push(bubbleObj);
+            setTimeout(() => { el.style.opacity = '1'; }, 200 * index);
+        }
+
+        // Animation Loop
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Update particles
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Update floating HTML bubbles if anti-gravity is on
+            if (antiGravityActive) {
+                activeBubbles.forEach(b => {
+                    b.y += b.vy;
+                    b.x += Math.sin((Date.now() * 0.001) + b.seed) * 0.6;
+                    b.element.style.transform = `translate(${b.x}px, ${b.y}px)`;
+
+                    // Wrap around top to bottom softly
+                    if (b.y < -50) {
+                        b.y = height + 20;
+                        b.x = width * 0.1 + (Math.random() * (width * 0.7));
+                    }
+                });
+            }
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Trigger Anti-Gravity
+        const triggerBtn = document.getElementById('trigger-btn');
+        const warmth = document.getElementById('warmth');
+        const card = document.getElementById('card');
+        const title = document.getElementById('title');
+        const bodyText = document.getElementById('body-text');
+        const subText = document.getElementById('sub-text');
+        const tag = document.getElementById('tag');
+        const hint = document.getElementById('hint');
+
+        triggerBtn.addEventListener('click', () => {
+            if (antiGravityActive) return;
+            antiGravityActive = true;
+
+            // Invert Gravity
+            gravity = -0.18;
+
+            // Visual Shifts
+            document.body.style.backgroundColor = '#1f1610';
+            warmth.style.opacity = '1';
+            tag.innerText = "Phase: Weightless";
+            tag.style.color = "#f59e0b";
+            card.classList.add('weightless');
+
+            // Copy Transition
+            title.innerText = "The weight is lifted.";
+            bodyText.innerHTML = "You don't need to be invincible every minute of the day. Whenever the world feels too loud or heavy, <span class='highlight'>lean into me</span>.";
+            subText.innerHTML = "Finish making that cheesecake at your own pace. I am right here, and I'm not going anywhere. ❤️";
+
+            // Transform button
+            triggerBtn.style.background = "rgba(251, 191, 36, 0.2)";
+            triggerBtn.style.border = "1px solid rgba(251, 191, 36, 0.4)";
+            triggerBtn.style.boxShadow = "0 0 25px rgba(245, 158, 11, 0.25)";
+            triggerBtn.innerHTML = "<span>Weightless Forever</span> ✨";
+            hint.innerText = "Floating in orbit";
+
+            // Spawn weightless thoughts
+            thoughts.forEach((t, i) => spawnFloatingThought(t, i));
         });
-
-        function createLoveDrop(x, y) {
-            const drop = document.createElement('div');
-            drop.classList.add('drop');
-            // Mix of sparkles, water, and hearts
-            const drops = ['💧', '✨', '💖'];
-            drop.innerText = drops[Math.floor(Math.random() * drops.length)];
-            
-            // Randomize position slightly around the tap
-            const offsetX = (Math.random() - 0.5) * 40;
-            const offsetY = (Math.random() - 0.5) * 40;
-            
-            drop.style.left = `${x + offsetX}px`;
-            drop.style.top = `${y + offsetY}px`;
-            
-            document.body.appendChild(drop);
-            setTimeout(() => drop.remove(), 1000);
-        }
-
-        function bloomFlower() {
-            isFullyGrown = true;
-            
-            // Final huge bouquet
-            seed.innerText = stages[4];
-            seed.style.animation = 'none'; // stop breathing
-            
-            // Huge pop animation
-            seed.style.transition = 'transform 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            seed.style.transform = 'scale(4)';
-            seed.style.filter = 'drop-shadow(0 20px 40px rgba(216, 17, 89, 0.4))';
-            
-            // Background goes full warmth
-            bgGradient.style.opacity = 1;
-            document.body.style.backgroundColor = '#fdf2f8';
-
-            // Show final letter
-            setTimeout(() => {
-                finalMessage.classList.add('show');
-                spawnButterflies();
-            }, 800);
-        }
-
-        function spawnButterflies() {
-            for(let i=0; i<15; i++) {
-                setTimeout(() => {
-                    let b = document.createElement('div');
-                    b.classList.add('butterfly');
-                    b.innerText = Math.random() > 0.5 ? '🦋' : '✨';
-                    b.style.left = '50%';
-                    b.style.top = '70%';
-                    
-                    const angle = Math.random() * Math.PI * 2;
-                    const distance = 100 + Math.random() * 200;
-                    const tx = Math.cos(angle) * distance;
-                    const ty = Math.sin(angle) * distance - 200; // Float upwards
-
-                    b.animate([
-                        { transform: 'translate(-50%, -50%) scale(0) rotate(0deg)', opacity: 0 },
-                        { transform: 'translate(-50%, -50%) scale(1) rotate(20deg)', opacity: 1, offset: 0.2 },
-                        { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.5) rotate(${Math.random() * 90 - 45}deg)`, opacity: 0 }
-                    ], {
-                        duration: 3000 + Math.random() * 2000,
-                        easing: 'ease-out'
-                    });
-
-                    document.body.appendChild(b);
-                    setTimeout(() => b.remove(), 5000);
-                }, i * 150); // Stagger them
-            }
-        }
     </script>
 </body>
 </html>
