@@ -2,380 +2,642 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Weightless — For My Bhura</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>For My Sunshine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
     <style>
+        :root {
+            --bg-cream: #fffdf9;
+            --bg-blush: #ffeef2;
+            --bg-gold: #fff6d6;
+            --text-main: #4a3b32;
+            --text-soft: #7d6b61;
+            --accent-rose: #e57a84;
+            --accent-rose-dark: #c95b66;
+            --accent-gold: #f5b041;
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
 
         body, html {
             width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #171215;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #f5f5f4;
-            transition: background-color 2.5s cubic-bezier(0.16, 1, 0.3, 1);
+            min-height: 100dvh;
+            background: linear-gradient(145deg, var(--bg-cream) 0%, var(--bg-blush) 50%, var(--bg-gold) 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Nunito', sans-serif;
+            overflow-x: hidden;
+            user-select: none;
         }
 
-        /* Anti-Gravity Ambient Warmth Layer */
-        .ambient-warmth {
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Background Floating Elements */
+        #bg-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 100%, rgba(217, 119, 6, 0.35) 0%, rgba(180, 83, 9, 0.15) 45%, transparent 75%);
-            opacity: 0;
-            transition: opacity 3s ease;
+            inset: 0;
             pointer-events: none;
             z-index: 1;
         }
 
-        canvas#physics-canvas {
+        /* Screen Management */
+        .screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-        }
-
-        /* UI Container */
-        .ui-overlay {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 3.5rem 1.5rem 2.5rem 1.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            opacity: 0;
             pointer-events: none;
+            transform: translateY(15px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            z-index: 10;
+            overflow-y: auto;
         }
 
-        /* Header Tag */
-        .header-tag {
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: #a8a29e;
-            opacity: 0.8;
-            transition: color 2s ease;
+        .screen.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
         }
 
-        /* Main Narrative Card */
-        .narrative-card {
-            width: 100%;
-            max-width: 480px;
-            background: rgba(30, 26, 29, 0.65);
+        /* Glassmorphic Wholesome Cards */
+        .wholesome-card {
+            background: rgba(255, 255, 255, 0.82);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 2.2rem 1.8rem;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            pointer-events: auto;
-            transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+            padding: 2rem 1.5rem;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 50px rgba(229, 122, 132, 0.12), 0 4px 12px rgba(0, 0, 0, 0.03);
+            position: relative;
         }
 
-        .narrative-card.weightless {
-            background: rgba(254, 243, 199, 0.08);
-            border-color: rgba(251, 191, 36, 0.25);
-            box-shadow: 0 25px 50px rgba(217, 119, 6, 0.15);
-            transform: translateY(-15px);
-        }
-
-        h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2rem, 7vw, 2.7rem);
-            font-weight: 600;
-            line-height: 1.15;
-            color: #fafaf9;
-            margin-bottom: 1.2rem;
-            transition: color 2s ease;
-        }
-
-        p {
-            font-size: 1rem;
-            font-weight: 300;
-            line-height: 1.8;
-            color: #d6d3d1;
-            margin-bottom: 1rem;
-            transition: color 2s ease;
-        }
-
-        p:last-of-type {
-            margin-bottom: 0;
-        }
-
-        .highlight {
-            color: #f59e0b;
-            font-weight: 500;
-        }
-
-        /* Anti-Gravity Action Button */
-        .action-container {
-            pointer-events: auto;
-            display: flex;
-            flex-direction: column;
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex;
             align-items: center;
-            gap: 12px;
-        }
-
-        .btn-antigravity {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            color: #fff;
-            border: none;
-            padding: 1rem 2.2rem;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 1.5rem;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #eb828c 0%, #d96672 100%);
+            color: white;
             border-radius: 50px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 25px rgba(217, 102, 114, 0.35);
+            transition: all 0.25s ease;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(217, 119, 6, 0.35);
-            transition: all 0.4s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            border: none;
         }
 
-        .btn-antigravity:active {
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(217, 102, 114, 0.45);
+        }
+
+        .btn-primary:active {
             transform: scale(0.96);
         }
 
-        .hint {
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #78716c;
+        /* Progress Pills */
+        .progress-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1.25rem;
+            justify-content: center;
         }
 
-        /* Floating Thought Orbs */
-        .thought-bubble {
-            position: absolute;
-            background: rgba(254, 243, 199, 0.12);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            color: #fef3c7;
-            padding: 0.8rem 1.4rem;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            pointer-events: auto;
-            cursor: grab;
-            white-space: nowrap;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(229, 122, 132, 0.25);
+            transition: all 0.4s ease;
+        }
+
+        .progress-dot.active {
+            width: 28px;
+            border-radius: 10px;
+            background: var(--accent-rose);
+        }
+
+        /* Thought Cloud (The Doubt) */
+        .doubt-box {
+            background: linear-gradient(135deg, #f1f3f6 0%, #e4e7ec 100%);
+            border: 2px dashed #b8c0cc;
+            border-radius: 22px;
+            padding: 1.75rem 1.25rem;
+            color: #5c6470;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: gentleFloat 3.5s infinite ease-in-out alternate;
+        }
+
+        .doubt-box:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes gentleFloat {
+            0% { transform: translateY(-4px); }
+            100% { transform: translateY(4px); }
+        }
+
+        .tap-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 16px;
+            background: white;
+            color: var(--accent-rose-dark);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            animation: pulseBadge 2s infinite;
+        }
+
+        @keyframes pulseBadge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        /* Truth Box (The Reassurance) */
+        .truth-box {
+            display: none;
             opacity: 0;
-            transition: opacity 1.5s ease;
+            transform: scale(0.92);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .truth-box.revealed {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .highlight-pink {
+            color: var(--accent-rose-dark);
+            font-weight: 800;
+            background: rgba(255, 224, 230, 0.6);
+            padding: 0 6px;
+            border-radius: 6px;
+        }
+
+        /* Timer Styling */
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 1rem 0;
+        }
+
+        .timer-cell {
+            background: linear-gradient(180deg, #ffffff 0%, #fff7f8 100%);
+            border: 1px solid rgba(229, 122, 132, 0.25);
+            border-radius: 16px;
+            padding: 10px 4px;
+            box-shadow: 0 4px 12px rgba(229, 122, 132, 0.08);
+        }
+
+        .timer-val {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--accent-rose-dark);
+            display: block;
+            line-height: 1.2;
+        }
+
+        .timer-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-soft);
+            font-weight: 700;
+        }
+
+        /* Burst Particles */
+        .pop-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            font-size: 1.3rem;
+        }
+
+        /* Floating Love Notes on Final Screen */
+        .love-toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #4a3b32;
+            color: #fffdf9;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            opacity: 0;
+            transition: all 0.35s ease;
+            z-index: 90;
+            white-space: nowrap;
+        }
+
+        .love-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-warmth" id="warmth"></div>
-    <canvas id="physics-canvas"></canvas>
+    <!-- Ambient Sunshine & Butterflies Canvas -->
+    <canvas id="bg-canvas"></canvas>
 
-    <div class="ui-overlay">
-        <div class="header-tag" id="tag">Phase: Heavy</div>
-
-        <div class="narrative-card" id="card">
-            <h1 id="title">Take a breath, Bhura.</h1>
-            <p id="body-text">
-                I know you are covered in biscuit crumbs right now, carefully layering that Lotus Biscoff cheesecake for me. But I can also feel how heavy everything feels on your shoulders.
+    <!-- ================= SCREEN 1: WELCOME ================= -->
+    <div id="screen-intro" class="screen active">
+        <div class="wholesome-card">
+            <div class="text-5xl mb-4 animate-bounce">🥺🌤️</div>
+            <h1 class="text-3xl md:text-4xl font-semibold text-[#c95b66] mb-3">
+                Hey, my sweet girl.
+            </h1>
+            <p class="text-base md:text-lg text-[#5e4c41] leading-relaxed mb-3">
+                I heard your overthinking brain was being a little mean to you lately, telling you things that aren't true at all.
             </p>
-            <p id="sub-text">
-                You carry so much without saying a word. But you don't have to carry the sky alone.
+            <p class="text-sm text-[#8c7b70] italic mb-2">
+                No rushed timers here. Take your time and click through whenever you're ready.
             </p>
-        </div>
-
-        <div class="action-container" id="action-box">
-            <button class="btn-antigravity" id="trigger-btn">
-                <span>Lift The Weight</span>
-                <span style="font-size: 1.2rem;">↑</span>
+            <button class="btn-primary w-full" id="btn-begin">
+                Let's clear those clouds 🤍
             </button>
-            <div class="hint" id="hint">Tap to invert gravity</div>
         </div>
     </div>
 
+    <!-- ================= SCREEN 2: ON-CLICK THOUGHT BUSTER ================= -->
+    <div id="screen-cards" class="screen">
+        <div class="wholesome-card">
+            <!-- Progress Dots -->
+            <div class="progress-bar" id="progress-bar">
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+            </div>
+
+            <p class="text-xs font-bold uppercase tracking-widest text-[#b08d85] mb-3" id="step-title">
+                Silly Thought #1 of 4
+            </p>
+
+            <!-- The Doubt Bubble (Click to Pop) -->
+            <div id="doubt-box" class="doubt-box">
+                <div class="text-3xl mb-2">🌧️</div>
+                <p class="text-lg font-semibold italic" id="doubt-text">
+                    "I think you don't need me anymore..."
+                </p>
+                <span class="tap-badge">✨ Tap to pop this lie ✨</span>
+            </div>
+
+            <!-- The Reassuring Truth (Appears after clicking the doubt) -->
+            <div id="truth-box" class="truth-box">
+                <div class="text-4xl mb-3" id="truth-icon">🌻</div>
+                <h2 class="text-2xl serif text-[#c95b66] mb-3" id="truth-heading">
+                    The Actual Truth:
+                </h2>
+                <p class="text-base md:text-lg text-[#4a3b32] leading-relaxed mb-4" id="truth-text">
+                    I don't just need you, <span class="highlight-pink">I choose you</span> every single day. My day doesn't start or end right without you. You are my favorite person and the anchor I never knew I needed.
+                </p>
+                <button class="btn-primary w-full" id="btn-next-card">
+                    I hear you... Next ➔
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SCREEN 3: WHOLESOME FINALE & LIVE TIMER ================= -->
+    <div id="screen-final" class="screen">
+        <div class="wholesome-card my-auto">
+            <div class="text-4xl mb-2">🦋💛🌞</div>
+            <h1 class="text-3xl font-semibold text-[#c95b66] mb-2">
+                My Forever Sunshine
+            </h1>
+            <p class="text-sm md:text-base text-[#5e4c41] leading-relaxed mb-4">
+                You are <strong>never</strong> a burden. You are my peace, my butterflies, and my home. And just in case you ever wonder how much patience and love I have left for you:
+            </p>
+
+            <!-- Live Patience & Love Timer Box -->
+            <div class="bg-[#fff9fa] border border-[#f5d0d6] rounded-2xl p-3 mb-4">
+                <p class="text-xs font-bold uppercase tracking-wider text-[#c95b66] mb-1">
+                    ⏳ Live Patience & Love Timer
+                </p>
+                <p class="text-xs text-[#8c7b70] mb-2">
+                    Time spent loving & reassuring you right now:
+                </p>
+
+                <div class="timer-grid">
+                    <div class="timer-cell">
+                        <span class="timer-val">∞</span>
+                        <span class="timer-label">Years Left</span>
+                    </div>
+                    <div class="timer-cell">
+                        <span class="timer-val" id="t-hours">00</span>
+                        <span class="timer-label">Hours</span>
+                    </div>
+                    <div class="timer-cell">
+                        <span class="timer-val" id="t-mins">00</span>
+                        <span class="timer-label">Mins</span>
+                    </div>
+                    <div class="timer-cell">
+                        <span class="timer-val" id="t-secs">00</span>
+                        <span class="timer-label">Secs</span>
+                    </div>
+                </div>
+
+                <p class="text-xs font-semibold text-[#d96672] mt-1">
+                    Patience Remaining: <span class="underline">100% (Auto-renews forever)</span>
+                </p>
+            </div>
+
+            <p class="text-sm text-[#5e4c41] italic mb-3">
+                I wouldn't trade you for anyone in this universe. Only you, puchku. Always.
+            </p>
+
+            <!-- Interactive Wholesome Hug / Sunshine Button -->
+            <button class="btn-primary w-full" id="btn-shower-love">
+                Tap for Butterflies & Hugs 🦋
+            </button>
+
+            <button class="mt-4 text-xs font-bold text-[#9c857b] underline block mx-auto cursor-pointer" id="btn-replay">
+                Read the reminders again ↺
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification for Cute Notes -->
+    <div id="love-toast" class="love-toast">You are my favorite human 💛</div>
+
     <script>
-        const canvas = document.getElementById('physics-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA: HER EXACT DOUBTS vs YOUR REASSURANCE ---
+            const cardsData = [
+                {
+                    step: "Silly Thought #1 of 4",
+                    doubt: "“Because I think you don't need me anymore...”",
+                    icon: "🌻",
+                    heading: "I need you more than ever.",
+                    truth: "Even when life gets busy or chaotic, you are the <span class='highlight-pink'>center of my world</span>. I don't just need you—I want you in every single chapter of my life. Nothing feels complete until I tell you about it.",
+                    btnText: "Okay, I believe you... Next ➔"
+                },
+                {
+                    step: "Silly Thought #2 of 4",
+                    doubt: "“I felt like somehow being with me felt like a burden...”",
+                    icon: "🏡",
+                    heading: "You are my relief, never a burden.",
+                    truth: "How could my <span class='highlight-pink'>safest place</span> ever be a burden? When my head is loud, you are my quiet. Loving you and taking care of you is the easiest, most natural thing I have ever done.",
+                    btnText: "That feels warm... Next ➔"
+                },
+                {
+                    step: "Silly Thought #3 of 4",
+                    doubt: "“...instead of the butterflies and sunshine people feel in love.”",
+                    icon: "🦋",
+                    heading: "You ARE my sunshine & butterflies.",
+                    truth: "The butterflies didn't fly away—they just built a <span class='highlight-pink'>permanent home</span> in my chest. Every time you smile or laugh, my whole world lights up. You bring me more sunshine than you even realize.",
+                    btnText: "One more thought... Next ➔"
+                },
+                {
+                    step: "Silly Thought #4 of 4",
+                    doubt: "“I thought you'll be happy with someone you have more patience for.”",
+                    icon: "💛",
+                    heading: "There is no 'someone else.'",
+                    truth: "I don't want anyone else. I want <span class='highlight-pink'>you</span>—on your happy days, your low days, and your overthinking days. My patience for you isn't running out; it grows deeper because I love every bit of who you are.",
+                    btnText: "See my promise to you ✨"
+                }
+            ];
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+            let currentIndex = 0;
 
-        // Physics State
-        let gravity = 0.25; // Initial downward pull
-        let antiGravityActive = false;
+            // DOM Elements
+            const screenIntro = document.getElementById('screen-intro');
+            const screenCards = document.getElementById('screen-cards');
+            const screenFinal = document.getElementById('screen-final');
 
-        // Particle Class (Crumbs & Embers)
-        class Particle {
-            constructor() {
-                this.reset(true);
+            const btnBegin = document.getElementById('btn-begin');
+            const doubtBox = document.getElementById('doubt-box');
+            const truthBox = document.getElementById('truth-box');
+            const btnNextCard = document.getElementById('btn-next-card');
+
+            const stepTitle = document.getElementById('step-title');
+            const doubtText = document.getElementById('doubt-text');
+            const truthIcon = document.getElementById('truth-icon');
+            const truthHeading = document.getElementById('truth-heading');
+            const truthText = document.getElementById('truth-text');
+            const progressDots = document.querySelectorAll('.progress-dot');
+
+            // --- 1. NAVIGATION & ON-CLICK FLOW ---
+            btnBegin.addEventListener('click', (e) => {
+                spawnBurst(e.clientX, e.clientY, ['🌤️', '💛', '✨']);
+                screenIntro.classList.remove('active');
+                setTimeout(() => {
+                    loadCard(0);
+                    screenCards.classList.add('active');
+                }, 400);
+            });
+
+            function loadCard(index) {
+                const item = cardsData[index];
+                stepTitle.textContent = item.step;
+                doubtText.textContent = item.doubt;
+                truthIcon.textContent = item.icon;
+                truthHeading.textContent = item.heading;
+                truthText.innerHTML = item.truth;
+                btnNextCard.textContent = item.btnText;
+
+                // Update Progress Dots
+                progressDots.forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === index);
+                });
+
+                // Reset visibility so Doubt shows first
+                doubtBox.style.display = 'block';
+                truthBox.classList.remove('revealed');
             }
 
-            reset(initial = false) {
-                this.x = Math.random() * width;
-                this.y = initial ? Math.random() * height : (gravity > 0 ? -10 : height + 10);
-                this.radius = Math.random() * 3 + 1.5;
-                this.vx = (Math.random() - 0.5) * 1.5;
-                this.vy = Math.random() * 2 - 1;
-                this.color = '#854d0e'; // Default crumb color
-                this.alpha = Math.random() * 0.5 + 0.3;
-                this.oscillationSpeed = Math.random() * 0.02 + 0.01;
+            // Clicking the Doubt Bubble pops it and reveals the Truth (No auto-timer!)
+            doubtBox.addEventListener('click', (e) => {
+                const rect = doubtBox.getBoundingClientRect();
+                const clickX = e.clientX || (rect.left + rect.width / 2);
+                const clickY = e.clientY || (rect.top + rect.height / 2);
+
+                spawnBurst(clickX, clickY, ['🦋', '🌸', '✨', '💛', '☀️']);
+
+                doubtBox.style.display = 'none';
+                truthBox.classList.add('revealed');
+            });
+
+            // Clicking the Next Button advances to the next card or Final Screen
+            btnNextCard.addEventListener('click', (e) => {
+                spawnBurst(e.clientX, e.clientY, ['🤍', '✨']);
+                currentIndex++;
+
+                if (currentIndex < cardsData.length) {
+                    loadCard(currentIndex);
+                } else {
+                    screenCards.classList.remove('active');
+                    setTimeout(() => {
+                        screenFinal.classList.add('active');
+                        spawnBurst(window.innerWidth / 2, window.innerHeight / 3, ['🦋', '🌞', '💛', '💖', '🌸']);
+                    }, 400);
+                }
+            });
+
+            // Replay Button
+            document.getElementById('btn-replay').addEventListener('click', () => {
+                currentIndex = 0;
+                screenFinal.classList.remove('active');
+                setTimeout(() => {
+                    loadCard(0);
+                    screenCards.classList.add('active');
+                }, 400);
+            });
+
+            // --- 2. LIVE WHOLESOME TIMER ---
+            const startTime = Date.now();
+            const elHours = document.getElementById('t-hours');
+            const elMins = document.getElementById('t-mins');
+            const elSecs = document.getElementById('t-secs');
+
+            // Base offset so it already looks like a rich ongoing counter of today's love, plus real-time ticking
+            const baseSecondsOffset = (14 * 3600) + (28 * 60); 
+
+            function updateTimer() {
+                const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000) + baseSecondsOffset;
+                const hours = Math.floor(elapsedSeconds / 3600);
+                const mins = Math.floor((elapsedSeconds % 3600) / 60);
+                const secs = elapsedSeconds % 60;
+
+                elHours.textContent = String(hours).padStart(2, '0');
+                elMins.textContent = String(mins).padStart(2, '0');
+                elSecs.textContent = String(secs).padStart(2, '0');
             }
+            setInterval(updateTimer, 1000);
+            updateTimer();
 
-            update() {
-                this.vy += gravity * 0.15;
-                this.x += this.vx + Math.sin(this.y * 0.01) * 0.5;
-                this.y += this.vy;
+            // --- 3. EXTRA LOVE SHOWER BUTTON ON FINAL SCREEN ---
+            const sweetNotes = [
+                "Zero burden, 100% my baby 🥹",
+                "Butterflies every time I see you 🦋",
+                "My patience for you is infinite ♾️",
+                "You are my safest place 🏡",
+                "My sweet little puchku forever 💛",
+                "Sending you the tightest hug right now 🤗"
+            ];
+            let noteIdx = 0;
+            const toastEl = document.getElementById('love-toast');
+            let toastTimeout;
 
-                // Air resistance
-                this.vx *= 0.99;
-                this.vy *= 0.98;
+            document.getElementById('btn-shower-love').addEventListener('click', (e) => {
+                spawnBurst(
+                    e.clientX || window.innerWidth / 2,
+                    e.clientY || window.innerHeight / 2,
+                    ['🦋', '☀️', '💛', '🌷', '✨', '🥰']
+                );
 
-                // Rebound or reset depending on gravity direction
-                if (gravity > 0 && this.y > height - 10) {
-                    this.y = height - 10;
-                    this.vy *= -0.3; // Rest on floor
-                } else if (gravity < 0 && this.y < -20) {
-                    this.reset(false);
+                toastEl.textContent = sweetNotes[noteIdx % sweetNotes.length];
+                noteIdx++;
+                toastEl.classList.add('show');
+
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toastEl.classList.remove('show');
+                }, 2600);
+            });
+
+            // --- 4. PARTICLE BURST EFFECT ---
+            function spawnBurst(x, y, emojis) {
+                for (let i = 0; i < 14; i++) {
+                    const el = document.createElement('div');
+                    el.className = 'pop-particle';
+                    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    el.style.left = `${x}px`;
+                    el.style.top = `${y}px`;
+                    document.body.appendChild(el);
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 50 + Math.random() * 90;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance - 30;
+
+                    el.animate([
+                        { transform: 'translate(-50%, -50%) scale(0.5)', opacity: 1 },
+                        { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.3)`, opacity: 0 }
+                    ], {
+                        duration: 900 + Math.random() * 400,
+                        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                        fill: 'forwards'
+                    });
+
+                    setTimeout(() => el.remove(), 1400);
                 }
             }
 
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = antiGravityActive ? `rgba(251, 191, 36, ${this.alpha})` : `rgba(180, 83, 9, ${this.alpha})`;
-                ctx.shadowBlur = antiGravityActive ? 12 : 0;
-                ctx.shadowColor = '#f59e0b';
-                ctx.fill();
-                ctx.shadowBlur = 0;
+            // --- 5. AMBIENT SUNSHINE & FLOATING MOTES CANVAS ---
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let w, h;
+            const motes = [];
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
             }
-        }
+            window.addEventListener('resize', resize);
+            resize();
 
-        // Initialize 70 biscuit crumbs
-        const particles = [];
-        for (let i = 0; i < 70; i++) {
-            particles.push(new Particle());
-        }
-
-        // Floating Thoughts Data
-        const thoughts = [
-            "Pass some of that weight to me.",
-            "You are doing so much, Anushka.",
-            "I'm right here beside you.",
-            "Your cheesecake will be incredible.",
-            "Let me hold the sky for you today."
-        ];
-
-        const activeBubbles = [];
-
-        function spawnFloatingThought(text, index) {
-            const el = document.createElement('div');
-            el.className = 'thought-bubble';
-            el.innerText = text;
-            document.body.appendChild(el);
-
-            const bubbleObj = {
-                element: el,
-                x: width * 0.15 + (Math.random() * (width * 0.6)),
-                y: height * 0.5 + (index * 60) + Math.random() * 20,
-                vx: (Math.random() - 0.5) * 0.8,
-                vy: -(Math.random() * 0.6 + 0.4),
-                seed: Math.random() * 100
-            };
-
-            activeBubbles.push(bubbleObj);
-            setTimeout(() => { el.style.opacity = '1'; }, 200 * index);
-        }
-
-        // Animation Loop
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-
-            // Update particles
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            // Update floating HTML bubbles if anti-gravity is on
-            if (antiGravityActive) {
-                activeBubbles.forEach(b => {
-                    b.y += b.vy;
-                    b.x += Math.sin((Date.now() * 0.001) + b.seed) * 0.6;
-                    b.element.style.transform = `translate(${b.x}px, ${b.y}px)`;
-
-                    // Wrap around top to bottom softly
-                    if (b.y < -50) {
-                        b.y = height + 20;
-                        b.x = width * 0.1 + (Math.random() * (width * 0.7));
-                    }
+            for (let i = 0; i < 35; i++) {
+                motes.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: Math.random() * 4 + 2,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: -Math.random() * 0.4 - 0.15,
+                    alpha: Math.random() * 0.5 + 0.2,
+                    color: Math.random() > 0.5 ? '255, 194, 209' : '245, 176, 65'
                 });
             }
 
-            requestAnimationFrame(animate);
-        }
-        animate();
+            function drawAmbient() {
+                ctx.clearRect(0, 0, w, h);
+                motes.forEach(m => {
+                    m.x += m.vx;
+                    m.y += m.vy;
+                    if (m.y < -10) { m.y = h + 10; m.x = Math.random() * w; }
+                    if (m.x < -10) m.x = w + 10;
+                    if (m.x > w + 10) m.x = -10;
 
-        // Trigger Anti-Gravity
-        const triggerBtn = document.getElementById('trigger-btn');
-        const warmth = document.getElementById('warmth');
-        const card = document.getElementById('card');
-        const title = document.getElementById('title');
-        const bodyText = document.getElementById('body-text');
-        const subText = document.getElementById('sub-text');
-        const tag = document.getElementById('tag');
-        const hint = document.getElementById('hint');
-
-        triggerBtn.addEventListener('click', () => {
-            if (antiGravityActive) return;
-            antiGravityActive = true;
-
-            // Invert Gravity
-            gravity = -0.18;
-
-            // Visual Shifts
-            document.body.style.backgroundColor = '#1f1610';
-            warmth.style.opacity = '1';
-            tag.innerText = "Phase: Weightless";
-            tag.style.color = "#f59e0b";
-            card.classList.add('weightless');
-
-            // Copy Transition
-            title.innerText = "The weight is lifted.";
-            bodyText.innerHTML = "You don't need to be invincible every minute of the day. Whenever the world feels too loud or heavy, <span class='highlight'>lean into me</span>.";
-            subText.innerHTML = "Finish making that cheesecake at your own pace. I am right here, and I'm not going anywhere. ❤️";
-
-            // Transform button
-            triggerBtn.style.background = "rgba(251, 191, 36, 0.2)";
-            triggerBtn.style.border = "1px solid rgba(251, 191, 36, 0.4)";
-            triggerBtn.style.boxShadow = "0 0 25px rgba(245, 158, 11, 0.25)";
-            triggerBtn.innerHTML = "<span>Weightless Forever</span> ✨";
-            hint.innerText = "Floating in orbit";
-
-            // Spawn weightless thoughts
-            thoughts.forEach((t, i) => spawnFloatingThought(t, i));
+                    ctx.beginPath();
+                    ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${m.color}, ${m.alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(drawAmbient);
+            }
+            drawAmbient();
         });
     </script>
 </body>
