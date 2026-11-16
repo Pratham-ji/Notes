@@ -1,644 +1,853 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>For My Sunshine</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-cream: #fffdf9;
-            --bg-blush: #ffeef2;
-            --bg-gold: #fff6d6;
-            --text-main: #4a3b32;
-            --text-soft: #7d6b61;
-            --accent-rose: #e57a84;
-            --accent-rose-dark: #c95b66;
-            --accent-gold: #f5b041;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body, html {
-            width: 100%;
-            min-height: 100dvh;
-            background: linear-gradient(145deg, var(--bg-cream) 0%, var(--bg-blush) 50%, var(--bg-gold) 100%);
-            background-attachment: fixed;
-            color: var(--text-main);
-            font-family: 'Nunito', sans-serif;
-            overflow-x: hidden;
-            user-select: none;
-        }
-
-        h1, h2, h3, .serif {
-            font-family: 'Playfair Display', serif;
-        }
-
-        /* Background Floating Elements */
-        #bg-canvas {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Screen Management */
-        .screen {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 1.5rem;
-            text-align: center;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(15px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-            z-index: 10;
-            overflow-y: auto;
-        }
-
-        .screen.active {
-            opacity: 1;
-            pointer-events: all;
-            transform: translateY(0);
-        }
-
-        /* Glassmorphic Wholesome Cards */
-        .wholesome-card {
-            background: rgba(255, 255, 255, 0.82);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 2px solid rgba(255, 255, 255, 0.9);
-            border-radius: 28px;
-            padding: 2rem 1.5rem;
-            width: 100%;
-            max-width: 440px;
-            box-shadow: 0 20px 50px rgba(229, 122, 132, 0.12), 0 4px 12px rgba(0, 0, 0, 0.03);
-            position: relative;
-        }
-
-        /* Buttons */
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 1.5rem;
-            padding: 14px 32px;
-            background: linear-gradient(135deg, #eb828c 0%, #d96672 100%);
-            color: white;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 8px 25px rgba(217, 102, 114, 0.35);
-            transition: all 0.25s ease;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(217, 102, 114, 0.45);
-        }
-
-        .btn-primary:active {
-            transform: scale(0.96);
-        }
-
-        /* Progress Pills */
-        .progress-bar {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 1.25rem;
-            justify-content: center;
-        }
-
-        .progress-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(229, 122, 132, 0.25);
-            transition: all 0.4s ease;
-        }
-
-        .progress-dot.active {
-            width: 28px;
-            border-radius: 10px;
-            background: var(--accent-rose);
-        }
-
-        /* Thought Cloud (The Doubt) */
-        .doubt-box {
-            background: linear-gradient(135deg, #f1f3f6 0%, #e4e7ec 100%);
-            border: 2px dashed #b8c0cc;
-            border-radius: 22px;
-            padding: 1.75rem 1.25rem;
-            color: #5c6470;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: gentleFloat 3.5s infinite ease-in-out alternate;
-        }
-
-        .doubt-box:active {
-            transform: scale(0.95);
-        }
-
-        @keyframes gentleFloat {
-            0% { transform: translateY(-4px); }
-            100% { transform: translateY(4px); }
-        }
-
-        .tap-badge {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 6px 16px;
-            background: white;
-            color: var(--accent-rose-dark);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-            animation: pulseBadge 2s infinite;
-        }
-
-        @keyframes pulseBadge {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.06); }
-        }
-
-        /* Truth Box (The Reassurance) */
-        .truth-box {
-            display: none;
-            opacity: 0;
-            transform: scale(0.92);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .truth-box.revealed {
-            display: block;
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .highlight-pink {
-            color: var(--accent-rose-dark);
-            font-weight: 800;
-            background: rgba(255, 224, 230, 0.6);
-            padding: 0 6px;
-            border-radius: 6px;
-        }
-
-        /* Timer Styling */
-        .timer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin: 1rem 0;
-        }
-
-        .timer-cell {
-            background: linear-gradient(180deg, #ffffff 0%, #fff7f8 100%);
-            border: 1px solid rgba(229, 122, 132, 0.25);
-            border-radius: 16px;
-            padding: 10px 4px;
-            box-shadow: 0 4px 12px rgba(229, 122, 132, 0.08);
-        }
-
-        .timer-val {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--accent-rose-dark);
-            display: block;
-            line-height: 1.2;
-        }
-
-        .timer-label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-soft);
-            font-weight: 700;
-        }
-
-        /* Burst Particles */
-        .pop-particle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 100;
-            font-size: 1.3rem;
-        }
-
-        /* Floating Love Notes on Final Screen */
-        .love-toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: #4a3b32;
-            color: #fffdf9;
-            padding: 10px 22px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            opacity: 0;
-            transition: all 0.35s ease;
-            z-index: 90;
-            white-space: nowrap;
-        }
-
-        .love-toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>I'm So Sorry, My Puchku 💜</title>
+<script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+<link href="[https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap)" rel="stylesheet">
+<style>
+:root {
+--kuromi-black: #23192d;
+--kuromi-dark: #342344;
+--kuromi-pink: #ff85b3;
+--kuromi-light-pink: #ffd6e7;
+--kuromi-lavender: #f3e8ff;
+--kuromi-purple: #c084fc;
+--mehandi-green: #5c7c32;
+--mehandi-henna: #9c4a1a;
+}
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+-webkit-tap-highlight-color: transparent;
+}
+body, html {
+width: 100%;
+min-height: 100dvh;
+font-family: 'Quicksand', sans-serif;
+background: linear-gradient(160deg, #1f1627 0%, #352145 45%, #4a2545 100%);
+color: #fff;
+overflow-x: hidden;
+user-select: none;
+scroll-behavior: smooth;
+}
+h1, h2, h3, .kawaii-font {
+font-family: 'Fredoka', sans-serif;
+}
+/* Floating Kuromi Background Canvas */
+#bg-canvas {
+position: fixed;
+inset: 0;
+pointer-events: none;
+z-index: 0;
+}
+/* Kawaii Glass Cards */
+.kuromi-card {
+background: rgba(255, 255, 255, 0.94);
+color: var(--kuromi-black);
+border: 3px solid var(--kuromi-pink);
+border-radius: 28px;
+box-shadow: 0 14px 0 var(--kuromi-black), 0 20px 40px rgba(255, 133, 179, 0.25);
+position: relative;
+transition: transform 0.3s ease;
+}
+.kuromi-card-dark {
+background: rgba(35, 25, 45, 0.92);
+backdrop-filter: blur(16px);
+color: #fff;
+border: 3px solid var(--kuromi-pink);
+border-radius: 28px;
+box-shadow: 0 12px 0 #120b18, 0 20px 40px rgba(255, 133, 179, 0.2);
+position: relative;
+}
+/* Kuromi Ear Decorations on Video Frame */
+.ear-left, .ear-right {
+position: absolute;
+top: -28px;
+width: 54px;
+height: 54px;
+background: var(--kuromi-black);
+border: 3px solid var(--kuromi-pink);
+z-index: 2;
+}
+.ear-left {
+left: 24px;
+border-radius: 12px 40px 0 40px;
+transform: rotate(-18deg);
+}
+.ear-right {
+right: 24px;
+border-radius: 40px 12px 40px 0;
+transform: rotate(18deg);
+}
+/* Kawaii Buttons */
+.btn-kuromi {
+background: linear-gradient(135deg, #ff85b3 0%, #ec4899 100%);
+color: white;
+font-family: 'Fredoka', sans-serif;
+font-weight: 600;
+border: 3px solid var(--kuromi-black);
+border-radius: 50px;
+padding: 12px 28px;
+box-shadow: 0 6px 0 var(--kuromi-black);
+transition: all 0.15s ease;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+}
+.btn-kuromi:active {
+transform: translateY(4px);
+box-shadow: 0 2px 0 var(--kuromi-black);
+}
+.btn-lavender {
+background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%);
+color: var(--kuromi-black);
+font-family: 'Fredoka', sans-serif;
+font-weight: 600;
+border: 3px solid var(--kuromi-black);
+border-radius: 50px;
+padding: 10px 22px;
+box-shadow: 0 5px 0 var(--kuromi-black);
+transition: all 0.15s ease;
+cursor: pointer;
+}
+.btn-lavender:active {
+transform: translateY(3px);
+box-shadow: 0 2px 0 var(--kuromi-black);
+}
+/* Custom Animated Video Stage */
+.video-stage {
+background: linear-gradient(180deg, #2a1b38 0%, #442754 100%);
+border: 3px solid var(--kuromi-black);
+border-radius: 20px;
+overflow: hidden;
+position: relative;
+aspect-ratio: 16 / 11;
+width: 100%;
+}
+/* Subtitle Pill inside Video */
+.video-subtitle {
+position: absolute;
+bottom: 12px;
+left: 50%;
+transform: translateX(-50%);
+width: 92%;
+background: rgba(20, 12, 28, 0.88);
+border: 2px solid var(--kuromi-pink);
+color: #fff;
+padding: 8px 14px;
+border-radius: 16px;
+font-size: 0.88rem;
+font-weight: 600;
+text-align: center;
+z-index: 15;
+box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+line-height: 1.35;
+}
+/* Festival Stamp Cards */
+.stamp-slot {
+background: #fdf4ff;
+border: 2.5px dashed #d8b4fe;
+border-radius: 18px;
+padding: 12px 10px;
+cursor: pointer;
+transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+position: relative;
+overflow: hidden;
+}
+.stamp-slot.stamped {
+background: #fff0f6;
+border: 2.5px solid #ec4899;
+transform: scale(1.02);
+}
+.stamp-badge {
+position: absolute;
+top: 6px;
+right: 6px;
+background: #ec4899;
+color: white;
+font-size: 0.65rem;
+font-weight: 700;
+padding: 2px 7px;
+border-radius: 20px;
+transform: scale(0) rotate(-12deg);
+transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.stamp-slot.stamped .stamp-badge {
+transform: scale(1) rotate(-8deg);
+}
+/* Animations for Kuromi SVG */
+@keyframes bobble {
+0%, 100% { transform: translateY(0px) rotate(-1deg); }
+50% { transform: translateY(-6px) rotate(2deg); }
+}
+.kuromi-bobble {
+animation: bobble 2.8s infinite ease-in-out;
+}
+@keyframes tearDrop {
+0% { transform: translateY(0) scale(0.8); opacity: 0.9; }
+100% { transform: translateY(18px) scale(1.1); opacity: 0; }
+}
+.tear-anim {
+animation: tearDrop 1.2s infinite ease-in;
+}
+@keyframes heartBeat {
+0%, 100% { transform: scale(1); }
+50% { transform: scale(1.15); }
+}
+.heart-beat {
+animation: heartBeat 1.2s infinite ease-in-out;
+}
+/* Burst Particles */
+.burst-item {
+position: fixed;
+pointer-events: none;
+z-index: 999;
+font-size: 1.4rem;
+}
+</style>
 </head>
-<body>
-
-    <!-- Ambient Sunshine & Butterflies Canvas -->
-    <canvas id="bg-canvas"></canvas>
-
-    <!-- ================= SCREEN 1: WELCOME ================= -->
-    <div id="screen-intro" class="screen active">
-        <div class="wholesome-card">
-            <div class="text-5xl mb-4 animate-bounce">🥺🌤️</div>
-            <h1 class="text-3xl md:text-4xl font-semibold text-[#c95b66] mb-3">
-                Hey, my sweet girl.
-            </h1>
-            <p class="text-base md:text-lg text-[#5e4c41] leading-relaxed mb-3">
-                I heard your overthinking brain was being a little mean to you lately, telling you things that aren't true at all.
-            </p>
-            <p class="text-sm text-[#8c7b70] italic mb-2">
-                No rushed timers here. Take your time and click through whenever you're ready.
-            </p>
-            <button class="btn-primary w-full" id="btn-begin">
-                Let's clear those clouds 🤍
-            </button>
-        </div>
-    </div>
-
-    <!-- ================= SCREEN 2: ON-CLICK THOUGHT BUSTER ================= -->
-    <div id="screen-cards" class="screen">
-        <div class="wholesome-card">
-            <!-- Progress Dots -->
-            <div class="progress-bar" id="progress-bar">
-                <div class="progress-dot active"></div>
-                <div class="progress-dot"></div>
-                <div class="progress-dot"></div>
-                <div class="progress-dot"></div>
-            </div>
-
-            <p class="text-xs font-bold uppercase tracking-widest text-[#b08d85] mb-3" id="step-title">
-                Silly Thought #1 of 4
-            </p>
-
-            <!-- The Doubt Bubble (Click to Pop) -->
-            <div id="doubt-box" class="doubt-box">
-                <div class="text-3xl mb-2">🌧️</div>
-                <p class="text-lg font-semibold italic" id="doubt-text">
-                    "I think you don't need me anymore..."
-                </p>
-                <span class="tap-badge">✨ Tap to pop this lie ✨</span>
-            </div>
-
-            <!-- The Reassuring Truth (Appears after clicking the doubt) -->
-            <div id="truth-box" class="truth-box">
-                <div class="text-4xl mb-3" id="truth-icon">🌻</div>
-                <h2 class="text-2xl serif text-[#c95b66] mb-3" id="truth-heading">
-                    The Actual Truth:
-                </h2>
-                <p class="text-base md:text-lg text-[#4a3b32] leading-relaxed mb-4" id="truth-text">
-                    I don't just need you, <span class="highlight-pink">I choose you</span> every single day. My day doesn't start or end right without you. You are my favorite person and the anchor I never knew I needed.
-                </p>
-                <button class="btn-primary w-full" id="btn-next-card">
-                    I hear you... Next ➔
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ================= SCREEN 3: WHOLESOME FINALE & LIVE TIMER ================= -->
-    <div id="screen-final" class="screen">
-        <div class="wholesome-card my-auto">
-            <div class="text-4xl mb-2">🦋💛🌞</div>
-            <h1 class="text-3xl font-semibold text-[#c95b66] mb-2">
-                My Forever Sunshine
-            </h1>
-            <p class="text-sm md:text-base text-[#5e4c41] leading-relaxed mb-4">
-                You are <strong>never</strong> a burden. You are my peace, my butterflies, and my home. And just in case you ever wonder how much patience and love I have left for you:
-            </p>
-
-            <!-- Live Patience & Love Timer Box -->
-            <div class="bg-[#fff9fa] border border-[#f5d0d6] rounded-2xl p-3 mb-4">
-                <p class="text-xs font-bold uppercase tracking-wider text-[#c95b66] mb-1">
-                    ⏳ Live Patience & Love Timer
-                </p>
-                <p class="text-xs text-[#8c7b70] mb-2">
-                    Time spent loving & reassuring you right now:
-                </p>
-
-                <div class="timer-grid">
-                    <div class="timer-cell">
-                        <span class="timer-val">∞</span>
-                        <span class="timer-label">Years Left</span>
-                    </div>
-                    <div class="timer-cell">
-                        <span class="timer-val" id="t-hours">00</span>
-                        <span class="timer-label">Hours</span>
-                    </div>
-                    <div class="timer-cell">
-                        <span class="timer-val" id="t-mins">00</span>
-                        <span class="timer-label">Mins</span>
-                    </div>
-                    <div class="timer-cell">
-                        <span class="timer-val" id="t-secs">00</span>
-                        <span class="timer-label">Secs</span>
-                    </div>
-                </div>
-
-                <p class="text-xs font-semibold text-[#d96672] mt-1">
-                    Patience Remaining: <span class="underline">100% (Auto-renews forever)</span>
-                </p>
-            </div>
-
-            <p class="text-sm text-[#5e4c41] italic mb-3">
-                I wouldn't trade you for anyone in this universe. Only you, puchku. Always.
-            </p>
-
-            <!-- Interactive Wholesome Hug / Sunshine Button -->
-            <button class="btn-primary w-full" id="btn-shower-love">
-                Tap for Butterflies & Hugs 🦋
-            </button>
-
-            <button class="mt-4 text-xs font-bold text-[#9c857b] underline block mx-auto cursor-pointer" id="btn-replay">
-                Read the reminders again ↺
-            </button>
-        </div>
-    </div>
-
-    <!-- Toast Notification for Cute Notes -->
-    <div id="love-toast" class="love-toast">You are my favorite human 💛</div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- DATA: HER EXACT DOUBTS vs YOUR REASSURANCE ---
-            const cardsData = [
-                {
-                    step: "Silly Thought #1 of 4",
-                    doubt: "“Because I think you don't need me anymore...”",
-                    icon: "🌻",
-                    heading: "I need you more than ever.",
-                    truth: "Even when life gets busy or chaotic, you are the <span class='highlight-pink'>center of my world</span>. I don't just need you—I want you in every single chapter of my life. Nothing feels complete until I tell you about it.",
-                    btnText: "Okay, I believe you... Next ➔"
-                },
-                {
-                    step: "Silly Thought #2 of 4",
-                    doubt: "“I felt like somehow being with me felt like a burden...”",
-                    icon: "🏡",
-                    heading: "You are my relief, never a burden.",
-                    truth: "How could my <span class='highlight-pink'>safest place</span> ever be a burden? When my head is loud, you are my quiet. Loving you and taking care of you is the easiest, most natural thing I have ever done.",
-                    btnText: "That feels warm... Next ➔"
-                },
-                {
-                    step: "Silly Thought #3 of 4",
-                    doubt: "“...instead of the butterflies and sunshine people feel in love.”",
-                    icon: "🦋",
-                    heading: "You ARE my sunshine & butterflies.",
-                    truth: "The butterflies didn't fly away—they just built a <span class='highlight-pink'>permanent home</span> in my chest. Every time you smile or laugh, my whole world lights up. You bring me more sunshine than you even realize.",
-                    btnText: "One more thought... Next ➔"
-                },
-                {
-                    step: "Silly Thought #4 of 4",
-                    doubt: "“I thought you'll be happy with someone you have more patience for.”",
-                    icon: "💛",
-                    heading: "There is no 'someone else.'",
-                    truth: "I don't want anyone else. I want <span class='highlight-pink'>you</span>—on your happy days, your low days, and your overthinking days. My patience for you isn't running out; it grows deeper because I love every bit of who you are.",
-                    btnText: "See my promise to you ✨"
-                }
-            ];
-
-            let currentIndex = 0;
-
-            // DOM Elements
-            const screenIntro = document.getElementById('screen-intro');
-            const screenCards = document.getElementById('screen-cards');
-            const screenFinal = document.getElementById('screen-final');
-
-            const btnBegin = document.getElementById('btn-begin');
-            const doubtBox = document.getElementById('doubt-box');
-            const truthBox = document.getElementById('truth-box');
-            const btnNextCard = document.getElementById('btn-next-card');
-
-            const stepTitle = document.getElementById('step-title');
-            const doubtText = document.getElementById('doubt-text');
-            const truthIcon = document.getElementById('truth-icon');
-            const truthHeading = document.getElementById('truth-heading');
-            const truthText = document.getElementById('truth-text');
-            const progressDots = document.querySelectorAll('.progress-dot');
-
-            // --- 1. NAVIGATION & ON-CLICK FLOW ---
-            btnBegin.addEventListener('click', (e) => {
-                spawnBurst(e.clientX, e.clientY, ['🌤️', '💛', '✨']);
-                screenIntro.classList.remove('active');
-                setTimeout(() => {
-                    loadCard(0);
-                    screenCards.classList.add('active');
-                }, 400);
-            });
-
-            function loadCard(index) {
-                const item = cardsData[index];
-                stepTitle.textContent = item.step;
-                doubtText.textContent = item.doubt;
-                truthIcon.textContent = item.icon;
-                truthHeading.textContent = item.heading;
-                truthText.innerHTML = item.truth;
-                btnNextCard.textContent = item.btnText;
-
-                // Update Progress Dots
-                progressDots.forEach((dot, idx) => {
-                    dot.classList.toggle('active', idx === index);
-                });
-
-                // Reset visibility so Doubt shows first
-                doubtBox.style.display = 'block';
-                truthBox.classList.remove('revealed');
-            }
-
-            // Clicking the Doubt Bubble pops it and reveals the Truth (No auto-timer!)
-            doubtBox.addEventListener('click', (e) => {
-                const rect = doubtBox.getBoundingClientRect();
-                const clickX = e.clientX || (rect.left + rect.width / 2);
-                const clickY = e.clientY || (rect.top + rect.height / 2);
-
-                spawnBurst(clickX, clickY, ['🦋', '🌸', '✨', '💛', '☀️']);
-
-                doubtBox.style.display = 'none';
-                truthBox.classList.add('revealed');
-            });
-
-            // Clicking the Next Button advances to the next card or Final Screen
-            btnNextCard.addEventListener('click', (e) => {
-                spawnBurst(e.clientX, e.clientY, ['🤍', '✨']);
-                currentIndex++;
-
-                if (currentIndex < cardsData.length) {
-                    loadCard(currentIndex);
-                } else {
-                    screenCards.classList.remove('active');
-                    setTimeout(() => {
-                        screenFinal.classList.add('active');
-                        spawnBurst(window.innerWidth / 2, window.innerHeight / 3, ['🦋', '🌞', '💛', '💖', '🌸']);
-                    }, 400);
-                }
-            });
-
-            // Replay Button
-            document.getElementById('btn-replay').addEventListener('click', () => {
-                currentIndex = 0;
-                screenFinal.classList.remove('active');
-                setTimeout(() => {
-                    loadCard(0);
-                    screenCards.classList.add('active');
-                }, 400);
-            });
-
-            // --- 2. LIVE WHOLESOME TIMER ---
-            const startTime = Date.now();
-            const elHours = document.getElementById('t-hours');
-            const elMins = document.getElementById('t-mins');
-            const elSecs = document.getElementById('t-secs');
-
-            // Base offset so it already looks like a rich ongoing counter of today's love, plus real-time ticking
-            const baseSecondsOffset = (14 * 3600) + (28 * 60); 
-
-            function updateTimer() {
-                const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000) + baseSecondsOffset;
-                const hours = Math.floor(elapsedSeconds / 3600);
-                const mins = Math.floor((elapsedSeconds % 3600) / 60);
-                const secs = elapsedSeconds % 60;
-
-                elHours.textContent = String(hours).padStart(2, '0');
-                elMins.textContent = String(mins).padStart(2, '0');
-                elSecs.textContent = String(secs).padStart(2, '0');
-            }
-            setInterval(updateTimer, 1000);
-            updateTimer();
-
-            // --- 3. EXTRA LOVE SHOWER BUTTON ON FINAL SCREEN ---
-            const sweetNotes = [
-                "Zero burden, 100% my baby 🥹",
-                "Butterflies every time I see you 🦋",
-                "My patience for you is infinite ♾️",
-                "You are my safest place 🏡",
-                "My sweet little puchku forever 💛",
-                "Sending you the tightest hug right now 🤗"
-            ];
-            let noteIdx = 0;
-            const toastEl = document.getElementById('love-toast');
-            let toastTimeout;
-
-            document.getElementById('btn-shower-love').addEventListener('click', (e) => {
-                spawnBurst(
-                    e.clientX || window.innerWidth / 2,
-                    e.clientY || window.innerHeight / 2,
-                    ['🦋', '☀️', '💛', '🌷', '✨', '🥰']
-                );
-
-                toastEl.textContent = sweetNotes[noteIdx % sweetNotes.length];
-                noteIdx++;
-                toastEl.classList.add('show');
-
-                clearTimeout(toastTimeout);
-                toastTimeout = setTimeout(() => {
-                    toastEl.classList.remove('show');
-                }, 2600);
-            });
-
-            // --- 4. PARTICLE BURST EFFECT ---
-            function spawnBurst(x, y, emojis) {
-                for (let i = 0; i < 14; i++) {
-                    const el = document.createElement('div');
-                    el.className = 'pop-particle';
-                    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                    el.style.left = `${x}px`;
-                    el.style.top = `${y}px`;
-                    document.body.appendChild(el);
-
-                    const angle = Math.random() * Math.PI * 2;
-                    const distance = 50 + Math.random() * 90;
-                    const tx = Math.cos(angle) * distance;
-                    const ty = Math.sin(angle) * distance - 30;
-
-                    el.animate([
-                        { transform: 'translate(-50%, -50%) scale(0.5)', opacity: 1 },
-                        { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.3)`, opacity: 0 }
-                    ], {
-                        duration: 900 + Math.random() * 400,
-                        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-                        fill: 'forwards'
-                    });
-
-                    setTimeout(() => el.remove(), 1400);
-                }
-            }
-
-            // --- 5. AMBIENT SUNSHINE & FLOATING MOTES CANVAS ---
-            const canvas = document.getElementById('bg-canvas');
-            const ctx = canvas.getContext('2d');
-            let w, h;
-            const motes = [];
-
-            function resize() {
-                w = canvas.width = window.innerWidth;
-                h = canvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            for (let i = 0; i < 35; i++) {
-                motes.push({
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    r: Math.random() * 4 + 2,
-                    vx: (Math.random() - 0.5) * 0.3,
-                    vy: -Math.random() * 0.4 - 0.15,
-                    alpha: Math.random() * 0.5 + 0.2,
-                    color: Math.random() > 0.5 ? '255, 194, 209' : '245, 176, 65'
-                });
-            }
-
-            function drawAmbient() {
-                ctx.clearRect(0, 0, w, h);
-                motes.forEach(m => {
-                    m.x += m.vx;
-                    m.y += m.vy;
-                    if (m.y < -10) { m.y = h + 10; m.x = Math.random() * w; }
-                    if (m.x < -10) m.x = w + 10;
-                    if (m.x > w + 10) m.x = -10;
-
-                    ctx.beginPath();
-                    ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(${m.color}, ${m.alpha})`;
-                    ctx.fill();
-                });
-                requestAnimationFrame(drawAmbient);
-            }
-            drawAmbient();
-        });
-    </script>
+<body class="pb-16">
+<!-- Floating Background Canvas (Skulls, Hearts, Sparkles) -->
+<canvas id="bg-canvas"></canvas>
+<!-- Main Wrapper -->
+<div class="relative z-10 max-w-md mx-auto px-4 pt-8 space-y-8">
+<!-- ================= HEADER: KUROMI APOLOGY BANNER ================= -->
+<div class="kuromi-card p-6 text-center mt-4">
+<div class="ear-left"></div>
+<div class="ear-right"></div>
+<!-- Cute Ribbon Badge -->
+<div class="inline-flex items-center gap-1.5 bg-[#23192d] text-[#ff85b3] text-xs font-bold px-3.5 py-1 rounded-full mb-3 border border-[#ff85b3]">
+<span>💀🎀</span> OFFICIAL KUROMI APOLOGY <span>🎀💀</span>
+</div>
+<!-- Custom Animated Sad Kuromi SVG -->
+<div class="w-36 h-36 mx-auto my-1 kuromi-bobble">
+<svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-md">
+<!-- Jester Hood Ears -->
+<path d="M55,85 C20,30 15,20 35,15 C55,10 75,45 85,65 Z" fill="#23192d" stroke="#110b17" stroke-width="4"/>
+<path d="M145,85 C180,30 185,20 165,15 C145,10 125,45 115,65 Z" fill="#23192d" stroke="#110b17" stroke-width="4"/>
+<!-- Pink Pom-Poms on Ears -->
+<circle cx="28" cy="18" r="11" fill="#ff85b3" stroke="#23192d" stroke-width="3"/>
+<circle cx="172" cy="18" r="11" fill="#ff85b3" stroke="#23192d" stroke-width="3"/>
+<!-- Main Hood -->
+<ellipse cx="100" cy="110" rx="62" ry="54" fill="#23192d" stroke="#110b17" stroke-width="4"/>
+<!-- White Face -->
+<ellipse cx="100" cy="122" rx="48" ry="38" fill="#ffffff" stroke="#23192d" stroke-width="3.5"/>
+<!-- Hood V-shape Forehead -->
+<path d="M65,88 Q100,115 135,88 Q100,65 65,88 Z" fill="#23192d"/>
+<!-- Pink Skull on Forehead -->
+<ellipse cx="100" cy="82" rx="13" ry="11" fill="#ff85b3" stroke="#23192d" stroke-width="2.5"/>
+<rect x="94" y="89" width="12" height="6" rx="2" fill="#ff85b3" stroke="#23192d" stroke-width="2"/>
+<circle cx="95" cy="82" r="2.8" fill="#23192d"/>
+<circle cx="105" cy="82" r="2.8" fill="#23192d"/>
+<!-- Cute Plead Eyes (Sad/Sorry) -->
+<ellipse cx="78" cy="122" rx="7" ry="9" fill="#23192d"/>
+<circle cx="76" cy="119" r="3" fill="#fff"/>
+<circle cx="80" cy="125" r="1.5" fill="#fff"/>
+<ellipse cx="122" cy="122" rx="7" ry="9" fill="#23192d"/>
+<circle cx="120" cy="119" r="3" fill="#fff"/>
+<circle cx="124" cy="125" r="1.5" fill="#fff"/>
+<!-- Sad Eyebrows -->
+<path d="M68,110 Q78,105 85,112" fill="none" stroke="#23192d" stroke-width="3" stroke-linecap="round"/>
+<path d="M132,110 Q122,105 115,112" fill="none" stroke="#23192d" stroke-width="3" stroke-linecap="round"/>
+<!-- Blushing Cheeks -->
+<ellipse cx="64" cy="130" rx="8" ry="4.5" fill="#ff9ebb" opacity="0.75"/>
+<ellipse cx="136" cy="130" rx="8" ry="4.5" fill="#ff9ebb" opacity="0.75"/>
+<!-- Animated Tears -->
+<circle cx="72" cy="133" r="3.5" fill="#60a5fa" class="tear-anim"/>
+<circle cx="128" cy="133" r="3.5" fill="#60a5fa" class="tear-anim"/>
+<!-- Pink Nose & Quivering Sorry Mouth -->
+<ellipse cx="100" cy="128" rx="3.5" ry="2.5" fill="#ff85b3"/>
+<path d="M93,139 Q100,134 107,139" fill="none" stroke="#23192d" stroke-width="2.8" stroke-linecap="round"/>
+<!-- Paws holding a "SORRY" Heart -->
+<ellipse cx="100" cy="168" rx="28" ry="16" fill="#ff85b3" stroke="#23192d" stroke-width="3"/>
+<text x="100" y="172" text-anchor="middle" fill="#23192d" font-family="Fredoka" font-weight="700" font-size="12">I'M SORRY</text>
+</svg>
+</div>
+<h1 class="text-2xl md:text-3xl font-bold text-[#23192d] leading-tight">
+I Said Something I Didn't Mean... 🥺
+</h1>
+<p class="text-sm md:text-base text-[#4a355b] font-semibold mt-2 leading-relaxed">
+My mouth spoke faster than my brain, and I hurt the girl who means the entire world to me. I didn't mean a single word of it, my baby.
+</p>
+</div>
+<!-- ================= SECTION 2: THE APOLOGY VIDEO PLAYER ================= -->
+<div class="kuromi-card-dark p-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="text-xl">🎬</span>
+<div>
+<h2 class="text-lg font-bold text-[#ff85b3] leading-none">
+A Little Apology Video For You
+</h2>
+<p class="text-xs text-purple-200 mt-0.5">Press play to watch Kuromi speak for me 💜</p>
+</div>
+</div>
+<button id="btn-sound" class="text-xs bg-[#352145] border border-[#ff85b3] text-[#ffd6e7] px-2.5 py-1 rounded-full font-bold">
+🎵 Sound: ON
+</button>
+</div>
+<!-- Video Screen Stage -->
+<div class="video-stage" id="video-stage">
+<!-- Optional Personal Video Element (hidden unless user loads a personal MP4) -->
+<video id="custom-video" class="w-full h-full object-cover hidden" playsinline></video>
+<!-- Built-in Animated Kuromi Short Film Canvas -->
+<canvas id="video-canvas" class="w-full h-full block"></canvas>
+<!-- Subtitle Overlay -->
+<div id="video-subtitle" class="video-subtitle">
+Tap Play ▶ to watch my apology film for you 🥺
+</div>
+<!-- Big Center Play Overlay -->
+<div id="play-overlay" class="absolute inset-0 bg-black/45 flex flex-col items-center justify-center z-20 cursor-pointer backdrop-blur-[2px] transition-opacity duration-300">
+<div class="w-16 h-16 rounded-full bg-[#ff85b3] border-4 border-[#23192d] flex items-center justify-center shadow-lg heart-beat">
+<span class="text-2xl text-[#23192d] ml-1">▶</span>
+</div>
+<span class="mt-2 text-xs font-bold uppercase tracking-wider bg-[#23192d] text-[#ff85b3] px-3 py-1 rounded-full border border-[#ff85b3]">
+Play Apology Video (0:24)
+</span>
+</div>
+</div>
+<!-- Video Controls & Timeline -->
+<div class="mt-3 space-y-2">
+<!-- Progress Bar -->
+<div class="w-full h-3 bg-[#150d1d] rounded-full overflow-hidden border border-[#ff85b3]/50 cursor-pointer" id="progress-container">
+<div id="video-progress" class="h-full bg-gradient-to-r from-[#ff85b3] to-[#c084fc] w-0 transition-all duration-150"></div>
+</div>
+<div class="flex items-center justify-between text-xs text-purple-200 font-semibold">
+<div class="flex items-center gap-2">
+<button id="btn-play-pause" class="bg-[#ff85b3] text-[#23192d] font-bold px-3 py-1 rounded-full border border-[#23192d]">
+▶ Play
+</button>
+<button id="btn-scene-next" class="bg-[#352145] text-purple-200 px-2.5 py-1 rounded-full border border-purple-400/40">
+Next Scene ⏭
+</button>
+</div>
+<span id="scene-indicator">Scene 1 / 4</span>
+</div>
+</div>
+</div>
+<!-- ================= SECTION 3: THE FESTIVAL MEHANDI PROMISE ================= -->
+<div class="kuromi-card p-6">
+<div class="flex items-center justify-between mb-2">
+<span class="bg-[#f3e8ff] text-[#6b21a8] text-xs font-bold px-3 py-1 rounded-full border border-[#c084fc]">
+🌿 LIFETIME VOUCHER
+</span>
+<span class="text-xs font-bold text-[#ec4899]" id="stamp-counter">0 / 4 Stamped</span>
+</div>
+<h2 class="text-2xl font-bold text-[#23192d] mb-1">
+My Festival Mehandi Promise ✋🏻🌿
+</h2>
+<p class="text-sm text-[#583e6d] font-semibold leading-relaxed mb-4">
+Not only am I sorry, I’m making this an official rule for us: <strong>In every important festival, I will get your Mehandi done!</strong> Tap each festival below to stamp my promise:
+</p>
+<!-- 4 Interactive Festival Stamp Cards -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+<div class="stamp-slot text-center" data-festival="0">
+<span class="stamp-badge">PROMISED ✓</span>
+<div class="text-2xl mb-1">🪔✨</div>
+<h3 class="font-bold text-sm text-[#23192d]">Diwali & Pooja</h3>
+<p class="text-[11px] text-[#6b537c] mt-0.5">Full hands dark stain + matching bangles</p>
+</div>
+<div class="stamp-slot text-center" data-festival="1">
+<span class="stamp-badge">PROMISED ✓</span>
+<div class="text-2xl mb-1">🌙🌸</div>
+<h3 class="font-bold text-sm text-[#23192d]">Karwa Chauth & Teej</h3>
+<p class="text-[11px] text-[#6b537c] mt-0.5">My name hidden in your mehandi design</p>
+</div>
+<div class="stamp-slot text-center" data-festival="2">
+<span class="stamp-badge">PROMISED ✓</span>
+<div class="text-2xl mb-1">🥁💐</div>
+<h3 class="font-bold text-sm text-[#23192d]">Holi, Eid & Rakhi</h3>
+<p class="text-[11px] text-[#6b537c] mt-0.5">Booking the best mehandi artist for you</p>
+</div>
+<div class="stamp-slot text-center" data-festival="3">
+<span class="stamp-badge">PROMISED ✓</span>
+<div class="text-2xl mb-1">💍👑</div>
+<h3 class="font-bold text-sm text-[#23192d]">Weddings & Functions</h3>
+<p class="text-[11px] text-[#6b537c] mt-0.5">Feeding you momos while your hands dry!</p>
+</div>
+</div>
+<!-- Extra Mehandi Care Perks Box -->
+<div class="bg-[#fdf2f8] border-2 border-[#fbcfe8] rounded-2xl p-3.5 text-xs text-[#4a2545] space-y-1.5 font-semibold">
+<div class="font-bold text-[#be185d] text-sm flex items-center gap-1.5">
+<span>🎀</span> Included in your Mehandi VIP Package:
+</div>
+<p>✦ I will apply the lemon-sugar mixture on your hands myself.</p>
+<p>✦ I will feed you food & hold your water straw while your mehandi dries.</p>
+<p>✦ I will hype up your mehandi stain and take 50 cute photos of your hands!</p>
+</div>
+</div>
+<!-- ================= SECTION 4: SINCERE HEART-TO-HEART ================= -->
+<div class="kuromi-card-dark p-6 text-center">
+<div class="text-3xl mb-2">💜🖤</div>
+<h2 class="text-xl font-bold text-[#ff85b3] mb-2">
+What I Truly Mean
+</h2>
+<p class="text-sm text-purple-100 leading-relaxed mb-3">
+Sometimes I say careless things in the heat of the moment that are the complete opposite of how much I adore you. You are my safe place, my puchku, and my favorite person.
+</p>
+<p class="text-sm text-[#ffd6e7] font-bold italic">
+"Even Kuromi has a super soft, mushy pink heart inside—and mine belongs 100% to you."
+</p>
+</div>
+<!-- ================= SECTION 5: FORGIVENESS INTERACTION ================= -->
+<div class="kuromi-card p-6 text-center" id="forgive-card">
+<h2 class="text-2xl font-bold text-[#23192d] mb-1">
+Will You Forgive Your Dummy? 🥺
+</h2>
+<p class="text-xs text-[#6b537c] font-semibold mb-5" id="plead-subtext">
+Kuromi and I are waiting with puppy eyes...
+</p>
+<div class="flex flex-col items-center justify-center gap-3 relative min-h-[115px]" id="button-arena">
+<button id="btn-forgive-yes" class="btn-kuromi text-base w-full max-w-[260px] z-10">
+Yes, I Forgive You! 💜✨
+</button>
+<button id="btn-forgive-no" class="btn-lavender text-sm">
+Hmph, Still Mad 😤
+</button>
+</div>
+</div>
+</div>
+<!-- ================= CELEBRATION MODAL (Revealed on "Yes") ================= -->
+<div id="celebration-modal" class="fixed inset-0 bg-[#180e24]/95 backdrop-blur-md z-50 flex items-center justify-center p-5 opacity-0 pointer-events-none transition-opacity duration-500">
+<div class="kuromi-card p-6 max-w-sm w-full text-center transform scale-90 transition-transform duration-500" id="celebration-box">
+<div class="text-5xl mb-2 heart-beat">💜🎀🌿</div>
+<h2 class="text-3xl font-bold text-[#23192d] mb-2">
+YAYYY! Thank You Baby! 🥹
+</h2>
+<p class="text-sm text-[#4a355b] font-semibold leading-relaxed mb-4">
+I promise to be so much more careful with my words and always treat you like the princess you are.
+</p>
+<!-- Official Signed Certificate -->
+<div class="bg-[#23192d] text-[#ffd6e7] p-4 rounded-2xl border-2 border-[#ff85b3] text-left text-xs space-y-1.5 mb-5">
+<div class="text-[#ff85b3] font-bold text-sm text-center border-b border-[#ff85b3]/30 pb-1.5 mb-2">
+📜 OFFICIALKUROMI PACT SEALED
+</div>
+<p>✅ <strong>Apology Accepted:</strong> 100% Hugs Owed</p>
+<p>✅ <strong>Festival Mehandi Pass:</strong> Activated Forever 🌿</p>
+<p>✅ <strong>Boyfriend Duty:</strong> Feeding you snacks while your mehandi dries!</p>
+</div>
+<button id="btn-hug-burst" class="btn-kuromi w-full">
+Send Virtual Hug & Kisses 🫂💋
+</button>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+// =========================================================================
+// 1. CUSTOM ANIMATED KUROMI APOLOGY VIDEO PLAYER + SYNTHESIZED MUSIC BOX
+// =========================================================================
+const vCanvas = document.getElementById('video-canvas');
+const vCtx = vCanvas.getContext('2d');
+const subtitleEl = document.getElementById('video-subtitle');
+const playOverlay = document.getElementById('play-overlay');
+const btnPlayPause = document.getElementById('btn-play-pause');
+const btnSceneNext = document.getElementById('btn-scene-next');
+const btnSound = document.getElementById('btn-sound');
+const progressBar = document.getElementById('video-progress');
+const progressContainer = document.getElementById('progress-container');
+const sceneIndicator = document.getElementById('scene-indicator');
+// 4 Heart-Melting Video Scenes (6 seconds each = 24 seconds total)
+const scenes = [
+{
+duration: 6,
+title: "Scene 1 / 4 • The Regret",
+subtitle: "“I said something stupid that I didn't mean at all... and I hurt my favorite person.” 🥺🌧️",
+mood: "rain"
+},
+{
+duration: 6,
+title: "Scene 2 / 4 • Bonking Myself",
+subtitle: "“Me right now wishing I could rewind time and bonk my own head before speaking...” 😭🔨",
+mood: "bonk"
+},
+{
+duration: 6,
+title: "Scene 3 / 4 • The Mehandi Promise",
+subtitle: "“And I promise: on EVERY important festival, I'll get your Mehandi done & feed you while it dries!” 🌿✋🏻✨",
+mood: "mehandi"
+},
+{
+duration: 6,
+title: "Scene 4 / 4 • Forever Yours",
+subtitle: "“You are my sweetest puchku. I love you endlessly. Please forgive your dummy?” 💜🎀",
+mood: "love"
+}
+];
+const totalDuration = 24; // seconds
+let currentTime = 0;
+let isPlaying = false;
+let soundEnabled = true;
+let lastFrameTime = performance.now();
+// Resize video canvas cleanly
+function resizeVideoCanvas() {
+const rect = vCanvas.parentElement.getBoundingClientRect();
+vCanvas.width = rect.width * window.devicePixelRatio;
+vCanvas.height = rect.height * window.devicePixelRatio;
+vCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+}
+window.addEventListener('resize', resizeVideoCanvas);
+resizeVideoCanvas();
+// Cute Web Audio API Music Box (No external audio files needed)
+let audioCtx = null;
+let lastNoteStep = -1;
+const melodyNotes = [523.25, 659.25, 783.99, 659.25, 698.46, 587.33, 523.25, 659.25]; // C5, E5, G5, E5, F5, D5, C5, E5
+function playChime(freq) {
+if (!soundEnabled) return;
+try {
+if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+if (audioCtx.state === 'suspended') audioCtx.resume();
+const osc = audioCtx.createOscillator();
+const gain = audioCtx.createGain();
+osc.type = 'sine';
+osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.7);
+osc.connect(gain);
+gain.connect(audioCtx.destination);
+osc.start();
+osc.stop(audioCtx.currentTime + 0.75);
+} catch (e) {}
+}
+// Draw cute Kuromi inside the video player based on active scene
+function drawVideoFrame(timeSec) {
+const w = vCanvas.width / window.devicePixelRatio;
+const h = vCanvas.height / window.devicePixelRatio;
+const sceneIdx = Math.min(3, Math.floor(timeSec / 6));
+const scene = scenes[sceneIdx];
+// Update UI labels
+subtitleEl.innerHTML = scene.subtitle;
+sceneIndicator.textContent = scene.title;
+progressBar.style.width = ${(timeSec / totalDuration) * 100}%;
+// Background Gradient per scene
+const grad = vCtx.createLinearGradient(0, 0, 0, h);
+if (scene.mood === 'rain') {
+grad.addColorStop(0, '#1e1b2e');
+grad.addColorStop(1, '#382952');
+} else if (scene.mood === 'bonk') {
+grad.addColorStop(0, '#2d1b38');
+grad.addColorStop(1, '#4c265e');
+} else if (scene.mood === 'mehandi') {
+grad.addColorStop(0, '#293822');
+grad.addColorStop(1, '#4f2c47');
+} else {
+grad.addColorStop(0, '#4a1d42');
+grad.addColorStop(1, '#702963');
+}
+vCtx.fillStyle = grad;
+vCtx.fillRect(0, 0, w, h);
+const cx = w / 2;
+const cy = h * 0.44 + Math.sin(timeSec * 4) * 4;
+// Scene specific background effects
+if (scene.mood === 'rain') {
+vCtx.strokeStyle = 'rgba(147, 197, 253, 0.45)';
+vCtx.lineWidth = 2;
+for (let i = 0; i < 18; i++) {
+const rx = ((i * 37) % w);
+const ry = ((timeSec * 120 + i * 29) % (h * 0.8));
+vCtx.beginPath();
+vCtx.moveTo(rx, ry);
+vCtx.lineTo(rx - 3, ry + 12);
+vCtx.stroke();
+}
+} else if (scene.mood === 'mehandi') {
+// Floating Mehandi cones & sparkles
+vCtx.font = '20px sans-serif';
+for (let i = 0; i < 6; i++) {
+const mx = cx + Math.cos(timeSec * 1.5 + i) * (w * 0.34);
+const my = cy + Math.sin(timeSec * 2 + i) * 35;
+vCtx.fillText(i % 2 === 0 ? '🌿' : '✨', mx - 10, my);
+}
+} else if (scene.mood === 'love') {
+vCtx.font = '22px sans-serif';
+for (let i = 0; i < 7; i++) {
+const hx = cx + Math.cos(timeSec * 1.8 + i) * (w * 0.35);
+const hy = cy + Math.sin(timeSec * 2.2 + i) * 40;
+vCtx.fillText(i % 2 === 0 ? '💜' : '🎀', hx - 10, hy);
+}
+}
+// Draw Kuromi Character in Center
+vCtx.save();
+vCtx.translate(cx, cy);
+// Ears
+vCtx.fillStyle = '#23192d';
+vCtx.beginPath();
+vCtx.moveTo(-25, -20);
+vCtx.quadraticCurveTo(-55, -70, -40, -75);
+vCtx.quadraticCurveTo(-20, -70, -5, -30);
+vCtx.fill();
+vCtx.beginPath();
+vCtx.moveTo(25, -20);
+vCtx.quadraticCurveTo(55, -70, 40, -75);
+vCtx.quadraticCurveTo(20, -70, 5, -30);
+vCtx.fill();
+// Pink Ear Balls
+vCtx.fillStyle = '#ff85b3';
+vCtx.beginPath();
+vCtx.arc(-43, -73, 7, 0, Math.PI * 2);
+vCtx.arc(43, -73, 7, 0, Math.PI * 2);
+vCtx.fill();
+// Head Hood
+vCtx.fillStyle = '#23192d';
+vCtx.beginPath();
+vCtx.ellipse(0, 0, 44, 36, 0, 0, Math.PI * 2);
+vCtx.fill();
+// Face
+vCtx.fillStyle = '#ffffff';
+vCtx.beginPath();
+vCtx.ellipse(0, 8, 34, 26, 0, 0, Math.PI * 2);
+vCtx.fill();
+// Pink Skull on Hood
+vCtx.fillStyle = '#ff85b3';
+vCtx.beginPath();
+vCtx.arc(0, -18, 8, 0, Math.PI * 2);
+vCtx.fill();
+// Eyes & Expression based on Scene
+vCtx.fillStyle = '#23192d';
+if (scene.mood === 'rain' || scene.mood === 'bonk') {
+// Teary puppy eyes
+vCtx.beginPath();
+vCtx.arc(-14, 8, 4.5, 0, Math.PI * 2);
+vCtx.arc(14, 8, 4.5, 0, Math.PI * 2);
+vCtx.fill();
+// Wavy sorry mouth
+vCtx.strokeStyle = '#23192d';
+vCtx.lineWidth = 2;
+vCtx.beginPath();
+vCtx.arc(0, 21, 5, Math.PI, 0);
+vCtx.stroke();
+if (scene.mood === 'bonk') {
+// Cute apologetic sweat drop / squeaky hammer
+vCtx.font = '24px sans-serif';
+const angle = Math.sin(timeSec * 12) * 0.4;
+vCtx.save();
+vCtx.rotate(angle);
+vCtx.fillText('🔨', 26, -32);
+vCtx.restore();
+}
+} else {
+// Happy sparkling eyes for Mehandi & Love scenes
+vCtx.strokeStyle = '#23192d';
+vCtx.lineWidth = 2.5;
+vCtx.beginPath();
+vCtx.arc(-14, 8, 5, Math.PI, 0);
+vCtx.stroke();
+vCtx.beginPath();
+vCtx.arc(14, 8, 5, Math.PI, 0);
+vCtx.stroke();
+// Happy smile
+vCtx.beginPath();
+vCtx.arc(0, 15, 6, 0, Math.PI);
+vCtx.stroke();
+// Holding Props
+vCtx.font = '22px sans-serif';
+if (scene.mood === 'mehandi') {
+vCtx.fillText('🌿✋🏻✨', -26, 44);
+} else {
+vCtx.fillText('💖🫂💖', -28, 44);
+}
+}
+// Pink Blushing Cheeks
+vCtx.fillStyle = 'rgba(255, 133, 179, 0.65)';
+vCtx.beginPath();
+vCtx.ellipse(-22, 14, 6, 3.5, 0, 0, Math.PI * 2);
+vCtx.ellipse(22, 14, 6, 3.5, 0, 0, Math.PI * 2);
+vCtx.fill();
+vCtx.restore();
+}
+// Main Video Animation Loop
+function updateVideoLoop(now) {
+const dt = (now - lastFrameTime) / 1000;
+lastFrameTime = now;
+if (isPlaying) {
+currentTime += dt;
+// Trigger soft music box note every ~0.75s
+const noteStep = Math.floor(currentTime / 0.75);
+if (noteStep !== lastNoteStep) {
+lastNoteStep = noteStep;
+playChime(melodyNotes[noteStep % melodyNotes.length]);
+}
+if (currentTime >= totalDuration) {
+currentTime = 0;
+isPlaying = false;
+playOverlay.style.opacity = '1';
+playOverlay.style.pointerEvents = 'all';
+btnPlayPause.textContent = '↻ Replay';
+}
+}
+drawVideoFrame(currentTime);
+requestAnimationFrame(updateVideoLoop);
+}
+requestAnimationFrame(updateVideoLoop);
+function togglePlay() {
+isPlaying = !isPlaying;
+if (isPlaying) {
+playOverlay.style.opacity = '0';
+playOverlay.style.pointerEvents = 'none';
+btnPlayPause.textContent = '⏸ Pause';
+playChime(523.25);
+} else {
+btnPlayPause.textContent = '▶ Play';
+}
+}
+playOverlay.addEventListener('click', togglePlay);
+btnPlayPause.addEventListener('click', togglePlay);
+btnSceneNext.addEventListener('click', () => {
+const nextSceneIdx = (Math.floor(currentTime / 6) + 1) % 4;
+currentTime = nextSceneIdx * 6 + 0.1;
+if (!isPlaying) togglePlay();
+});
+progressContainer.addEventListener('click', (e) => {
+const rect = progressContainer.getBoundingClientRect();
+const clickRatio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+currentTime = clickRatio * totalDuration;
+drawVideoFrame(currentTime);
+});
+btnSound.addEventListener('click', () => {
+soundEnabled = !soundEnabled;
+btnSound.textContent = soundEnabled ? '🎵 Sound: ON' : '🔇 Sound: OFF';
+});
+// =========================================================================
+// 2. INTERACTIVE MEHANDI PROMISE STAMP CARDS
+// =========================================================================
+const stampSlots = document.querySelectorAll('.stamp-slot');
+const stampCounter = document.getElementById('stamp-counter');
+let stampedCount = 0;
+stampSlots.forEach(slot => {
+slot.addEventListener('click', (e) => {
+if (!slot.classList.contains('stamped')) {
+slot.classList.add('stamped');
+stampedCount++;
+stampCounter.textContent = ${stampedCount} / 4 Stamped;
+playChime(659.25 + stampedCount * 60);
+}
+spawnBurst(e.clientX || window.innerWidth / 2, e.clientY || window.innerHeight / 2, ['🌿', '✋🏻', '✨', '💜', '🎀']);
+});
+});
+// =========================================================================
+// 3. PLAYFUL FORGIVENESS BUTTONS ("Hmph" button dodges & makes "Yes" grow)
+// =========================================================================
+const btnYes = document.getElementById('btn-forgive-yes');
+const btnNo = document.getElementById('btn-forgive-no');
+const pleadSubtext = document.getElementById('plead-subtext');
+const celebrationModal = document.getElementById('celebration-modal');
+const celebrationBox = document.getElementById('celebration-box');
+const cheekyPleas = [
+"Wait! Kuromi says you have to click Yes! 💀🎀",
+"Think of all the festival Mehandi dates! 🌿✋🏻",
+"I'll feed you momos while your mehandi dries! 🥟🥺",
+"My words were dumb, but my love is 1000% real 💜",
+"Look at Kuromi's teary puppy eyes! 🥺✨",
+"Okay, the 'Mad' button is officially broken now! 😤💖"
+];
+let noClickCount = 0;
+let yesScale = 1;
+function dodgeNoButton(e) {
+if (e && e.cancelable) e.preventDefault();
+noClickCount++;
+yesScale = Math.min(1.25, yesScale + 0.05);
+btnYes.style.transform = scale(${yesScale});
+pleadSubtext.textContent = cheekyPleas[noClickCount % cheekyPleas.length];
+pleadSubtext.classList.add('text-[#ec4899]');
+// Move button playfully within safe bounds
+const offsetX = (Math.random() - 0.5) * 140;
+const offsetY = (Math.random() - 0.5) * 50;
+btnNo.style.transform = translate(${offsetX}px, ${offsetY}px) scale(${Math.max(0.75, 1 - noClickCount * 0.04)});
+playChime(440);
+}
+btnNo.addEventListener('mouseover', dodgeNoButton);
+btnNo.addEventListener('touchstart', dodgeNoButton, { passive: false });
+btnNo.addEventListener('click', dodgeNoButton);
+// Clicking YES!
+btnYes.addEventListener('click', (e) => {
+playChime(523.25);
+setTimeout(() => playChime(659.25), 120);
+setTimeout(() => playChime(783.99), 240);
+setTimeout(() => playChime(1046.50), 360);
+// Stamp all Mehandi cards automatically too
+stampSlots.forEach(s => s.classList.add('stamped'));
+stampCounter.textContent = 4 / 4 Stamped;
+spawnBurst(window.innerWidth / 2, window.innerHeight / 2, ['💜', '🎀', '🌿', '💀', '✨', '💖']);
+celebrationModal.classList.remove('opacity-0', 'pointer-events-none');
+celebrationBox.classList.remove('scale-90');
+celebrationBox.classList.add('scale-100');
+});
+document.getElementById('btn-hug-burst').addEventListener('click', (e) => {
+playChime(880);
+spawnBurst(
+e.clientX || window.innerWidth / 2,
+e.clientY || window.innerHeight / 2,
+['🫂', '💋', '💜', '🎀', '🌿', '✨', '🥰']
+);
+});
+// =========================================================================
+// 4. PARTICLE BURST & AMBIENT KUROMI BACKGROUND CANVAS
+// =========================================================================
+function spawnBurst(x, y, symbols) {
+for (let i = 0; i < 16; i++) {
+const el = document.createElement('div');
+el.className = 'burst-item';
+el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+el.style.left = ${x}px;
+el.style.top = ${y}px;
+document.body.appendChild(el);
+const angle = Math.random() * Math.PI * 2;
+const dist = 50 + Math.random() * 100;
+const tx = Math.cos(angle) * dist;
+const ty = Math.sin(angle) * dist - 30;
+el.animate([
+{ transform: 'translate(-50%, -50%) scale(0.4)', opacity: 1 },
+{ transform: translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.3), opacity: 0 }
+], {
+duration: 950 + Math.random() * 350,
+easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+fill: 'forwards'
+});
+setTimeout(() => el.remove(), 1350);
+}
+}
+// Ambient Background Floating Sparkles
+const bgCanvas = document.getElementById('bg-canvas');
+const bgCtx = bgCanvas.getContext('2d');
+let bw, bh;
+const floaters = [];
+function resizeBg() {
+bw = bgCanvas.width = window.innerWidth;
+bh = bgCanvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeBg);
+resizeBg();
+for (let i = 0; i < 28; i++) {
+floaters.push({
+x: Math.random() * bw,
+y: Math.random() * bh,
+r: Math.random() * 3 + 1.5,
+vy: -Math.random() * 0.4 - 0.15,
+vx: (Math.random() - 0.5) * 0.25,
+color: i % 2 === 0 ? '255, 133, 179' : '192, 132, 252',
+alpha: Math.random() * 0.5 + 0.2
+});
+}
+function animateBg() {
+bgCtx.clearRect(0, 0, bw, bh);
+floaters.forEach(f => {
+f.x += f.vx;
+f.y += f.vy;
+if (f.y < -10) { f.y = bh + 10; f.x = Math.random() * bw; }
+bgCtx.beginPath();
+bgCtx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+bgCtx.fillStyle = rgba(${f.color}, ${f.alpha});
+bgCtx.fill();
+});
+requestAnimationFrame(animateBg);
+}
+animateBg();
+});
+</script>
 </body>
 </html>
